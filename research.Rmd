@@ -23,7 +23,7 @@ title: "研究"
 
 - Omizu, T., & Kunisato, Y. (2023, July). Network simulation of depression as a complex system with treatment components.In Artificial Life Conference Proceedings 35 (Vol. 2023, No. 1, p. 97). One Rogers Street, Cambridge, MA 02142-1209,USA journals-info@ mit. edu: MIT Press.  (https://direct.mit.edu/isal/proceedings/isal/35/97/116843) (審査あり)
 
-- 大水拓海(2023) 日本心理学会第87回 若手の会企画「学部生・高校生プレゼンバトル」「複雑系としてのうつ病の数理シミュレーション」2023年9月15-17日 (https://sites.google.com/view/jpaecp-lt)
+- 大水拓海(2023) 日本心理学会第87回 若手の会企画「学部生・高校生プレゼンバトル」「複雑系としてのうつ病の数理シミュレーション」2023年9月15-17日 (https://sites.google.com/view/jpaecp-lt/2023)
 
 - 大水拓海・国里愛彦 (2024).  介入標的によってうつ症状低減効果は変わるか？ーネットワークモデルを用いた数理シミュレーションー. 日本心理学会第88回大会.(2024.9.6 - 2024.9.8). ポスター発表.(https://pub.confit.atlas.jp/ja/event/jpa2024/presentation/1D-41).
 
