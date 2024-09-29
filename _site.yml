@@ -1,0 +1,14 @@
+name: "大水拓海の個人ホームページ"
+navbar:
+  title: "大水拓海の個人ホームページ"
+  left:
+    - text: "ホーム"
+      href: index.html
+    - text: "プロフィール"
+      href: about.html
+    - text: "研究"
+      href: research.html
+output:
+  html_document:
+    css: site_style.css
+output_dir: "docs"
