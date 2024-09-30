@@ -5,35 +5,34 @@ title: "研究"
 # 学術論文(査読あり)
 
 
--  Omizu, T. and Kunisato. Y.(2024). Exploring Effective Intervention Strategies for Depression as a Complex System: Targeted Interventions through Network Simulations. Japanese Psychological Research. (early view : https://onlinelibrary.wiley.com/doi/full/10.1111/jpr.12553)
+-  [1] Omizu, T. and Kunisato. Y.(2024). Exploring Effective Intervention Strategies for Depression as a Complex System: Targeted Interventions through Network Simulations. Japanese Psychological Research. (https://onlinelibrary.wiley.com/doi/full/10.1111/jpr.12553)
 
 
-- BBBB
 
 
 # 紀要論文
 
 
-- 国里愛彦・藁科佳奈・隅田昌孝・村口ゆら・大水拓海 (2023). 横断データに対する心理ネットワーク分析のチュートリアル. 専修人間科学論集 心理学篇 13, (1), pp. 51-67. 
+- [1] 国里愛彦・藁科佳奈・隅田昌孝・村口ゆら・大水拓海 (2023). 横断データに対する心理ネットワーク分析のチュートリアル. 専修人間科学論集 心理学篇 13, (1), pp. 51-67. 
 
 
 
 
 # 学会発表
 
-- Omizu, T., & Kunisato, Y. (2023, July). Network simulation of depression as a complex system with treatment components.In Artificial Life Conference Proceedings 35 (Vol. 2023, No. 1, p. 97). One Rogers Street, Cambridge, MA 02142-1209,USA journals-info@ mit. edu: MIT Press.  (https://direct.mit.edu/isal/proceedings/isal/35/97/116843) (審査あり)
+- [1] Omizu, T., & Kunisato, Y. (2023, July). Network simulation of depression as a complex system with treatment components.In Artificial Life Conference Proceedings 35 (Vol. 2023, No. 1, p. 97). One Rogers Street, Cambridge, MA 02142-1209,USA journals-info@ mit. edu: MIT Press.  (https://direct.mit.edu/isal/proceedings/isal/35/97/116843) (審査あり)
 
-- 大水拓海(2023) 日本心理学会第87回 若手の会企画「学部生・高校生プレゼンバトル」「複雑系としてのうつ病の数理シミュレーション」2023年9月15-17日 (https://sites.google.com/view/jpaecp-lt/2023)
+- [2] 大水拓海(2023) 日本心理学会第87回 若手の会企画「学部生・高校生プレゼンバトル」「複雑系としてのうつ病の数理シミュレーション」2023年9月15-17日 (https://sites.google.com/view/jpaecp-lt/2023)
 
-- 大水拓海・国里愛彦 (2024).  介入標的によってうつ症状低減効果は変わるか？ーネットワークモデルを用いた数理シミュレーションー. 日本心理学会第88回大会.(2024.9.6 - 2024.9.8). ポスター発表.(https://pub.confit.atlas.jp/ja/event/jpa2024/presentation/1D-41).
+- [3] 大水拓海・国里愛彦 (2024).  介入標的によってうつ症状低減効果は変わるか？ーネットワークモデルを用いた数理シミュレーションー. 日本心理学会第88回大会.(2024.9.6 - 2024.9.8). ポスター発表.(https://pub.confit.atlas.jp/ja/event/jpa2024/presentation/1D-41).
 
-- 大水拓海・国里愛彦(2024). 症状ネットワークのコネクティビティは症状改善の指標となるか？日本神経回路学会. JNN2024(2024.9.11-9.13). ポスター発表. (https://conf.jnns.org/).
+- [4] 大水拓海・国里愛彦(2024). 症状ネットワークのコネクティビティは症状改善の指標となるか？日本神経回路学会. JNN2024(2024.9.11-9.13). ポスター発表. (https://conf.jnns.org/).
 
 
 # 受賞等
 
-- 大水拓海(2023) 日本心理学会第87回 若手の会企画「学部生・高校生プレゼンバトル」ベストプレゼンター(第1席). 「複雑系としてのうつ病の数理シミュレーション」2023年9月15-17日 (https://sites.google.com/view/jpaecp-lt/2023)
+- [1] 大水拓海(2023) 日本心理学会第87回 若手の会企画「学部生・高校生プレゼンバトル」ベストプレゼンター(第1席). 「複雑系としてのうつ病の数理シミュレーション」2023年9月15-17日 (https://sites.google.com/view/jpaecp-lt/2023)
 
-- 2024.3.22 専修大学川島記念賞(学術)
+- [2] 2024.3.22 専修大学川島記念賞(学術)
 
-- 2024.3.22 令和5年度専修大学心理学科優秀卒業論文「複雑系としてのうつ病の症状維持と治療作用メカニズムーネットワークモデルを用いた数理シミュレーションによる検討ー」
+- [3] 2024.3.22 令和5年度専修大学心理学科優秀卒業論文「複雑系としてのうつ病の症状維持と治療作用メカニズムーネットワークモデルを用いた数理シミュレーションによる検討ー」
