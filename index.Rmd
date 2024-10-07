@@ -10,7 +10,16 @@ title: "ホーム"
 
 
 
+
+
 ## メールアドレス
 
 takumio.research[at]gmail.com
 
+
+## Twitter Timeline
+
+<a class="twitter-timeline" href="https://twitter.com/Research_tomizu
+?ref_src=twsrc%5Etfw">Tweets by @Research_tomizu
+</a> 
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
