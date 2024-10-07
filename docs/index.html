@@ -277,10 +277,16 @@ $(document).ready(function () {
 </div>
 <div id="twitter-timeline" class="section level2">
 <h2>Twitter Timeline</h2>
-<a class="twitter-timeline" href="https://twitter.com/Research_tomizu?ref_src=twsrc%5Etfw" 
-   data-width="400" data-height="600">Tweets by <span
-class="citation">@Research_tomizu</span></a>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<a class="twitter-timeline" href="https://twitter.com/Research_tomizu?ref_src=twsrc%5Etfw"
+   data-width="400" data-height="600" data-tweet-limit="3" data-chrome="nofooter noborders">Tweets
+by <span class="citation">@Research_tomizu</span></a>
+<script>
+   window.addEventListener('load', function() {
+       var script = document.createElement("script");
+       script.src = "https://platform.twitter.com/widgets.js";
+       document.body.appendChild(script);
+   });
+</script>
 </div>
 
 
