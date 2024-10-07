@@ -17,7 +17,10 @@ title: "ホーム"
 takumio.research[at]gmail.com
 
 
-## Twitter Timeline
+## X(Twitter)
+
+スマホからだと見れますが，パソコンからだとうまく表示されない場合があります。
+そのうち直します。
 
 
 <a class="twitter-timeline" href="https://twitter.com/Research_tomizu?ref_src=twsrc%5Etfw"
