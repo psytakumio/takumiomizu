@@ -15,7 +15,7 @@ title: "研究"
 
 - [1] 国里愛彦・藁科佳奈・隅田昌孝・村口ゆら・大水拓海 (2023). 横断データに対する心理ネットワーク分析のチュートリアル. 専修人間科学論集 心理学篇 13, (1), pp. 51-67. (https://senshu-u.repo.nii.ac.jp/records/13467)
 
-
+- [2] 大水拓海・国里愛彦(pre print).単一事例研究への心理ネットワーク分析の適用―graphicalVARを用いたチュートリアル―.　(https://osf.io/preprints/psyarxiv/vjy2e)
 
 
 ## 学会発表
