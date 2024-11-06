@@ -29,7 +29,13 @@ title: "研究"
 - [4] 大水拓海・国里愛彦(2024). 症状ネットワークのコネクティビティは症状改善の指標となるか？日本神経回路学会. JNN2024(2024.9.11-9.13). ポスター発表. (https://conf.jnns.org/).
 
 
-## その他の研究関連のイベント等
+## その他の研究関連のイベント(研究会など)
+
+[1] Computational Psychiatry and Neurobiology 2024 at University of Tokyo
+Yamanaka-Ryo Naito Seminer House by abreuvoir.*Computational Study of Psychotherapy Mechanisms through Psychological Networks and Mathematical Simulations.(oral presentation)* November 4, 2024.
+
+
+
 
 
 ## 受賞等
