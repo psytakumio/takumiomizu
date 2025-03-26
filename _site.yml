@@ -11,4 +11,6 @@ navbar:
 output:
   html_document:
     css: site_style.css
+    includes:
+      in_header: "meta.html"
 output_dir: "docs"
