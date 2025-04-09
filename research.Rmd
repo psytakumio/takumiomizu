@@ -5,7 +5,7 @@ title: "研究"
 ## 学術論文(査読あり)
 
 
--  [1] Omizu, T. and Kunisato. Y.(2024). Exploring Effective Intervention Strategies for Depression as a Complex System: Targeted Interventions through Network Simulations. Japanese Psychological Research. (https://onlinelibrary.wiley.com/doi/full/10.1111/jpr.12553)
+-  [1] Omizu, T. and Kunisato. Y.(2024). Exploring Effective Intervention Strategies for Depression as a Complex System: Targeted Interventions through Network Simulations. Japanese Psychological Research. 67,(2),147-161.
 
 
 
@@ -15,7 +15,7 @@ title: "研究"
 
 - [1] 国里愛彦・藁科佳奈・隅田昌孝・村口ゆら・大水拓海 (2023). 横断データに対する心理ネットワーク分析のチュートリアル. 専修人間科学論集 心理学篇 13, (1), pp. 51-67. (https://senshu-u.repo.nii.ac.jp/records/13467)
 
-- [2] 大水拓海・国里愛彦(2025,印刷中).単一事例研究への心理ネットワーク分析の適用―graphicalVARを用いたチュートリアル―.　(https://osf.io/preprints/psyarxiv/vjy2e)
+- [2] 大水拓海・国里愛彦(2025).単一事例研究への心理ネットワーク分析の適用―graphicalVARを用いたチュートリアル―. 専修人間科学論集 心理学篇 15, (1), pp.45-56.
 
 
 ## 学会発表
