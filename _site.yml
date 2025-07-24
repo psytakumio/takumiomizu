@@ -8,6 +8,8 @@ navbar:
       href: about.html
     - text: "研究"
       href: research.html
+    - text: "スライド"
+      href: slide.html
 output:
   html_document:
     css: site_style.css

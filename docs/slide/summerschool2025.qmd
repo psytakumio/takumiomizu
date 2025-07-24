@@ -1,0 +1,155 @@
+---
+title: "心理ネットワークを用いた<br>シミュレーション研究"
+subtitle: "計算論的臨床心理学サマースクール2025"
+author: "専修大学大学院文学研究科心理学専攻修士課程2年<br>大水 拓海"
+date: 2025.8.7
+format: 
+  revealjs:
+    theme: simple
+    css: styles.css  # カスタムCSSファイルを参照
+standalone: true
+embed-resources: true
+slide-number: true
+---
+
+## 自己紹介 {#columns-syntax}
+
+### 大水拓海(おおみず たくみ)
+
+::: columns
+
+::: {.column width="50%"}
+
+研究テーマ・関心
+
+- 心理療法の作用機序
+- 感情粒度
+- 心理ネットワーク
+- シミュレーション
+- 能動的推論
+
+:::
+
+::: {.column width="50%"}
+
+
+
+[個人HP](https://psytakumio.github.io/takumiomizu/index.html)
+
+:::
+:::
+
+## 心理ネットワーク”シミュレーション”
+
+
+## Omizu & Kunisato(2025)
+
+![](slidefig/JPR1.png)
+
+国内で初めて心理ネットワークのシミュレーション研究を行った論文(多分)
+
+
+
+
+## Cramer et al(2016)
+
+
+::: columns
+
+::: {.column width="50%"}
+
+### モデル式
+
+$$A^{t}_{i} = \sum^{J}_{j=1} cW_{ij}X^{t-1}_j\tag{1}$$
+
+
+$$P(X^{t}_{i} = 1) = \frac{1}{1+e^{b_{i}}-A^{t}_i} \tag{2}$$
+
+:::
+
+::: {.column width="50%"}
+
+
+:::
+:::
+
+
+
+
+## Omizu & Kunisato(2025)
+
+![](slidefig/jpr_res.jpg)
+
+## Omizu & Kunisato(2025)
+
+
+## psynetsim パッケージ
+
+
+
+## psynetsim パッケージ
+
+- ネットワークシミュレーションを実行する関数を<br>パッケージにしてまとめました
+
+- ご自身のRコンソールに以下をコピペして，パッケージをダウンロードしてください
+
+```{r, echo=TRUE}
+remotes::install_github("TakumiOmizu/psynetsim")
+library(psynetsim)
+```
+
+パッケージのサンプルコード
+```{r, echo=TRUE}
+# Example data for a 6-symptom network
+set.seed(456)
+weight_6 <- matrix(rnorm(6*6, mean = 0.2, sd = 0.08), nrow = 6, ncol = 6)
+diag(weight_6) <- 0
+weight_6[upper.tri(weight_6)] <- t(weight_6)[upper.tri(weight_6)]
+threshold_6 <- data.frame(threshold = rnorm(6, mean = 0.3, sd = 0.05))
+target_list_6 <- list(symptom1 = 1, symptom2 = 0, symptom3 = 1,
+                      symptom4 = 0, symptom5 = 0, symptom6 = 1)
+custom_symptom_names_6 <- c("Anxiety", "Sadness", "Fatigue",
+                            "Insomnia", "Irritability", "Pain")
+```
+
+
+
+## psynetsim パッケージ
+
+サンプルコードの実行！
+
+```{r, echo=TRUE}
+# Run the simulation with custom parameters
+sim_results <- simulate_treatment_network(
+  W_init = weight_6,
+  b_init = threshold_6$threshold,
+  target = target_list_6,
+  connectivity = 1.2,
+  edge_between_TC = 0.8,
+  weight_bias = 1.2,
+  TB = 0.8,
+  trial = 5, # Example: Overriding default 10
+  baseline_iteration = 15, # Example: Overriding default 10
+  num_TC = 4, # Example: Overriding default 5
+  TC_iteration_per_component = 12, # Example: Overriding default 10
+  follow_up_iteration = 15, # Example: Overriding default 10
+  symptom_name = custom_symptom_names_6
+)
+```
+
+
+
+## ネットワークシミュレーションを試してみよう！
+
+先ほど推定したIsing modelの重みと閾値を使って，シミュレーション
+
+
+## ネットワークシミュレーションを試してみよう！
+
+```{r, echo=TRUE, eval=FALSE}
+# 国里先生パートで推定したIsingのデータを使ってシミュレーションする
+simulate_treatment_network()
+```
+
+
+## ネットワークシミュレーションを試してみよう！
