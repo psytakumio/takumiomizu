@@ -5,7 +5,7 @@ author: "専修大学大学院文学研究科心理学専攻修士課程2年<br>
 date: 2025.8.7
 format: 
   revealjs:
-    theme: simple
+    theme: warm
     css: styles.css  # カスタムCSSファイルを参照
 standalone: true
 embed-resources: true
@@ -207,7 +207,7 @@ sim_results <- simulate_treatment_network(
 ## ネットワークシミュレーションを試そう！
 
 
-[不安のオープンデータ](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0182162#sec015)をダウンロードしてカレントディレクトリに入れた。
+[不安のオープンデータ](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0182162#sec015)をダウンロードしてカレントディレクトリに保存する。
 
 
 ```{r, echo=TRUE}
