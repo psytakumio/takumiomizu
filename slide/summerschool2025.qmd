@@ -207,7 +207,7 @@ sim_results <- simulate_treatment_network(
 ## ネットワークシミュレーションを試そう！
 
 
-[不安のオープンデータ](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0182162#sec015)
+[不安のオープンデータ](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0182162#sec015)をダウンロードしてカレントディレクトリに入れた。
 
 
 ```{r, echo=TRUE}
