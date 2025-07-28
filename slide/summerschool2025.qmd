@@ -43,6 +43,8 @@ slide-number: true
 
 - 新たな仮説の生成
 
+# ネットワークシミュレーションの実例
+
 
 ## Cramer et al (2016)
 
@@ -65,36 +67,39 @@ $$P(X^{t}_{i} = 1) = \frac{1}{1+e^{b_{i}}-A^{t}_i} \tag{2}$$
 
 ![](slidefig/JPR1.png)
 
-国内で初めて心理ネットワークのシミュレーション研究を行った論文(多分)
 
 
 
 
 ## Omizu & Kunisato(2025)
 
-- Cramerのモデルでは症状のみの接続の強さに着目
+Cramerのモデルでは症状のみの接続の強さに着目
+<br>
 <br>
 →心理療法などの治療的な要素を入れて拡張することで，ネットワークの中でどの症状を標的にすれば大きな治療効果が得られるかシミュレーションできる
 
 
 
 
-## Omizu & Kunisato(2025)
+## Omizu & Kunisato(2025)：単独症状
 
 ![](slidefig/jpr_res.jpg)
 
-## Omizu & Kunisato(2025)
+## Omizu & Kunisato(2025)：複数症状
 
 
-## psynetsim パッケージ
+![](slidefig/jpr_res2.jpg)
 
+# psynetsim パッケージ
+
+シミュレーションを実際に行ってみる
 
 
 ## psynetsim パッケージ
 
 - ネットワークシミュレーションを実行する関数を<br>パッケージにしてまとめました
 
-- ご自身のRコンソールに以下をコピペして，パッケージをダウンロードしてください
+- ご自身のRコンソールに以下をコピペして，パッケージをインストールしてください
 
 ```{r, echo=TRUE}
 remotes::install_github("TakumiOmizu/psynetsim")
@@ -106,17 +111,20 @@ library(psynetsim)
 ## psynetsim パッケージ
 
 
-- W_init
+- **W_init**：第1引数。症状ネットワークの重み。
 
-- b_init
+- **b_init**：第2引数。各ノードの活性化閾値。
 
-- target
+- **target**：どのノードを標的とするかを選択するリスト/ベクトル。介入するノードは1，介入しないノードは0にする。
 
-- connectivity
+上記は必須の引数です。
+<br>他にもいろいろオプションがあります。
 
-- edge_between_TC
 
-- weight_bias
+```{r, echo=TRUE, eval=FALSE}
+?simulate_treatment_network
+```
+
 
 
 ## psynetsim パッケージ
@@ -183,7 +191,7 @@ sim_results <- simulate_treatment_network(
 ```
 
 
-## ネットワークシミュレーションを試してみよう！
+## ネットワークシミュレーションを試そう！
 
 先ほど推定したIsing modelの重みと閾値を使って，シミュレーション
 
@@ -194,14 +202,18 @@ sim_results <- simulate_treatment_network(
 
 - 症状を悪化させてしまう組み合わせはあるか？
 
-- その他，
+- その他，どんな条件だとどんなことが起きそうか？
 
-## ネットワークシミュレーションを試してみよう！
+## ネットワークシミュレーションを試そう！
 
-```{r, echo=TRUE, eval=FALSE}
-# 国里先生パートで推定したIsingのデータを使ってシミュレーションする
-simulate_treatment_network()
+
+[不安のオープンデータ](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0182162#sec015)
+
+
+```{r, echo=TRUE}
+# Isingのデータを使ってシミュレーションする
+
 ```
 
 
-## ネットワークシミュレーションを試してみよう！
+## ネットワークシミュレーションを試そう！

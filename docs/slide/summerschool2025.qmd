@@ -14,89 +14,120 @@ slide-number: true
 
 ## 自己紹介 {#columns-syntax}
 
-### 大水拓海(おおみず たくみ)
+大水拓海(おおみず たくみ)
 
-::: columns
 
-::: {.column width="50%"}
+### 所属
 
-研究テーマ・関心
+専修大学大学院文学研究科心理学専攻修士課程2年
 
-- 心理療法の作用機序
-- 感情粒度
-- 心理ネットワーク
-- シミュレーション
-- 能動的推論
 
-:::
+### 研究テーマ・関心
 
-::: {.column width="50%"}
+心理療法の作用機序,感情粒度,心理ネットワーク, <br> シミュレーション,能動的推論
 
 
 
 [個人HP](https://psytakumio.github.io/takumiomizu/index.html)
 
-:::
-:::
+
 
 ## 心理ネットワーク”シミュレーション”
+
+
+なぜネットワークからシミュレーションを行うか？
+
+- 実際の臨床データを使用することの困難さ(入手，使用)
+
+- 侵襲性の問題を超えて介入を試す，予測する
+
+- 新たな仮説の生成
+
+# ネットワークシミュレーションの実例
+
+
+## Cramer et al (2016)
+
+
+ネットワークの結合を強めるパラメータ$c$の値が症状全体の活性化を左右する
+
+<div style="font-size: 0.5em;">
+
+$$A^{t}_{i} = \sum^{J}_{j=1} cW_{ij}X^{t-1}_j\tag{1}$$
+
+$$P(X^{t}_{i} = 1) = \frac{1}{1+e^{b_{i}}-A^{t}_i} \tag{2}$$
+
+</div>
+
+
+![](slidefig/cramerfig.jpg)
 
 
 ## Omizu & Kunisato(2025)
 
 ![](slidefig/JPR1.png)
 
-国内で初めて心理ネットワークのシミュレーション研究を行った論文(多分)
-
-
-
-
-## Cramer et al(2016)
-
-
-::: columns
-
-::: {.column width="50%"}
-
-### モデル式
-
-$$A^{t}_{i} = \sum^{J}_{j=1} cW_{ij}X^{t-1}_j\tag{1}$$
-
-
-$$P(X^{t}_{i} = 1) = \frac{1}{1+e^{b_{i}}-A^{t}_i} \tag{2}$$
-
-:::
-
-::: {.column width="50%"}
-
-
-:::
-:::
 
 
 
 
 ## Omizu & Kunisato(2025)
+
+Cramerのモデルでは症状のみの接続の強さに着目
+<br>
+<br>
+→心理療法などの治療的な要素を入れて拡張することで，ネットワークの中でどの症状を標的にすれば大きな治療効果が得られるかシミュレーションできる
+
+
+
+
+## Omizu & Kunisato(2025)：単独症状
 
 ![](slidefig/jpr_res.jpg)
 
-## Omizu & Kunisato(2025)
+## Omizu & Kunisato(2025)：複数症状
 
 
-## psynetsim パッケージ
+![](slidefig/jpr_res2.jpg)
 
+# psynetsim パッケージ
+
+シミュレーションを実際に行ってみる
 
 
 ## psynetsim パッケージ
 
 - ネットワークシミュレーションを実行する関数を<br>パッケージにしてまとめました
 
-- ご自身のRコンソールに以下をコピペして，パッケージをダウンロードしてください
+- ご自身のRコンソールに以下をコピペして，パッケージをインストールしてください
 
 ```{r, echo=TRUE}
 remotes::install_github("TakumiOmizu/psynetsim")
 library(psynetsim)
 ```
+
+
+
+## psynetsim パッケージ
+
+
+- **W_init**：第1引数。症状ネットワークの重み。
+
+- **b_init**：第2引数。各ノードの活性化閾値。
+
+- **target**：どのノードを標的とするかを選択するリスト/ベクトル。介入するノードは1，介入しないノードは0にする。
+
+上記は必須の引数です。
+<br>他にもいろいろオプションがあります。
+
+
+```{r, echo=TRUE, eval=FALSE}
+?simulate_treatment_network
+```
+
+
+
+## psynetsim パッケージ
 
 パッケージのサンプルコード
 ```{r, echo=TRUE}
@@ -118,7 +149,7 @@ custom_symptom_names_6 <- c("Anxiety", "Sadness", "Fatigue",
 
 サンプルコードの実行！
 
-```{r, echo=TRUE}
+```{r, echo=TRUE, eval=FALSE}
 # Run the simulation with custom parameters
 sim_results <- simulate_treatment_network(
   W_init = weight_6,
@@ -130,7 +161,7 @@ sim_results <- simulate_treatment_network(
   TB = 0.8,
   trial = 5, # Example: Overriding default 10
   baseline_iteration = 15, # Example: Overriding default 10
-  num_TC = 4, # Example: Overriding default 5
+  num_TC = 1, # Example: Overriding default 5
   TC_iteration_per_component = 12, # Example: Overriding default 10
   follow_up_iteration = 15, # Example: Overriding default 10
   symptom_name = custom_symptom_names_6
@@ -138,18 +169,51 @@ sim_results <- simulate_treatment_network(
 ```
 
 
+## psynetsim パッケージ
 
-## ネットワークシミュレーションを試してみよう！
+```{r, echo=FALSE}
+# Run the simulation with custom parameters
+sim_results <- simulate_treatment_network(
+  W_init = weight_6,
+  b_init = threshold_6$threshold,
+  target = target_list_6,
+  connectivity = 1.2,
+  edge_between_TC = 0.8,
+  weight_bias = 1.2,
+  TB = 0.8,
+  trial = 5, # Example: Overriding default 10
+  baseline_iteration = 15, # Example: Overriding default 10
+  num_TC = 1, # Example: Overriding default 5
+  TC_iteration_per_component = 12, # Example: Overriding default 10
+  follow_up_iteration = 15, # Example: Overriding default 10
+  symptom_name = custom_symptom_names_6
+)
+```
+
+
+## ネットワークシミュレーションを試そう！
 
 先ほど推定したIsing modelの重みと閾値を使って，シミュレーション
 
 
-## ネットワークシミュレーションを試してみよう！
+- 単独の症状を標的とした場合，どの症状への介入が最も効果的か？
 
-```{r, echo=TRUE, eval=FALSE}
-# 国里先生パートで推定したIsingのデータを使ってシミュレーションする
-simulate_treatment_network()
+- 複数の症状を標的とした場合，どのような組み合わせが効果的か？
+
+- 症状を悪化させてしまう組み合わせはあるか？
+
+- その他，どんな条件だとどんなことが起きそうか？
+
+## ネットワークシミュレーションを試そう！
+
+
+[不安のオープンデータ](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0182162#sec015)
+
+
+```{r, echo=TRUE}
+# Isingのデータを使ってシミュレーションする
+
 ```
 
 
-## ネットワークシミュレーションを試してみよう！
+## ネットワークシミュレーションを試そう！
