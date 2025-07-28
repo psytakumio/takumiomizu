@@ -132,14 +132,26 @@ library(psynetsim)
 
 ## psynetsim パッケージ
 
-パッケージのサンプルコード
+仮想データの作成
 ```{r, echo=TRUE}
 # Example data for a 6-symptom network
 set.seed(456)
 weight_6 <- matrix(rnorm(6*6, mean = 0.2, sd = 0.08), nrow = 6, ncol = 6)
 diag(weight_6) <- 0
 weight_6[upper.tri(weight_6)] <- t(weight_6)[upper.tri(weight_6)]
+print(weight_6)
+
 threshold_6 <- data.frame(threshold = rnorm(6, mean = 0.3, sd = 0.05))
+print(threshold_6)
+
+```
+
+
+
+## psynetsim パッケージ
+
+ターゲットとノード名の設定
+```{r, echo=TRUE}
 target_list_6 <- list(symptom1 = 1, symptom2 = 0, symptom3 = 1,
                       symptom4 = 0, symptom5 = 0, symptom6 = 1)
 custom_symptom_names_6 <- c("Anxiety", "Sadness", "Fatigue",
@@ -147,11 +159,7 @@ custom_symptom_names_6 <- c("Anxiety", "Sadness", "Fatigue",
 ```
 
 
-
-## psynetsim パッケージ
-
-サンプルコードの実行！
-
+シミュレーションの実行
 ```{r, echo=TRUE, eval=FALSE}
 # Run the simulation with custom parameters
 sim_results <- simulate_treatment_network(
@@ -161,18 +169,20 @@ sim_results <- simulate_treatment_network(
   connectivity = 1.2,
   edge_between_TC = 0.8,
   weight_bias = 1.2,
-  TB = 0.8,
-  trial = 5, # Example: Overriding default 10
-  baseline_iteration = 15, # Example: Overriding default 10
-  num_TC = 1, # Example: Overriding default 5
-  TC_iteration_per_component = 12, # Example: Overriding default 10
-  follow_up_iteration = 15, # Example: Overriding default 10
+  TB = 1,
+  trial = 10, # Example: Overriding default 10
+  baseline_iteration = 10, # Example: Overriding default 10
+  num_TC = 5, # Example: Overriding default 5
+  TC_iteration_per_component = 10, # Example: Overriding default 10
+  follow_up_iteration = 10, # Example: Overriding default 10
   symptom_name = custom_symptom_names_6
 )
 ```
 
 
 ## psynetsim パッケージ
+
+シミュレーション結果
 
 ```{r, echo=FALSE}
 # Run the simulation with custom parameters
