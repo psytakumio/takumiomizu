@@ -132,14 +132,26 @@ library(psynetsim)
 
 ## psynetsim パッケージ
 
-パッケージのサンプルコード
+仮想データの作成
 ```{r, echo=TRUE}
 # Example data for a 6-symptom network
 set.seed(456)
 weight_6 <- matrix(rnorm(6*6, mean = 0.2, sd = 0.08), nrow = 6, ncol = 6)
 diag(weight_6) <- 0
 weight_6[upper.tri(weight_6)] <- t(weight_6)[upper.tri(weight_6)]
+print(weight_6)
+
 threshold_6 <- data.frame(threshold = rnorm(6, mean = 0.3, sd = 0.05))
+print(threshold_6)
+
+```
+
+
+
+## psynetsim パッケージ
+
+ターゲットとノード名の設定
+```{r, echo=TRUE}
 target_list_6 <- list(symptom1 = 1, symptom2 = 0, symptom3 = 1,
                       symptom4 = 0, symptom5 = 0, symptom6 = 1)
 custom_symptom_names_6 <- c("Anxiety", "Sadness", "Fatigue",
@@ -147,11 +159,7 @@ custom_symptom_names_6 <- c("Anxiety", "Sadness", "Fatigue",
 ```
 
 
-
-## psynetsim パッケージ
-
-サンプルコードの実行！
-
+シミュレーションの実行
 ```{r, echo=TRUE, eval=FALSE}
 # Run the simulation with custom parameters
 sim_results <- simulate_treatment_network(
@@ -161,18 +169,20 @@ sim_results <- simulate_treatment_network(
   connectivity = 1.2,
   edge_between_TC = 0.8,
   weight_bias = 1.2,
-  TB = 0.8,
-  trial = 5, # Example: Overriding default 10
-  baseline_iteration = 15, # Example: Overriding default 10
-  num_TC = 1, # Example: Overriding default 5
-  TC_iteration_per_component = 12, # Example: Overriding default 10
-  follow_up_iteration = 15, # Example: Overriding default 10
+  TB = 1,
+  trial = 10, # Example: Overriding default 10
+  baseline_iteration = 10, # Example: Overriding default 10
+  num_TC = 5, # Example: Overriding default 5
+  TC_iteration_per_component = 10, # Example: Overriding default 10
+  follow_up_iteration = 10, # Example: Overriding default 10
   symptom_name = custom_symptom_names_6
 )
 ```
 
 
 ## psynetsim パッケージ
+
+シミュレーション結果
 
 ```{r, echo=FALSE}
 # Run the simulation with custom parameters
@@ -213,10 +223,154 @@ sim_results <- simulate_treatment_network(
 [不安のオープンデータ](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0182162#sec015)をダウンロードしてカレントディレクトリに保存する。
 
 
-```{r, echo=TRUE}
+```{r, echo=TRUE, eval=FALSE}
 # Isingのデータを使ってシミュレーションする
+library(tidyverse)
+library(foreign)
+library(bootnet)
+library(qgraph)
+library(IsingFit)
+
+# データの読み込み
+data <- read.spss("data/pone.0182162.s004.sav", 
+                  to.data.frame=TRUE)
+# データの整理(GADに絞って実行)
+data_gad <- data %>% 
+  rename(gad7a = S_GAD7_a, gad7b = S_GAD7_b, 
+         gad7c = S_GAD7_c, gad7d = S_GAD7_d, 
+         gad7e = S_GAD7_e, gad7f = S_GAD7_f, 
+         gad7g = S_GAD7_g) %>% 
+  select(gad7a, gad7b, gad7c, gad7d, gad7e, gad7f, gad7g)
+
+data_gad %>% head()
+
+
+
+```
+
+## ネットワークシミュレーションを試そう！
+
+
+```{r, echo=FALSE}
+# Isingのデータを使ってシミュレーションする
+library(tidyverse)
+library(foreign)
+library(bootnet)
+library(qgraph)
+library(IsingFit)
+
+# データの読み込み
+data <- read.spss("data/pone.0182162.s004.sav", 
+                  to.data.frame=TRUE)
+# データの整理(GADに絞って実行)
+data_gad <- data %>% 
+  rename(gad7a = S_GAD7_a, gad7b = S_GAD7_b, 
+         gad7c = S_GAD7_c, gad7d = S_GAD7_d, 
+         gad7e = S_GAD7_e, gad7f = S_GAD7_f, 
+         gad7g = S_GAD7_g) %>% 
+  select(gad7a, gad7b, gad7c, gad7d, gad7e, gad7f, gad7g)
+
+data_gad %>% head()
+
+
+
+```
+
+
+
+
+## ネットワークシミュレーションを試そう！
+
+```{r,echo=TRUE,eval=FALSE}
+#0以外を1に変換
+y_ifelse <- ifelse(data_gad < 1, 0, 1) %>% na.omit()
+
+y_ifelse %>% head()
+
+res <- IsingFit(y_ifelse, family = "binomial", AND = TRUE, gamma = 0.25, plot
+         = TRUE, progressbar = TRUE, min_sum = -Inf,
+         lowerbound.lambda = NA)
+
+res$weiadj 
+res$thresholds
+
+```
+
+
+
+## ネットワークシミュレーションを試そう！
+
+```{r,include=FALSE,echo=TRUE}
+#0以外を1に変換
+y_ifelse <- ifelse(data_gad < 1, 0, 1) %>% na.omit()
+
+y_ifelse %>% head()
+
+res <- IsingFit(y_ifelse, family = "binomial", AND = TRUE, gamma = 0.25, plot
+         = TRUE, progressbar = TRUE, min_sum = -Inf,
+         lowerbound.lambda = NA)
+
+
+
+
+```
+
+
+
+```{r}
+res$weiadj 
+res$thresholds
+```
+
+
+
+## ネットワークシミュレーションを試そう！
+
+```{r,echo=TRUE,eval=FALSE}
+library(psynetsim)
+qgraph(res$weiadj, posCol = "blue", color = "lightblue")
 
 ```
 
 
 ## ネットワークシミュレーションを試そう！
+
+```{r,echo=FALSE}
+library(psynetsim)
+qgraph(res$weiadj, posCol = "blue", color = "lightblue")
+
+
+```
+
+
+## ネットワークシミュレーションを試そう！
+
+```{r,echo=TRUE,eval=FALSE}
+
+
+#推定したデータを使ってシミュレーション
+simulate_treatment_network(res$weiadj, 
+                           res$thresholds,
+                           connectivity = 1.3,
+                           target = c(1,1,1,1,1,1,1),
+                           num_TC = 10,
+                           edge_between_TC = 2,
+                           weight_bias = 1)
+```
+
+
+
+## ネットワークシミュレーションを試そう！
+
+```{r,echo=FALSE}
+
+
+#推定したデータを使ってシミュレーション
+simulate_treatment_network(res$weiadj, 
+                           res$thresholds,
+                           connectivity = 1.3,
+                           target = c(1,0,0,0,0,0,0),
+                           num_TC = 10,
+                           edge_between_TC = 1,
+                           weight_bias = 1)
+```
