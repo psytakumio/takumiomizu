@@ -8,9 +8,12 @@ format:
     theme: simple
     css: styles.css  # カスタムCSSファイルを参照
 standalone: true
+scrollable: true
 embed-resources: true
 slide-number: true
 ---
+
+
 
 ## 自己紹介 {#columns-syntax}
 
@@ -37,7 +40,7 @@ slide-number: true
 
 なぜネットワークからシミュレーションを行うか？
 
-- 実際の臨床データを使用することの困難さ(入手，使用)
+- 実際の臨床データを使用することの困難さ(入手や使用)
 
 - 侵襲性の問題を超えて介入を試す，予測する
 
@@ -46,10 +49,25 @@ slide-number: true
 # ネットワークシミュレーションの実例
 
 
+## Cramer et al(2016)
+
+
+DSM-III-TRに基づく大うつ病の横断データ(8973名)から症状ネットワークが推定されている
+
+```{r, echo=FALSE}
+library(qgraph)
+cramer <- read.table("data/Cramer2016_weight.txt", header = TRUE)
+qgraph(cramer, layout = "circle", posCol = "blue", color = "lightblue")
+
+
+```
+
+
+
 ## Cramer et al (2016)
 
 
-ネットワークの結合を強めるパラメータ$c$の値が症状全体の活性化を左右する
+ネットワークの結合を強めるパラメータ$c$の値が症状全体の活性化を左右する([Cramer et al, 2016](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0167490))
 
 <div style="font-size: 0.5em;">
 
@@ -75,11 +93,12 @@ $$P(X^{t}_{i} = 1) = \frac{1}{1+e^{b_{i}}-A^{t}_i} \tag{2}$$
 
 - Cramerのモデルでは症状のみの接続の強さに着目
 
-- 実データにおいて症状が改善しても接続が強まっていることが報告(Höller et al, 2022)
+- 実データにおいて症状が改善しても接続が強まっていることが報告([Höller et al, 2022](https://www.mdpi.com/1660-4601/19/12/7131))
 
 <br>
 <br>
 →心理療法などの治療的な要素を入れて拡張することで，ネットワークの中でどの症状を標的にすれば大きな治療効果が得られるかシミュレーションできる
+
 
 
 
@@ -118,7 +137,7 @@ library(psynetsim)
 
 - **b_init**：第2引数。各ノードの活性化閾値。
 
-- **target**：どのノードを標的とするかを選択するリスト/ベクトル。介入するノードは1，介入しないノードは0にする。
+- **target**：第3引数。どのノードを標的とするかを選択する。介入するノードは1，介入しないノードは0にする。
 
 上記は必須の引数です。
 <br>他にもいろいろオプションがあります。
@@ -152,8 +171,8 @@ print(threshold_6)
 
 ターゲットとノード名の設定
 ```{r, echo=TRUE}
-target_list_6 <- list(symptom1 = 1, symptom2 = 0, symptom3 = 1,
-                      symptom4 = 0, symptom5 = 0, symptom6 = 1)
+target_list_6 <- list(symptom1 = 1, symptom2 = 0, symptom3 = 0,
+                      symptom4 = 0, symptom5 = 0, symptom6 = 0)
 custom_symptom_names_6 <- c("Anxiety", "Sadness", "Fatigue",
                             "Insomnia", "Irritability", "Pain")
 ```
@@ -163,18 +182,18 @@ custom_symptom_names_6 <- c("Anxiety", "Sadness", "Fatigue",
 ```{r, echo=TRUE, eval=FALSE}
 # Run the simulation with custom parameters
 sim_results <- simulate_treatment_network(
-  W_init = weight_6,
-  b_init = threshold_6$threshold,
-  target = target_list_6,
-  connectivity = 1.2,
-  edge_between_TC = 0.8,
-  weight_bias = 1.2,
-  TB = 1,
-  trial = 10, # Example: Overriding default 10
-  baseline_iteration = 10, # Example: Overriding default 10
-  num_TC = 5, # Example: Overriding default 5
-  TC_iteration_per_component = 10, # Example: Overriding default 10
-  follow_up_iteration = 10, # Example: Overriding default 10
+  W_init = weight_6,　#重み
+  b_init = threshold_6$threshold,　#閾値
+  target = target_list_6,　#ターゲット
+  connectivity = 1.2, #全体的な接続の強さ
+  edge_between_TC = 1,　#TCノード間の接続の強さ
+  weight_bias = 1,　#症状とTCノードの重みの強さ
+  TB = 1,　#閾値の値の高さ
+  trial = 10, # 繰り返し回数(複数回行って平均を取っている)
+  baseline_iteration = 10, # ベースラインのステップ数
+  num_TC = 5, # TCノードの数
+  TC_iteration_per_component = 10, # 何ステップごとにTCを追加するか
+  follow_up_iteration = 10, # TCを全て追加した後のフォローアップ期間
   symptom_name = custom_symptom_names_6
 )
 ```
@@ -187,43 +206,33 @@ sim_results <- simulate_treatment_network(
 ```{r, echo=FALSE}
 # Run the simulation with custom parameters
 sim_results <- simulate_treatment_network(
-  W_init = weight_6,
-  b_init = threshold_6$threshold,
-  target = target_list_6,
-  connectivity = 1.2,
-  edge_between_TC = 0.8,
-  weight_bias = 1.2,
-  TB = 0.8,
-  trial = 5, # Example: Overriding default 10
-  baseline_iteration = 15, # Example: Overriding default 10
-  num_TC = 1, # Example: Overriding default 5
-  TC_iteration_per_component = 12, # Example: Overriding default 10
-  follow_up_iteration = 15, # Example: Overriding default 10
+  W_init = weight_6,　#重み
+  b_init = threshold_6$threshold,　#閾値
+  target = target_list_6,　#ターゲット
+  connectivity = 1.2, #全体的な接続の強さ
+  edge_between_TC = 1,　#TCノード間の接続の強さ
+  weight_bias = 1,　#症状とTCノードの重みの強さ
+  TB = 1,　#閾値の値の高さ
+  trial = 10, # 繰り返し回数(複数回行って平均を取っている)
+  baseline_iteration = 10, # ベースラインのステップ数
+  num_TC = 5, # TCノードの数
+  TC_iteration_per_component = 10, # 何ステップごとにTCを追加するか
+  follow_up_iteration = 10, # TCを全て追加した後のフォローアップ期間
   symptom_name = custom_symptom_names_6
 )
 ```
 
 
-## ネットワークシミュレーションを試そう！
 
-先ほど推定したIsing modelの重みと閾値を使って，シミュレーション
-
-
-- 単独の症状を標的とした場合，どの症状への介入が最も効果的か？
-
-- 複数の症状を標的とした場合，どのような組み合わせが効果的か？
-
-- 症状を悪化させてしまう組み合わせはあるか？
-
-- その他，どんな条件だとどんなことが起きそうか？
 
 ## ネットワークシミュレーションを試そう！
 
 
-[不安のオープンデータ](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0182162#sec015)をダウンロードしてカレントディレクトリに保存する。
+[Jordan et al(2017)](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0182162#sec015)のオープンデータからPHQ-9を使用します
 
 
-```{r, echo=TRUE, eval=FALSE}
+
+```{r, echo=TRUE}
 # Isingのデータを使ってシミュレーションする
 library(tidyverse)
 library(foreign)
@@ -234,44 +243,16 @@ library(IsingFit)
 # データの読み込み
 data <- read.spss("data/pone.0182162.s004.sav", 
                   to.data.frame=TRUE)
-# データの整理(GADに絞って実行)
-data_gad <- data %>% 
-  rename(gad7a = S_GAD7_a, gad7b = S_GAD7_b, 
-         gad7c = S_GAD7_c, gad7d = S_GAD7_d, 
-         gad7e = S_GAD7_e, gad7f = S_GAD7_f, 
-         gad7g = S_GAD7_g) %>% 
-  select(gad7a, gad7b, gad7c, gad7d, gad7e, gad7f, gad7g)
 
-data_gad %>% head()
-
-
-
-```
-
-## ネットワークシミュレーションを試そう！
-
-
-```{r, echo=FALSE}
-# Isingのデータを使ってシミュレーションする
-library(tidyverse)
-library(foreign)
-library(bootnet)
-library(qgraph)
-library(IsingFit)
-
-# データの読み込み
-data <- read.spss("data/pone.0182162.s004.sav", 
-                  to.data.frame=TRUE)
-# データの整理(GADに絞って実行)
-data_gad <- data %>% 
-  rename(gad7a = S_GAD7_a, gad7b = S_GAD7_b, 
-         gad7c = S_GAD7_c, gad7d = S_GAD7_d, 
-         gad7e = S_GAD7_e, gad7f = S_GAD7_f, 
-         gad7g = S_GAD7_g) %>% 
-  select(gad7a, gad7b, gad7c, gad7d, gad7e, gad7f, gad7g)
-
-data_gad %>% head()
-
+# データの整理(PHQ-9に絞って実行)
+data_phq <- data %>% 
+  mutate(phq9a = S_PHQ9_a, phq9b = S_PHQ9_b, 
+         phq9c = S_PHQ9_c, phq9d = S_PHQ9_d, 
+         phq9e = S_PHQ9_e, phq9f = S_PHQ9_f, 
+         phq9g = S_PHQ9_g, phq9h = S_PHQ9_h, 
+         phq9i = S_PHQ9_i) %>% 
+  select(phq9a, phq9b, phq9c, phq9d, phq9e, phq9f, phq9g, phq9h, phq9i) %>%
+  binarize(split = 1)
 
 
 ```
@@ -279,63 +260,33 @@ data_gad %>% head()
 
 
 
-## ネットワークシミュレーションを試そう！
+## Isingモデルによる推定
 
-```{r,echo=TRUE,eval=FALSE}
-#0以外を1に変換
-y_ifelse <- ifelse(data_gad < 1, 0, 1) %>% na.omit()
+```{r,echo=TRUE,message=FALSE}
 
-y_ifelse %>% head()
 
-res <- IsingFit(y_ifelse, family = "binomial", AND = TRUE, gamma = 0.25, plot
+res <- IsingFit(data_phq, family = "binomial", AND = TRUE, gamma = 0.25, plot
          = TRUE, progressbar = TRUE, min_sum = -Inf,
          lowerbound.lambda = NA)
 
-res$weiadj 
-res$thresholds
-
 ```
+## データの確認
 
-
-
-## ネットワークシミュレーションを試そう！
-
-```{r,include=FALSE,echo=TRUE}
-#0以外を1に変換
-y_ifelse <- ifelse(data_gad < 1, 0, 1) %>% na.omit()
-
-y_ifelse %>% head()
-
-res <- IsingFit(y_ifelse, family = "binomial", AND = TRUE, gamma = 0.25, plot
-         = TRUE, progressbar = TRUE, min_sum = -Inf,
-         lowerbound.lambda = NA)
-
-
-
-
-```
-
-
-
+重み
 ```{r}
 res$weiadj 
+```
+
+
+閾値
+```{r}
 res$thresholds
 ```
 
 
+## ネットワークの確認
 
-## ネットワークシミュレーションを試そう！
-
-```{r,echo=TRUE,eval=FALSE}
-library(psynetsim)
-qgraph(res$weiadj, posCol = "blue", color = "lightblue")
-
-```
-
-
-## ネットワークシミュレーションを試そう！
-
-```{r,echo=FALSE}
+```{r,echo=TRUE}
 library(psynetsim)
 qgraph(res$weiadj, posCol = "blue", color = "lightblue")
 
@@ -343,7 +294,9 @@ qgraph(res$weiadj, posCol = "blue", color = "lightblue")
 ```
 
 
-## ネットワークシミュレーションを試そう！
+## シミュレーションの実行
+
+一つ目の症状ノードを標的にした介入
 
 ```{r,echo=TRUE,eval=FALSE}
 
@@ -352,7 +305,7 @@ qgraph(res$weiadj, posCol = "blue", color = "lightblue")
 simulate_treatment_network(res$weiadj, 
                            res$thresholds,
                            connectivity = 1.3,
-                           target = c(1,1,1,1,1,1,1),
+                           target = c(1,0,0,0,0,0,0,0,0),
                            num_TC = 10,
                            edge_between_TC = 2,
                            weight_bias = 1)
@@ -360,7 +313,7 @@ simulate_treatment_network(res$weiadj,
 
 
 
-## ネットワークシミュレーションを試そう！
+## シミュレーション結果
 
 ```{r,echo=FALSE}
 
@@ -369,8 +322,19 @@ simulate_treatment_network(res$weiadj,
 simulate_treatment_network(res$weiadj, 
                            res$thresholds,
                            connectivity = 1.3,
-                           target = c(1,0,0,0,0,0,0),
+                           target = c(1,0,0,0,0,0,0,0,0),
                            num_TC = 10,
                            edge_between_TC = 1,
                            weight_bias = 1)
 ```
+
+
+## ネットワークシミュレーションを試そう！
+
+PHQ-9の症状ネットワークや，関心のあるテーマから推定したネットワークを対象にして，ネットワークシミュレーションを行ってみましょう！
+
+- 単独もしくは複数の症状を標的とした場合，どの症状への介入が最も効果的か？
+
+- 症状を悪化させてしまう組み合わせはあるか？
+
+- その他，どんな条件だとどんなことが起きそうか？
