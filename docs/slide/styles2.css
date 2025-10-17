@@ -1,0 +1,152 @@
+/* styles.css */
+
+/* 全体的なフォント設定をゴシック体にする */
+/* Meiryo, Yu Gothic など、Windows・Macで一般的に利用可能なゴシック体を優先して指定 */
+body {
+  font-family: "メイリオ", Meiryo, "Yu Gothic", "游ゴシック", "Hiragino Sans", "ヒラギノ角ゴ ProN", "Helvetica Neue", Arial, sans-serif;
+  font-size: 1,0em; /* 基本フォントサイズを調整する場合1.0em */
+  color: #333333; /* デフォルトの文字色 */
+}
+
+/* タイトルのフォントサイズ、フォントファミリー、色を指定 */
+/* #title ID を使用するのが最も確実です */
+#title {
+  font-size: 72px !important; /* タイトルのフォントサイズを72pxに設定 */
+  font-family: "メイリオ", Meiryo, "Yu Gothic", "游ゴシック", "Hiragino Sans", "ヒラギノ角ゴ ProN", "Helvetica Neue", Arial, sans-serif !important; /* ゴシック体に */
+  color: #333333 !important; /* フォントの色を濃いグレーに設定 */
+}
+
+
+/*ここで文章のフォントサイズを変更できる*/
+.reveal{--r-main-font-size: 32px;} 
+
+/* h1要素のフォントサイズ、フォントファミリー、色を指定 */
+.reveal section h1 {
+  font-size: 60px !important; /* フォントサイズを60pxに設定 */
+  font-family: "メイリオ", Meiryo, "Yu Gothic", "游ゴシック", "Hiragino Sans", "ヒラギノ角ゴ ProN", "Helvetica Neue", Arial, sans-serif !important; /* ゴシック体に */
+  color: #333333 !important; /* フォントの色を濃いグレーに設定 */
+}
+
+/* h2要素のフォントサイズ、フォントファミリー、色を指定 */
+.reveal section h2 {
+  font-size: 48px !important; /* フォントサイズを48pxに設定 */
+  font-family: "メイリオ", Meiryo, "Yu Gothic", "游ゴシック", "Hiragino Sans", "ヒラギノ角ゴ ProN", "Helvetica Neue", Arial, sans-serif !important; /* ゴシック体に */
+  color: #333333 !important; /* フォントの色をやや薄いグレーに設定 */
+}
+
+/* h3要素のフォントサイズ、フォントファミリー、色を指定 */
+.reveal section h3 {
+  font-size: 42px !important; /* フォントサイズを48pxに設定 */
+  font-family: "メイリオ", Meiryo, "Yu Gothic", "游ゴシック", "Hiragino Sans", "ヒラギノ角ゴ ProN", "Helvetica Neue", Arial, sans-serif !important; /* ゴシック体に */
+  color: #666666 !important; /* フォントの色をやや薄いグレーに設定 */
+}
+
+/* 段落のフォントファミリーを指定 */
+.reveal p {
+  font-family: "メイリオ", Meiryo, "Yu Gothic", "游ゴシック", "Hiragino Sans", "ヒラギノ角ゴ ProN", "Helvetica Neue", Arial, sans-serif !important; /* ゴシック体に */
+  color: #333333 !important; /* フォントの色を濃いグレーに設定 */
+}
+
+/* 箇条書きリストのフォントファミリーを指定 */
+.reveal ul {
+  font-family: "メイリオ", Meiryo, "Yu Gothic", "游ゴシック", "Hiragino Sans", "ヒラギノ角ゴ ProN", "Helvetica Neue", Arial, sans-serif !important; /* ゴシック体に */
+  color: #333333 !important; /* フォントの色を濃いグレーに設定 */
+}
+
+/* 番号付きリストのフォントファミリーを指定 */
+.reveal ol {
+  font-family: "メイリオ", Meiryo, "Yu Gothic", "游ゴシック", "Hiragino Sans", "ヒラギノ角ゴ ProN", "Helvetica Neue", Arial, sans-serif !important; /* ゴシック体に */
+  color: #333333 !important; /* フォントの色を濃いグレーに設定 */
+}
+
+/* authorのフォントファミリーを指定 */
+.reveal .author,
+.reveal .author p,
+.reveal .author div,
+.reveal .author span,
+.reveal .slide-title-info .author-name {
+  font-family: "メイリオ", Meiryo, "Yu Gothic", "游ゴシック", "Hiragino Sans", "ヒラギノ角ゴ ProN", "Helvetica Neue", Arial, sans-serif !important; /* ゴシック体に */
+  color: #333333 !important;
+}
+
+/* スライドの背景色 */
+.reveal .backgrounds {
+  background-color: #f8f8f8; /* ややオフホワイトの背景 */
+}
+
+/* リンクの色 */
+.reveal a {
+  color: #3498db; /* 青系のリンク色 */
+  text-decoration: none;
+}
+
+.reveal a:hover {
+  text-decoration: underline;
+}
+
+/* コードブロックのスタイル */
+.reveal pre code {
+  max-height: 500px; /* コードブロックの最大高さ */
+  font-size: 0.8em; /* コードのフォントサイズ */
+  line-height: 1.3;
+  padding: 15px;
+  border-radius: 5px;
+  background-color: #ecf0f1; /* やや薄いグレーの背景 */
+  color: #34495e; /* 濃いめのテキスト色 */
+}
+
+/* 画像のスタイル (必要に応じて) */
+.reveal img {
+  border: none; /* デフォルトの枠線をなくす */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 軽い影 */
+  max-width: 90%; /* スライドからはみ出さないように */
+  height: auto;
+}
+
+/* フッターのスタイル */
+.reveal .slide-footer {
+  font-size: 0.7em;
+  color: #7f8c8d; /* 薄いグレーのテキスト */
+  position: absolute;
+  bottom: 10px;
+  left: 20px;
+}
+
+/* スライド番号のスタイル */
+.reveal .slide-number {
+  font-size: 0.7em;
+  color: #7f8c8d;
+}
+
+/* mermaid図のテキスト色調整 (背景色に合わせて) */
+.mermaid text {
+  fill: #34495e !important; /* mermaid図内のテキスト色 */
+}
+
+/* Calloutブロックのスタイル */
+.reveal .callout {
+  padding: 1em;
+  margin: 1em 0;
+  border-left: 5px solid;
+  border-radius: 5px;
+}
+
+.reveal .callout-note {
+  border-color: #3498db; /* 青 */
+  background-color: #eaf6fc;
+}
+
+.reveal .callout-tip {
+  border-color: #2ecc71; /* 緑 */
+  background-color: #eafcf1;
+}
+
+.reveal .callout-warning {
+  border-color: #e67e22; /* オレンジ */
+  background-color: #fcf4ec;
+}
+
+.reveal .callout-important {
+  border-color: #e74c3c; /* 赤 */
+  background-color: #fcebeb;
+}
