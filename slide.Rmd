@@ -3,8 +3,4 @@ title: "スライド"
 ---
 
 
-計算論的臨床心理学サマースクール2025
-
 - [心理ネットワークを用いたシミュレーション研究](slide/summerschool2025.html) 
-
-- [脳画像](slide/brain_image.html)
