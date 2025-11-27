@@ -4,3 +4,5 @@ title: "スライド"
 
 
 - [心理ネットワークを用いたシミュレーション研究](slide/summerschool2025.html) 
+
+- [感情粒度とメンタルヘルス](slide/hirosima.html)

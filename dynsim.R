@@ -6,7 +6,7 @@ library(qgraph)
 library(tidyverse)
 library(gridExtra)
 library(cowplot)
-library(glmnet) # LASSO推定用
+library(glmnet)
 library(foreign)
 library(bootnet)
 library(IsingFit)
@@ -28,9 +28,7 @@ data_phq <- data %>%
 res <- estimateNetwork(data_phq, "IsingSampler")
 
 
-# -------------------------------------------------------------------------
-# シミュレーション関数の定義
-# -------------------------------------------------------------------------
+
 simulate_treatment_network_dym <- function(W_init,
                                            b_init,
                                            target,
@@ -44,6 +42,8 @@ simulate_treatment_network_dym <- function(W_init,
                                            TC_iteration_per_component = 10,
                                            follow_up_iteration = 10,
                                            symptom_name = NULL) {
+  
+  
   
   # --- 内部関数: ロジスティック関数 ---
   sigmoid <- function(x) {
@@ -367,13 +367,13 @@ simulate_treatment_network_dym <- function(W_init,
 # 推定したデータを使ってシミュレーション
 simulate_treatment_network_dym(res$graph,
                                res$intercepts,
-                               target = c(0,0,0,1,0,0,0,0,0),
+                               target = c(1,0,0,0,0,0,0,0,0),
                                connectivity = 1.3,
                                edge_between_TC = 1,
                                weight_bias = 1,
                                TB = 1,
                                trial = 10,
                                baseline_iteration = 10,
-                               num_TC = 9,
+                               num_TC = 1,
                                TC_iteration_per_component = 10,
                                follow_up_iteration = 10)
