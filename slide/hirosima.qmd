@@ -174,7 +174,7 @@ bibliography: references.bib
 
 ![](images\AIFmodel.png)
 
-※モデルの詳細は補足資料
+モデルの詳細は[補足資料](supplementary/EGAIF.html)
 
 
 ## シミュレーション
@@ -369,8 +369,5 @@ bibliography: references.bib
 
 -   細かいモデルの設定などはまだこれから要検討
 
-# 補足資料
-
-[モデルの説明](supplementary/EGAIF.html)
 
 ## 引用文献

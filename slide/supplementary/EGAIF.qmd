@@ -1,5 +1,7 @@
 ---
-title: "階層γモデルの詳細"
+title: "感情粒度と適応行動の計算論モデルの試作"
+author: Takumi Omizu
+date: 2025.11.28
 format: html
 editor: source
 ---
