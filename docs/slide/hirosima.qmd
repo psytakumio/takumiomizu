@@ -14,7 +14,7 @@ bibliography: references.bib
 ---
 
 
-# テーマ
+# トピック
 
 -   感情粒度について
 
@@ -140,7 +140,7 @@ bibliography: references.bib
 
 -   エージェントは期待自由エネルギーを最小化する行動を選択することで，不確実性を減らしながら目標(選好)を達成する
 
-    ※詳細は補足資料
+モデルの詳細は[補足資料](supplementary/EGAIF.html)
 
 ## 環境モデル(エージェントのタスク)
 
