@@ -118,25 +118,234 @@ window.Quarto = {
 <section id="生成モデル" class="level3">
 <h3 class="anchored" data-anchor-id="生成モデル">生成モデル</h3>
 <ul>
-<li><p>A(尤度) <span class="math inline">\(P(o |s)\)</span>:状態が正解なら確率0.6(安定では0.9)でget，不正解なら0.4(安定なら0.1)でget</p></li>
-<li><p>B(遷移行列)<span class="math inline">\(P(s_t | s_{t-1},\upsilon_{t-1})\)</span>:状態は行動によって変化しないという仮定の下で単位行列に設定</p></li>
-<li><p>C(選好):報酬2,無報酬-4に設定し，報酬を強く選好。</p></li>
-<li><p>D(初期信念)：両腕共に0.5</p></li>
+<li><p><span class="math inline">\(A\)</span>(尤度) <span class="math inline">\(P(o |s)\)</span>:状態が正解なら確率0.6(安定では0.9)でget，不正解なら0.4(安定なら0.1)でget</p></li>
+<li><p><span class="math inline">\(B\)</span>(遷移行列)<span class="math inline">\(P(s_t | s_{t-1},\upsilon_{t-1})\)</span>:状態は行動によって変化しないという仮定の下で単位行列に設定</p></li>
+<li><p><span class="math inline">\(C\)</span>(選好)<span class="math inline">\(P(o)\)</span>:報酬2,無報酬-4に設定し，報酬を強く選好。</p></li>
+<li><p><span class="math inline">\(D\)</span>(初期信念)：両腕共に0.5</p></li>
 </ul>
 </section>
 <section id="推論" class="level3">
 <h3 class="anchored" data-anchor-id="推論">推論</h3>
 <p>状態の推論では，通常のベイズ更新に加えて精度パラメータ<span class="math inline">\(\gamma\)</span>による重みづけを導入した。</p>
+<p><span class="math display">\[Q(s_t) \propto P(o_t |s_t, \upsilon_{t-1})・Q(s_{t-1})^{\gamma}\]</span></p>
+<p>ここで，<span class="math inline">\(\gamma\)</span>は0~1の範囲で変動する動的なパラメータである。<span class="math inline">\(\gamma\)</span>が1に近づくほど，過去の信念を強く保持するように更新され，0に近づくほど過去の信念を重視せず現在の観測に敏感になる。</p>
+</section>
+<section id="行動選択" class="level3">
+<h3 class="anchored" data-anchor-id="行動選択">行動選択</h3>
+<p>エージェントは，期待自由エネルギー<span class="math inline">\((G)\)</span>の最小化に基づき行動を選択する。</p>
+<p><span class="math display">\[G(\upsilon) = D_{KL}[Q(o|s,\upsilon)||P(o)]+H[Q(o|s,\upsilon)]\]</span></p>
+<p>期待自由エネルギーの第一項は信念と選好のKLダイバージェンスであり，これは目的を達成するための実用的価値(pragmatic value)であり，「利用」を表す。第二項はエントロピー(不確実性)であり，情報の「探索」を行う認識的価値(epistemic value)である。すなわち，情報の利用と探索の両方をバランスよく最小化するような行動の期待自由エネルギーは小さくなる。このように計算された期待自由エネルギーを用いて，実際の行動確率<span class="math inline">\(P(\upsilon)\)</span>は，期待自由エネルギーの小さい行動で高くなる(ソフトマックス行動選択)。</p>
+<p><span class="math display">\[P(\upsilon) = softmax(-G(\upsilon))\]</span></p>
 </section>
 </section>
 <section id="シグナル" class="level2">
 <h2 class="anchored" data-anchor-id="シグナル">シグナル</h2>
+<p>下位層の信念と実際の行動選択の結果から，3つの離散化された指標を得て，上位層への観測信号<span class="math inline">\(o^{H}\)</span>とする。得られる指標は，以下の3つである。</p>
+<ol type="1">
+<li>予測誤差の符号(<span class="math inline">\(signPE\)</span>):</li>
+</ol>
+<ul>
+<li><p>実際に得られた報酬&gt;予測していた期待値→<span class="math inline">\(+1\)</span></p></li>
+<li><p>実際に得られた報酬&lt;予測していた期待値→<span class="math inline">\(-1\)</span></p></li>
+<li><p>それ以外(完全一致)→<span class="math inline">\(0\)</span></p></li>
+</ul>
+<ol start="2" type="1">
+<li>KLダイバージェンス(<span class="math inline">\(KL_{div}\)</span>):下位層における信念更新(サプライズ)の大きさ</li>
+</ol>
+<ul>
+<li>閾値<span class="math inline">\(\tau_{KL}\)</span>を超えた場合に<span class="math inline">\(1\)</span>，以下なら<span class="math inline">\(0\)</span>が符号化される。シミュレーションでは1.0に設定した。</li>
+</ul>
+<p>3.不確実性(<span class="math inline">\(Unc\)</span>):下位層における信念のエントロピー</p>
+<ul>
+<li>閾値<span class="math inline">\(\tau_{Unc}\)</span>を超えた場合に<span class="math inline">\(1\)</span>，以下なら<span class="math inline">\(0\)</span>が符号化される。シミュレーションでは0.35に設定した。</li>
+</ul>
+<p>3つのシグナルを組み合わせることで，計12通りの観測インデックス<span class="math inline">\(o^{H}\in[1,...12]\)</span>を生成した。</p>
 </section>
 <section id="上位層" class="level2">
 <h2 class="anchored" data-anchor-id="上位層">上位層</h2>
+<p>上位層は，下位層から送られる信号を基に，自身の感情状態を能動的推論によって調整するPOMDPである。具体的には，現在の感情状態<span class="math inline">\(Q(s^{H})\)</span>を推論し，ホメオスタシス状態(選好)<span class="math inline">\(s^*\)</span>に近づくための内部行動<span class="math inline">\(\upsilon^H\)</span>を選択する。</p>
+<section id="変数-1" class="level3">
+<h3 class="anchored" data-anchor-id="変数-1">変数</h3>
+<ul>
+<li><p>状態<span class="math inline">\(s^{H}\)</span>:6つのバイナリノード(感情カテゴリ)の組み合わせ(<span class="math inline">\(2^6=64\)</span>状態)</p></li>
+<li><p>ノード(感情カテゴリ)の構成</p></li>
+</ul>
+<p>感情カテゴリは，Pos1，Pos2, Pos3, Neg1, Neg2, Neg3の6種類である。今回は暫定的に，Excitement, Hope, Contentment, Anxiety, Frustration, Disappointmentの6つを想定して設定した。</p>
+<ul>
+<li><p>行動<span class="math inline">\(\upsilon^{H}:\)</span>:13通り(何もしない+各ノードをon/offする操作)</p></li>
+<li><p>観測$o^{H}:o $:下位層から送られる12通りの信号</p></li>
+</ul>
+</section>
+<section id="生成モデル-1" class="level3">
+<h3 class="anchored" data-anchor-id="生成モデル-1">生成モデル</h3>
+<ul>
+<li><p><span class="math inline">\(A\)</span>(尤度) <span class="math inline">\(P(o^H|s^H)\)</span>:特定の感情状態(e.g.&nbsp;Pos要素がonなど)であるとき，特定の観測(e.g.&nbsp;予測誤差が正)が得られやすい確率分布となる</p></li>
+<li><p>例えば，<span class="math inline">\(s^{H}\)</span>のAnxietyが1の時，観測「不確実性が高い(<span class="math inline">\(o^{H}_3 = 1\)</span>)」の確率が高くなる(0.8)</p></li>
+<li><p><span class="math inline">\(B\)</span>(遷移行列)<span class="math inline">\(P(s^H_t | s^H_{t-1},\upsilon^H_{t-1})\)</span>:エージェントが選択した上位層における行動に従って，次の状態の該当ビットが確定する</p></li>
+<li><p><span class="math inline">\(C\)</span>(選好)<span class="math inline">\(P(s^H)\)</span>:ホメオスタシスの定義。暫定的に理想状態を<span class="math inline">\(s^* = [1,1,1,0,0,0]\)</span>というポジティブ感情が活性化した状態に選好を置いている。</p></li>
+<li><p><span class="math inline">\(D\)</span>(初期信念)：全てのカテゴリに等確率。</p></li>
+</ul>
+</section>
+<section id="下位層からのシグナルと上位層の尤度について" class="level3">
+<h3 class="anchored" data-anchor-id="下位層からのシグナルと上位層の尤度について">下位層からのシグナルと上位層の尤度について</h3>
+<p>行列<span class="math inline">\(A\)</span>のサイズは，12行(観測<span class="math inline">\(o^H\)</span>の種類)×64列(状態<span class="math inline">\(s^H\)</span>の種類)である。</p>
+<section id="行について" class="level4">
+<h4 class="anchored" data-anchor-id="行について">行について</h4>
+<p>観測<span class="math inline">\(o^H\)</span>は，下位層からの3つの信号(予測誤差の符号，KLダイバージェンス，不確実性)の組み合わせで決定される。これらを区別するために，以下の式によって各信号から12のインデックスに変換される。</p>
+<p><span class="math display">\[Index = (sign_{PE} -1)\times 4 + KL_{high} \times2 +Unc_{high}+1\]</span> ここで，各要素は以下である。</p>
+<ul>
+<li><p><span class="math inline">\(sign_{PE} \in [1,2,3]\)</span> (1:負，2:ゼロ，3:正)</p></li>
+<li><p><span class="math inline">\(KL_{high} \in[0,1]\)</span>(0:低，1:高)</p></li>
+<li><p><span class="math inline">\(Unc_{high} \in [0,1]\)</span>(0:低，1:高)</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>行 ID</strong></td>
+<td><strong>予測誤差 (PE)</strong></td>
+<td><strong>サプライズ (KL)</strong></td>
+<td><strong>不確実性 (Unc)</strong></td>
+<td><strong>意味</strong></td>
+</tr>
+<tr class="even">
+<td><strong>1</strong></td>
+<td><strong>負 (Loss)</strong></td>
+<td><strong>低</strong></td>
+<td><strong>低</strong></td>
+<td><strong>Disappointment</strong></td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>負</td>
+<td>低</td>
+<td>高</td>
+<td>定義なし / ノイズ</td>
+</tr>
+<tr class="even">
+<td><strong>3</strong></td>
+<td><strong>負 (Loss)</strong></td>
+<td><strong>高</strong></td>
+<td><strong>低</strong></td>
+<td><strong>Frustration</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>4</strong></td>
+<td><strong>負 (Loss)</strong></td>
+<td><strong>高</strong></td>
+<td><strong>高</strong></td>
+<td><strong>Anxiety</strong></td>
+</tr>
+<tr class="even">
+<td>5~8</td>
+<td>ゼロ</td>
+<td>-</td>
+<td>-</td>
+<td>定義なし / ノイズ</td>
+</tr>
+<tr class="odd">
+<td><strong>9</strong></td>
+<td><strong>正 (Get)</strong></td>
+<td><strong>低</strong></td>
+<td><strong>低</strong></td>
+<td><strong>Contentment</strong></td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td>正</td>
+<td>低</td>
+<td>高</td>
+<td>定義なし / ノイズ</td>
+</tr>
+<tr class="odd">
+<td><strong>11</strong></td>
+<td><strong>正 (Get)</strong></td>
+<td><strong>高</strong></td>
+<td><strong>低</strong></td>
+<td><strong>Excitement</strong></td>
+</tr>
+<tr class="even">
+<td><strong>12</strong></td>
+<td><strong>正 (Get)</strong></td>
+<td><strong>高</strong></td>
+<td><strong>高</strong></td>
+<td><strong>Hope</strong></td>
+</tr>
+</tbody>
+</table></li>
+</ul>
+</section>
+<section id="列について" class="level4">
+<h4 class="anchored" data-anchor-id="列について">列について</h4>
+<p>状態<span class="math inline">\(s^H\)</span>は，6つのバイナリノードの組み合わせ(<span class="math inline">\(2^6=64\)</span>)である。各列<span class="math inline">\(j\)</span>は，特定の感情パターンの組み合わせを表す。</p>
+<ul>
+<li><p>Bit1: Excitement(ポジティブ・高覚醒)</p></li>
+<li><p>Bit2: Hope(ポジティブ・高不確実)</p></li>
+<li><p>Bit3: Contentment(ポジティブ・低覚醒)</p></li>
+<li><p>Bit4: Anxiety(ネガティブ・高不確実)</p></li>
+<li><p>Bit5: Frustration(ネガティブ・高覚醒)</p></li>
+<li><p>Bit6: Disappointment(ネガティブ・低覚醒)</p></li>
+</ul>
+</section>
+</section>
+<section id="尤度行列aの決定アルゴリズム" class="level3">
+<h3 class="anchored" data-anchor-id="尤度行列aの決定アルゴリズム">尤度行列Aの決定アルゴリズム</h3>
+<p>まず，全ての要素<span class="math inline">\(\hat{A}_{ij}\)</span>を0.05で初期化する。その後，各状態<span class="math inline">\(j\)</span>(列)について，以下のビットが1(on)であれば，対応する観測の行<span class="math inline">\(i\)</span>の重みを0.8に上書きする。1つの状態で複数のビット(感情)が活性化している場合，複数の行が0.8に上書きされる。</p>
+<table class="caption-top table">
+<tbody>
+<tr class="odd">
+<td><strong>状態ビット (</strong><span class="math inline">\(s^H\)</span>)</td>
+<td><strong>対応する観測行 (</strong><span class="math inline">\(o^H\)</span>)</td>
+<td><strong>行ID</strong></td>
+</tr>
+<tr class="even">
+<td><strong>Disappointment</strong> (Bit 6)</td>
+<td>負・低KL・低Unc</td>
+<td><strong>1</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>Frustration</strong> (Bit 5)</td>
+<td>負・高KL・低Unc</td>
+<td><strong>3</strong></td>
+</tr>
+<tr class="even">
+<td><strong>Anxiety</strong> (Bit 4)</td>
+<td>負・高KL・高Unc</td>
+<td><strong>4</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>Contentment</strong> (Bit 3)</td>
+<td>正・低KL・低Unc</td>
+<td><strong>9</strong></td>
+</tr>
+<tr class="even">
+<td><strong>Excitement</strong> (Bit 1)</td>
+<td>正・高KL・低Unc</td>
+<td><strong>11</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>Hope</strong> (Bit 2)</td>
+<td>正・高KL・高Unc</td>
+<td><strong>12</strong></td>
+</tr>
+</tbody>
+</table>
+<p>最期に，確率分布であることを担保するため，各列(状態)ごとの合計が1.0になるように正規化される。</p>
+<p><span class="math display">\[A_{ij} = \frac{\hat{A}}{\sum^{12}_{k=1} \hat{A}_{kj}}\]</span></p>
+</section>
 </section>
 <section id="ネットワーク推定" class="level2">
 <h2 class="anchored" data-anchor-id="ネットワーク推定">ネットワーク推定</h2>
+<p>上位層において選択された感情状態の時間的なネットワーク構造を推定し，それを基に下位層の精度パラメータ<span class="math inline">\(\gamma\)</span>を制御する。</p>
+<p>指定したステップの感情状態の履歴を使って，ネットワークを推定する。ノードワイズ正則化ロジスティック回帰によるIsingモデルの時系列データに対する推定を行う。具体的には，ラグ1のロジスティック回帰を行う。</p>
+<p><span class="math display">\[logit(P(Z_{i,t} = 1))=\beta_{i,0} + \sum^6_{j=1} W_{ij}Z_{j,t-1}\]</span></p>
+<p>ノードワイズ正則化ロジスティック回帰とIsing モデルは数理的に等価であり，切片が閾値，係数行列が重みになる。 推定した係数行列に対して，閾値処理による正則化を行う。暫定的に，<span class="math inline">\(|W_{ij}|&lt;0.5\)</span>の場合に0にする。 推定された係数の絶対値を正規化し，その総和を計算する。 <span class="math display">\[D_{norm} = \frac{\sum |W^{'}_{ij}|_{normalized}}{Max　Possible　Sum}\]</span></p>
+<p>この式によって計算されるネットワーク密度<span class="math inline">\(D\)</span>が高いことは，感情間の結合が強く，固着しているため，感情粒度が低い状態を表す。 下位層における<span class="math inline">\(\gamma\)</span>は，以下の式で更新される。 <span class="math display">\[\gamma = 1.0-D_{norm}\]</span></p>
 </section>
 
 </main>

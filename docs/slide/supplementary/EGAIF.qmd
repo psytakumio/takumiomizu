@@ -2,8 +2,6 @@
 title: "階層γモデルの詳細"
 format: html
 editor: source
-  markdown: 
-    wrap: 72
 ---
 
 ## モデル全体の構成
