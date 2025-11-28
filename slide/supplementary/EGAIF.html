@@ -106,6 +106,28 @@ window.Quarto = {
 </section>
 <section id="下位層" class="level2">
 <h2 class="anchored" data-anchor-id="下位層">下位層</h2>
+<p>下位層では，エージェントは環境と直接相互作用し，信念の更新と行動選択を行う。</p>
+<section id="変数" class="level3">
+<h3 class="anchored" data-anchor-id="変数">変数</h3>
+<ul>
+<li><p>状態<span class="math inline">\(s^{L}:s\in[1,2]\)</span>(どちらの腕が良いかの信念)</p></li>
+<li><p>行動<span class="math inline">\(\upsilon^{L}: \in[1,2]\)</span>(Left, Right)</p></li>
+<li><p>観測<span class="math inline">\(o^{L}:o \in [get, loss]\)</span>(報酬の有無)</p></li>
+</ul>
+</section>
+<section id="生成モデル" class="level3">
+<h3 class="anchored" data-anchor-id="生成モデル">生成モデル</h3>
+<ul>
+<li><p>A(尤度) <span class="math inline">\(P(o |s)\)</span>:状態が正解なら確率0.6(安定では0.9)でget，不正解なら0.4(安定なら0.1)でget</p></li>
+<li><p>B(遷移行列)<span class="math inline">\(P(s_t | s_{t-1},\upsilon_{t-1})\)</span>:状態は行動によって変化しないという仮定の下で単位行列に設定</p></li>
+<li><p>C(選好):報酬2,無報酬-4に設定し，報酬を強く選好。</p></li>
+<li><p>D(初期信念)：両腕共に0.5</p></li>
+</ul>
+</section>
+<section id="推論" class="level3">
+<h3 class="anchored" data-anchor-id="推論">推論</h3>
+<p>状態の推論では，通常のベイズ更新に加えて精度パラメータ<span class="math inline">\(\gamma\)</span>による重みづけを導入した。</p>
+</section>
 </section>
 <section id="シグナル" class="level2">
 <h2 class="anchored" data-anchor-id="シグナル">シグナル</h2>
