@@ -361,6 +361,48 @@ window.Quarto = {
 <p>ノードワイズ正則化ロジスティック回帰とIsing モデルは数理的に等価であり，切片が閾値，係数行列が重みになる。 推定した係数行列に対して，閾値処理による正則化を行う。暫定的に，<span class="math inline">\(|W_{ij}|&lt;0.5\)</span>の場合に0にする。 推定された係数の絶対値を正規化し，その総和を計算する。 <span class="math display">\[D_{norm} = \frac{\sum |W^{'}_{ij}|_{normalized}}{Max　Possible　Sum}\]</span></p>
 <p>この式によって計算されるネットワーク密度<span class="math inline">\(D\)</span>が高いことは，感情間の結合が強く，固着しているため，感情粒度が低い状態を表す。 下位層における<span class="math inline">\(\gamma\)</span>は，以下の式で更新される。 <span class="math display">\[\gamma = 1.0-D_{norm}\]</span></p>
 </section>
+<section id="シミュレーション結果の分析固定gammaモデルの挙動" class="level1">
+<h1>シミュレーション結果の分析：固定<span class="math inline">\(\gamma\)</span>モデルの挙動</h1>
+<p>本節では，提案モデル（変動<span class="math inline">\(\gamma\)</span>モデル）の有効性を論じる前提として，パラメータ <span class="math inline">\(\gamma\)</span> を固定した場合に生じる適応不全のメカニズムを数理的な観点から分析する。シミュレーションの結果，<span class="math inline">\(\gamma\)</span> が極端に低い場合（0.1）および高い場合（1.0）の双方において，環境変化への適応に失敗することが確認された。以下にその要因を記述する。</p>
+<section id="低精度モデル-gamma0.1-における情報の散逸" class="level2">
+<h2 class="anchored" data-anchor-id="低精度モデル-gamma0.1-における情報の散逸">低精度モデル (<span class="math inline">\(\gamma=0.1\)</span>) における情報の散逸</h2>
+<p><span class="math inline">\(\gamma=0.1\)</span> の条件下では，エージェントの信念（Belief）は環境の変化に関わらず <span class="math inline">\(0.5\)</span>（不確実な状態）付近に停滞し，有益な学習が蓄積されない現象が観察された。これは，ベイズ更新における <span class="math inline">\(\gamma\)</span> による重みづけと，確率分布の正規化（Normalization）プロセスによって説明される。</p>
+<p>信念更新の更新則は，簡易的に以下の比例式で表される。</p>
+<p><span class="math display">\[
+Q(s_t) \propto P(o_t|s_t) \cdot Q(s_{t-1})^\gamma
+\]</span></p>
+<p>ここで <span class="math inline">\(\gamma=0.1\)</span> の場合，過去の信念 <span class="math inline">\(Q(s_{t-1})\)</span> は <span class="math inline">\(0.1\)</span> 乗される。確率値 <span class="math inline">\(p \in [0, 1]\)</span> に対する <span class="math inline">\(0.1\)</span> 乗操作は，分布を平坦化（flattening）する効果を持つ。 例えば，前回の試行で「左のレバーが良い」という信念が <span class="math inline">\(0.6\)</span>，「右」が <span class="math inline">\(0.4\)</span> まで学習できていたとする。次回の更新において，事前信念項は以下のように変換される。</p>
+<p><span class="math display">\[
+\begin{aligned}
+0.6^{0.1} &amp;\approx 0.950 \\
+0.4^{0.1} &amp;\approx 0.912
+\end{aligned}
+\]</span></p>
+<p>ベイズ更新においては，確率の総和が1になるよう正規化が行われるため，この時点での事前確率は以下のようになる。</p>
+<p><span class="math display">\[
+P(Left_{new}) = \frac{0.950}{0.950 + 0.912} \approx 0.51
+\]</span></p>
+<p>このように，過去の経験によって生じた確率差（<span class="math inline">\(0.6\)</span> vs <span class="math inline">\(0.4\)</span>）は，<span class="math inline">\(\gamma\)</span> 乗と正規化のプロセスを経ることで，次のステップではほぼ等確率（<span class="math inline">\(0.51\)</span> vs <span class="math inline">\(0.49\)</span>）にリセットされてしまう。この「学習結果の散逸（Memory Loss）」が毎ステップ繰り返されるため，エージェントは過去の情報を蓄積できず，常にその瞬間の観測ノイズに翻弄されることになる。</p>
+</section>
+<section id="高精度モデル-gamma1.0-における信念の慣性と探索の停止" class="level2">
+<h2 class="anchored" data-anchor-id="高精度モデル-gamma1.0-における信念の慣性と探索の停止">高精度モデル (<span class="math inline">\(\gamma=1.0\)</span>) における信念の慣性と探索の停止</h2>
+<p>一方，通常のベイズ更新に相当する <span class="math inline">\(\gamma=1.0\)</span> の条件下では，環境変化（ルールの反転）が発生した後も旧ルールに固執し続け，正答率が著しく低下する現象が確認された。この適応不全は，主に以下の2つの要因による。</p>
+<section id="信念の慣性-belief-inertia" class="level3">
+<h3 class="anchored" data-anchor-id="信念の慣性-belief-inertia">1. 信念の慣性 (Belief Inertia)</h3>
+<p><span class="math inline">\(\gamma=1.0\)</span> では，過去の信念が減衰することなく累積される。安定した環境下で学習が進み，信念 <span class="math inline">\(Q(s)\)</span> が極端な値（例: <span class="math inline">\(0.999...\)</span>）に達すると，それは強固な事前分布（Prior）として機能する。 ルールが反転し，一度や二度の「ハズレ（予測誤差）」を観測したとしても，累積された過去の証拠が圧倒的に強いため，事後分布はほとんど修正されない。これは「過学習（Overfitting）」の状態と言え，環境の変化に対する感度を失わせる。</p>
+</section>
+<section id="探索の欠如と情報の遮断" class="level3">
+<h3 class="anchored" data-anchor-id="探索の欠如と情報の遮断">2. 探索の欠如と情報の遮断</h3>
+<p>さらに致命的なのは行動選択への影響である。能動的推論における行動選択は，信念の確信度（精度）に依存する。信念が <span class="math inline">\(1.0\)</span> に張り付いている状態では，エージェントは「正解はわかっている」と確信し，決定論的に一方の行動（例：旧正解である左レバー）を選択し続ける。 逆側のレバー（新正解）を選択しない限り，エージェントは「右レバーが当たりやすくなった」という新たな証拠（観測データ）を得ることができない。結果として，信念を修正するためのデータ入力そのものが遮断され，誤った信念が永続化する。</p>
+<p>　以上の分析から，固定的な <span class="math inline">\(\gamma\)</span> 値では，変化する環境（Volatile Environment）において以下のトレードオフを解消できないことが示唆される。</p>
+<ul>
+<li><strong>低 <span class="math inline">\(\gamma\)</span></strong>: 柔軟性は高いが，情報の蓄積ができず学習が成立しない（Underfitting）。</li>
+<li><strong>高 <span class="math inline">\(\gamma\)</span></strong>: 情報の蓄積は早いが，一度形成された信念が固着し，変化に適応できない（Overfitting / Rigidity）。</li>
+</ul>
+<p>したがって，環境の不確実性に応じて <span class="math inline">\(\gamma\)</span> を動的に調整するメタ学習的なメカニズムが必要不可欠となる。</p>
+</section>
+</section>
+</section>
 
 </main>
 <!-- /main column -->
