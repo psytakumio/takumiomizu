@@ -13,6 +13,14 @@ format:
 bibliography: references.bib
 ---
 
+# スライドリンク
+
+
+※数式などの補足資料が含まれている本スライドのリンクです
+
+
+![](images/QR_AIF.png)
+
 
 # トピック
 
@@ -254,7 +262,7 @@ bibliography: references.bib
 
 
 
-# 5. 考察・結論
+#  考察・結論
 
 ## 感情粒度の機能的意義
 
