@@ -1,0 +1,35 @@
+---
+title: "R パッケージ　psynetsim"
+author: Takumi Omizu
+date: 2025.12.7
+format: html
+editor: source
+---
+
+# psynetsimについて
+
+
+psynetsimは，大水が行っている心理ネットワークのシミュレーションに用いる関数が含まれたパッケージです。適宜関数は追加されます。
+以下のコードを実行することで動かすことができます。
+
+```{r, eval=FALSE}
+remotes::install_github("TakumiOmizu/psynetsim")
+library(psynetsim)
+```
+
+
+# 関数
+
+- 以降ではpsynetsimパッケージに含まれている関数の使い方についてまとめています。
+(追記するまでは，Rで？「関数名」を実行して使い方をご確認ください。)
+
+- 最新はver0.2.0で，閾値に介入する時系列シミュレーション関数(simulate_network_threshold)を追加しました。
+
+
+### simulate_treatment_network
+
+
+### simulate_treatment_network_dym
+
+
+### simulate_network_threshold

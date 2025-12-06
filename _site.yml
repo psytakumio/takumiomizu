@@ -8,7 +8,7 @@ navbar:
       href: about.html
     - text: "研究"
       href: research.html
-    - text: "スライド"
+    - text: "マテリアル"
       href: slide.html
 output:
   html_document:

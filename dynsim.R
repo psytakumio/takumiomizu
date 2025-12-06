@@ -374,6 +374,6 @@ simulate_treatment_network_dym(res$graph,
                                TB = 1,
                                trial = 10,
                                baseline_iteration = 10,
-                               num_TC = 1,
+                               num_TC = 9,
                                TC_iteration_per_component = 10,
                                follow_up_iteration = 10)
