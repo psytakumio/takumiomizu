@@ -9,6 +9,15 @@ title: "マテリアル"
 - [感情粒度とメンタルヘルス：心理ネットワークと能動的推論モデルによるシミュレーションから](slide/hirosima.html) 
 
 
+
+### 研究ノート
+
+- [イジングモデルの温度(非公開)]()
+
+<!-- Isingの温度はsupplementary/Ising_temp.html -->
+
 ### パッケージ
 
 - [psynetsim](slide/manual/psynetsim_manual.html)
+
+
