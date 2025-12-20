@@ -119,7 +119,10 @@ window.Quarto = {
 <p>この式で，右辺第1項と第2項は<span class="math inline">\(y_i\)</span>を含むペア，第3項は<span class="math inline">\(y_i\)</span>を含まないペアになっている。ここで，<span class="math inline">\(y_i\)</span>を含むペアの部分を整理する。<span class="math inline">\(W\)</span>は対称行列なので，インデックスを統一してまとめると，「iとつながっているすべての相手j(<span class="math inline">\(j \not{=} i\)</span>)」との和として書くことができる。</p>
 <p><span class="math display">\[(y_iを含む相互作用) = y_i(\sum_{j \not{= i}}W_{ij}y_j)\]</span></p>
 <p>ここまで行ってきた<span class="math inline">\(y_i\)</span>に関する分解を統合する。</p>
-<p><span class="math display">\[E(y) = (\theta_i y_i +\sum_{j \not = i} W_{ij} y_i y_j) + (\sum_{k \not = i} \theta_k y_k + \sum_ {j&lt;k(j,k \not = i)}W_{jk}_yj y_k)\]</span> ここで<span class="math inline">\(y_i\)</span>を含まない項である第2項をまとめて<span class="math inline">\(Rest(y_{-i})\)</span>とおくと，<span class="math inline">\(E(y)\)</span>は以下のように「<span class="math inline">\(y_i\)</span>にかかる係数部分」と「<span class="math inline">\(y_i\)</span>と無関係な部分」が分離できる。</p>
+<p><span class="math display">\[
+E(y) = \left( \theta_i y_i + \sum_{j \neq i} W_{ij} y_i y_j \right) + \left( \sum_{k \neq i} \theta_k y_k + \sum_{j&lt;k, j,k \neq i} W_{jk} y_j y_k \right)
+\]</span></p>
+<p>ここで<span class="math inline">\(y_i\)</span>を含まない項である第2項をまとめて<span class="math inline">\(Rest(y_{-i})\)</span>とおくと，<span class="math inline">\(E(y)\)</span>は以下のように「<span class="math inline">\(y_i\)</span>にかかる係数部分」と「<span class="math inline">\(y_i\)</span>と無関係な部分」が分離できる。</p>
 <p><span class="math display">\[ E (y)= y_i (\theta_i + \sum_{j \not = i} W_{ij} y_j) + Rest(y_{-i})\]</span></p>
 <p>分離できたら，<span class="math inline">\(y_i = 1\)</span>となる条件付確率を計算する。簡略化のため，線形和を<span class="math inline">\(L_i = \theta_i + \sum_{j \not = i}W_{ij} y_j\)</span>と置くと，エネルギーの式は<span class="math inline">\(E(y) = y_i L_i + Rest\)</span>と置くことができる。</p>
 <p><span class="math display">\[P(y_i = 1 | y_{-i}) = \frac{exp(E(y_i = 1))}{exp(E(y_i = 1) +exp(E(y_i = 0))}\]</span> ここで<span class="math inline">\(y_i\)</span>は0か1のどちらかの状態をとるので，</p>

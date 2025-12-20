@@ -50,7 +50,11 @@ $$(y_iを含む相互作用) = y_i(\sum_{j \not{= i}}W_{ij}y_j)$$
 
 ここまで行ってきた$y_i$に関する分解を統合する。
 
-$$E(y) = (\theta_i y_i +\sum_{j \not = i} W_{ij} y_i y_j) + (\sum_{k \not = i} \theta_k y_k + \sum_ {j<k(j,k \not = i)}W_{jk}_yj y_k)$$
+
+$$
+E(y) = \left( \theta_i y_i + \sum_{j \neq i} W_{ij} y_i y_j \right) + \left( \sum_{k \neq i} \theta_k y_k + \sum_{j<k, j,k \neq i} W_{jk} y_j y_k \right)
+$$
+
 ここで$y_i$を含まない項である第2項をまとめて$Rest(y_{-i})$とおくと，$E(y)$は以下のように「$y_i$にかかる係数部分」と「$y_i$と無関係な部分」が分離できる。
 
 $$ E (y)= y_i (\theta_i + \sum_{j \not = i} W_{ij} y_j) + Rest(y_{-i})$$
