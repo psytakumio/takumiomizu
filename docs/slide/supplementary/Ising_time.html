@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.555">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>N=1のイジングモデル</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="Ising_time_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Ising_time_files/libs/quarto-html/quarto.js"></script>
+<script src="Ising_time_files/libs/quarto-html/popper.min.js"></script>
+<script src="Ising_time_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Ising_time_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Ising_time_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Ising_time_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Ising_time_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Ising_time_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Ising_time_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">N=1のイジングモデル</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="イジングモデルとノードワイズロジスティック回帰が数学的に等価である証明" class="level2">
+<h2 class="anchored" data-anchor-id="イジングモデルとノードワイズロジスティック回帰が数学的に等価である証明">イジングモデルとノードワイズロジスティック回帰が数学的に等価である証明</h2>
+<section id="データ値が取り得る状態を0もしくは2とする場合" class="level3">
+<h3 class="anchored" data-anchor-id="データ値が取り得る状態を0もしくは2とする場合">データ(値)が取り得る状態を0もしくは2とする場合</h3>
+<p>説明では，ノードの集合は1~pまで，注目するノードはi，総和用のインデックスとしてjとk(1からpまで動く)，</p>
+<ul>
+<li><p>確率変数<span class="math inline">\(\boldsymbol{Y} = (Y_1,Y_2, ...,Y_p)\)</span></p></li>
+<li><p>値；各変数<span class="math inline">\(Y_i \in [0,1]\)</span></p></li>
+<li><p><span class="math inline">\(\theta_k\)</span>: ノードkの閾値(バイアス)</p></li>
+<li><p><span class="math inline">\(W_{jk}\)</span>: ノードjとkの相互作用(エッジの重み)。<span class="math inline">\(W_{jk} = W_{kj}, W_{kk} = 0\)</span></p></li>
+</ul>
+</section>
+<section id="同時確率分布ボルツマン分布" class="level3">
+<h3 class="anchored" data-anchor-id="同時確率分布ボルツマン分布">同時確率分布(ボルツマン分布)</h3>
+<p>変数が0もしくは1の状態をとる場合の同時確率は以下のように定義される</p>
+<p><span class="math display">\[P(\boldsymbol{Y} = y) = \frac{1}{Z} exp(\sum_k \theta_k y_k + \sum_{j&lt;k} W_{jk}y_j y_k)\]</span></p>
+</section>
+<section id="指数部分エネルギー関数の分解" class="level3">
+<h3 class="anchored" data-anchor-id="指数部分エネルギー関数の分解">指数部分(エネルギー関数)の分解</h3>
+<p>指数部分を<span class="math inline">\(E(y)\)</span>と置く</p>
+<p><span class="math display">\[E(y) = \sum_k^p \theta_k y_k + \sum_{j&lt;k} W_{jk}y_j y_k\]</span></p>
+<p>注目する変数である<span class="math inline">\(y_i\)</span>に関係する項と，関係しない項(<span class="math inline">\(X\)</span>)に分解する。まず，第1項(閾値の項)を分解する。総和<span class="math inline">\(\sum_{k=1}^p\)</span>の中から，<span class="math inline">\(k = i\)</span>の場合だけを抜き出す。</p>
+<p><span class="math display">\[\sum_{k=1}^p \theta_k y_k = \theta_i y_i + \sum_{k \not{=} i} \theta_k y_k\]</span></p>
+<p>次に，第2項(相互作用項)を分解する。総和<span class="math inline">\(\sum_{j&lt;k}\)</span>はすべてのペアの和なので，このペアの中にはiが混ざっているものと混ざっていないものがある。iが関わるペアは<span class="math inline">\(「j = i(かつi&lt;k)」\)</span>または<span class="math inline">\(「k = i(かつj&lt;i)」\)</span>のいずれかになる。</p>
+<p><span class="math display">\[\sum_{j&lt;k} W_{jk} y_j y_k = \sum_{k&gt;i} W_{ik} y_i y_k + \sum_{j&lt;i}W_{ji} y_j y_i + \sum_{j&lt;k,j \not{=}i, k \not{=}i}W_{jk y_j y_k}\]</span></p>
+<p>この式で，右辺第1項と第2項は<span class="math inline">\(y_i\)</span>を含むペア，第3項は<span class="math inline">\(y_i\)</span>を含まないペアになっている。ここで，<span class="math inline">\(y_i\)</span>を含むペアの部分を整理する。<span class="math inline">\(W\)</span>は対称行列なので，インデックスを統一してまとめると，「iとつながっているすべての相手j(<span class="math inline">\(j \not{=} i\)</span>)」との和として書くことができる。</p>
+<p><span class="math display">\[(y_iを含む相互作用) = y_i(\sum_{j \not{= i}}W_{ij}y_j)\]</span></p>
+<p>ここまで行ってきた<span class="math inline">\(y_i\)</span>に関する分解を統合する。</p>
+<p><span class="math display">\[
+E(y) = \left( \theta_i y_i + \sum_{j \neq i} W_{ij} y_i y_j \right) + \left( \sum_{k \neq i} \theta_k y_k + \sum_{j&lt;k, j,k \neq i} W_{jk} y_j y_k \right)
+\]</span></p>
+<p>ここで<span class="math inline">\(y_i\)</span>を含まない項である第2項をまとめて<span class="math inline">\(Rest(y_{-i})\)</span>とおくと，<span class="math inline">\(E(y)\)</span>は以下のように「<span class="math inline">\(y_i\)</span>にかかる係数部分」と「<span class="math inline">\(y_i\)</span>と無関係な部分」が分離できる。</p>
+<p><span class="math display">\[ E (y)= y_i (\theta_i + \sum_{j \not = i} W_{ij} y_j) + Rest(y_{-i})\]</span></p>
+<p>分離できたら，<span class="math inline">\(y_i = 1\)</span>となる条件付確率を計算する。簡略化のため，線形和を<span class="math inline">\(L_i = \theta_i + \sum_{j \not = i}W_{ij} y_j\)</span>と置くと，エネルギーの式は<span class="math inline">\(E(y) = y_i L_i + Rest\)</span>と置くことができる。</p>
+<p><span class="math display">\[P(y_i = 1 | y_{-i}) = \frac{exp(E(y_i = 1))}{exp(E(y_i = 1) +exp(E(y_i = 0))}\]</span> ここで<span class="math inline">\(y_i\)</span>は0か1のどちらかの状態をとるので，</p>
+<ul>
+<li><span class="math inline">\(y_i = 1\)</span>の時</li>
+</ul>
+<p><span class="math display">\[E(y_i = 1) = 1・L_i+Rest = L_i + Rest\]</span></p>
+<ul>
+<li><span class="math inline">\(y_i = 0\)</span>の時</li>
+</ul>
+<p><span class="math display">\[E(y_i = 0) = 0・Li + Rest = Rest\]</span> となる。</p>
+<p>これを確率の式に代入すると，</p>
+<p><span class="math display">\[P(y_i = 1 | y_{-i}) = \frac{exp(L_i + Rest)}{exp(L_i + Rest) + exp(Rest)}\]</span></p>
+<p>分母と分子を<span class="math inline">\(exp(Rest)\)</span>で割って約分する。</p>
+<p><span class="math display">\[P(y_i = 1 | y_{-i}) = \frac{exp(L_i)}{exp(L_i) + 1}\]</span> 分母と分子に<span class="math inline">\(exp(-L_i)\)</span>を掛ける。</p>
+<p><span class="math display">\[P(y_i = 1 | y_{-i}) = \frac{1}{1+exp(-L_i)}\]</span></p>
+<p><span class="math inline">\(L_i\)</span>をもとの形に戻すと，</p>
+<p><span class="math display">\[P(y_i = 1 | y_{-i}) = \frac{1}{1+exp(-(\theta_i + \sum_{j\not = i}W_{ij}y_j))}\]</span></p>
+<p>ロジスティック回帰の式は以下の通りなので，比較すると完全一致することがわかる。</p>
+<p><span class="math display">\[P(\boldsymbol{Y} = 1) = \frac{1}{1+exp(-(\beta_0 + \sum_{j\not = i}\beta_{j}y_j))}\]</span></p>
+</section>
+</section>
+<section id="補足1推定された値の取り出し方と解釈" class="level2">
+<h2 class="anchored" data-anchor-id="補足1推定された値の取り出し方と解釈">補足1:推定された値の取り出し方と解釈</h2>
+<ul>
+<li><p>ロジスティック回帰の切片と係数はイジングモデルの閾値と結合強度の<span class="math inline">\(\frac{1}{2}\)</span>と等しい</p></li>
+<li><p>ただしデータが1か-1の状態をとる場合に<span class="math inline">\(\frac{1}{2}\)</span>の操作が必要で，データが1か0の状態をとる場合はこの操作は必要ない</p></li>
+<li><p>エッジに自己回帰効果は反映されておらず，推定に用いた期間の変数間の無方向の条件付き関連が表現されている</p></li>
+</ul>
+</section>
+<section id="補足2対称化操作" class="level2">
+<h2 class="anchored" data-anchor-id="補足2対称化操作">補足2:対称化操作</h2>
+<ul>
+<li><p>IsingFitパッケージの内部でも対称化の操作を行っている。その際，ANDルールとORルールのどちらかが用いられる。</p></li>
+<li><p>双方向からの予測で両方とも係数が0ではない場合のみエッジを残し，値を平均するという操作。偽陽性を減らすことができる。</p></li>
+<li><p>推定された<span class="math inline">\(\beta_{ij}\)</span>と<span class="math inline">\(\beta_{ji}\)</span>のずれは，graphicalVARのように因果の方向性を表すものではなく，推定のノイズであるとみなすため，平均してノイズを消す対称化が行われる。</p></li>
+<li><p>実装は，glmnetパッケージで正則化推定を行って，得られた係数行列bata_matとその転置であるt(beta_mat)を使ってANDルールを使い，両方とも0じゃない数値を足して2(もしくは4)で割った値が最終的な無向グラフになる</p></li>
+<li><p>4で割るのは，ロジスティック回帰の値からイジングに変換するのに2で割り，対称化するときにさらに2で割るため。データが0か1の状態をとるときには対称化のために2で割るだけ。</p></li>
+</ul>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

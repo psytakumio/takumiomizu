@@ -13,15 +13,6 @@ format:
 bibliography: references.bib
 ---
 
-# スライドリンク
-
-
-※数式などの補足資料が含まれている本スライドのリンクです
-
-
-![](images/QR_AIF.png)
-
-
 # トピック
 
 -   感情粒度について
