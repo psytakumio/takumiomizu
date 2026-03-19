@@ -5,8 +5,9 @@ title: "研究"
 ## 学術論文(査読あり)
 
 
--  [1] Omizu, T. and Kunisato. Y.(2024). Exploring Effective Intervention Strategies for Depression as a Complex System: Targeted Interventions through Network Simulations. Japanese Psychological Research. 67,(2),147-161.
+- [1] Omizu, T. and Kunisato. Y.(2024). Exploring Effective Intervention Strategies for Depression as a Complex System: Targeted Interventions through Network Simulations. Japanese Psychological Research. 67,(2),147-161.
 
+- [2] 江川伊織・大水拓海・国里愛彦(印刷中). 計算論的アプローチにおける不確実性下の意思決定・学習課題:スコーピングレビューによる選定指針. 認知科学, 33(2),-.
 
 
 
