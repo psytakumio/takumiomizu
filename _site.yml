@@ -2,7 +2,7 @@ name: "大水拓海の個人ホームページ"
 navbar:
   title: "大水拓海の個人ホームページ"
   left:
-    - text: "ホーム"
+    - text: "大水拓海(Takumi Omizu)"
       href: index.html
     - text: "プロフィール"
       href: about.html
