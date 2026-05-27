@@ -1,0 +1,29 @@
+---
+title: "大水拓海 (Takumi Omizu)"
+about:
+  template: trestles
+  links:
+    - icon: envelope-fill
+      text: メール
+      href: "mailto:tomizu@psy.senshu-u.ac.jp"
+    - icon: twitter-x
+      text: X (Twitter)
+      href: "https://twitter.com/Research_tomizu"
+    - icon: person-lines-fill
+      text: researchmap
+      href: "https://researchmap.jp/takumiomizu"
+---
+
+大水拓海（おおみずたくみ）です。
+
+専修大学大学院文学研究科心理学専攻**博士後期課程**に在籍しています。
+
+主に**臨床心理学**で扱われる精神障害等の症状維持メカニズムや心理療法の作用メカニズムについて，心理ネットワーク分析・数理シミュレーション・能動的推論などの**計算論的アプローチ**を用いた研究に取り組んでいます。
+
+---
+
+### 研究キーワード
+
+::: {.keyword-list}
+計算論的臨床心理学 &nbsp;｜&nbsp; 心理ネットワーク分析 &nbsp;｜&nbsp; 能動的推論 &nbsp;｜&nbsp; 数理シミュレーション &nbsp;｜&nbsp; 感情粒度
+:::

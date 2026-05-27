@@ -1,0 +1,167 @@
+/* ===========================================
+   Takumi Omizu Personal Website - Custom CSS
+   =========================================== */
+
+/* --- Google Fonts: Noto Sans JP --- */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap');
+
+/* --- Base Typography --- */
+body {
+  font-family: 'Noto Sans JP', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 400;
+  line-height: 1.85;
+  color: #2c3e50;
+}
+
+/* --- Navbar --- */
+.navbar-brand {
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+/* --- Section Headings --- */
+h2 {
+  font-weight: 700;
+  font-size: 1.25rem;
+  border-left: 4px solid #18bc9c;
+  padding-left: 0.65rem;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  color: #2c3e50;
+}
+
+h3 {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #5a6a7a;
+  margin-top: 1.5rem;
+}
+
+/* --- About Page (trestles) --- */
+#quarto-document-content .about-entity {
+  padding-top: 1rem;
+}
+
+.about-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1.2rem;
+}
+
+.about-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #2c3e50;
+  color: #ffffff !important;
+  border-radius: 6px;
+  padding: 0.45rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none !important;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  border: none;
+}
+
+.about-link:hover {
+  background-color: #18bc9c;
+  transform: translateY(-1px);
+  color: #ffffff !important;
+}
+
+.about-link i {
+  font-size: 1rem;
+}
+
+/* --- Research Keywords (index page) --- */
+.keyword-list {
+  background: #f0faf8;
+  border: 1px solid #c8ede8;
+  border-radius: 8px;
+  padding: 0.75rem 1.2rem;
+  color: #18bc9c;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+}
+
+/* --- Publication / Content Lists --- */
+.pub-list {
+  margin-top: 0.5rem;
+}
+
+.pub-list p,
+.pub-list li {
+  margin-bottom: 0.9rem;
+  line-height: 1.85;
+  color: #3a4a5a;
+}
+
+.pub-list strong:first-child {
+  color: #18bc9c;
+  font-weight: 700;
+}
+
+.pub-list a {
+  color: #18bc9c;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+
+.pub-list a:hover {
+  border-bottom-color: #18bc9c;
+}
+
+/* --- Profile Table (about page) --- */
+.about-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table {
+  border: none !important;
+  font-size: 0.95rem;
+}
+
+table td, table th {
+  border: none !important;
+  border-bottom: 1px solid #e8ecef !important;
+  padding: 0.55rem 0.75rem !important;
+  vertical-align: top;
+}
+
+table tr:last-child td {
+  border-bottom: none !important;
+}
+
+table th {
+  background: none !important;
+  font-weight: 600;
+  color: #5a6a7a;
+}
+
+/* --- Horizontal Rule --- */
+hr {
+  border: none;
+  border-top: 1px solid #e8ecef;
+  margin: 1.8rem 0;
+}
+
+/* --- Footer --- */
+.nav-footer {
+  font-size: 0.85rem;
+  color: #8a9bab;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 768px) {
+  h2 {
+    font-size: 1.1rem;
+  }
+
+  .keyword-list {
+    font-size: 0.85rem;
+  }
+}

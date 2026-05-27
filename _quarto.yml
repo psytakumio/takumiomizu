@@ -1,0 +1,36 @@
+project:
+  type: website
+  output-dir: docs
+  render:
+    - "index.qmd"
+    - "about.qmd"
+    - "research.qmd"
+    - "slide.qmd"
+
+website:
+  title: "大水拓海"
+  navbar:
+    background: primary
+    foreground: light
+    title: "大水拓海"
+    left:
+      - href: index.qmd
+        text: ホーム
+      - href: about.qmd
+        text: プロフィール
+      - href: research.qmd
+        text: 研究
+      - href: slide.qmd
+        text: マテリアル
+  page-footer:
+    background: light
+    border: true
+    center: "© 2025 Takumi Omizu"
+
+format:
+  html:
+    theme: flatly
+    css: styles.css
+    toc: false
+    lang: ja
+    include-in-header: meta.html
