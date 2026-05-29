@@ -2,6 +2,7 @@
 title: "研究"
 ---
 
+::: {#content-ja}
 ## 学術論文（査読あり）
 
 ::: {.pub-list}
@@ -84,4 +85,91 @@ title: "研究"
 
 **[1]** 2020年11月12日 専修大学新入生学術奨学生
 
+:::
+:::
+
+::: {#content-en}
+## Peer-Reviewed Journal Articles
+
+::: {.pub-list}
+
+**[2]** Egawa, I., **Omizu, T.**, & Kunisato, Y. (in press). Uncertainty-based decision-making and learning tasks in computational approaches: A scoping review for selection guidelines. *Cognitive Science*, 33(2).
+
+**[1]** **Omizu, T.** and Kunisato, Y. (2025). Exploring Effective Intervention Strategies for Depression as a Complex System: Targeted Interventions through Network Simulations. *Japanese Psychological Research*, 67(2), 147–161. [[DOI]](https://doi.org/10.1111/jpr.12553)
+
+:::
+
+---
+
+## Bulletin Articles
+
+::: {.pub-list}
+
+**[2]** **Omizu, T.** & Kunisato, Y. (2025). Application of Psychological Network Analysis to Single-Case Research: A Tutorial Using graphicalVAR. *Senshu Social Well-being Review: Psychology*, 15(1), 45–56. [[link]](https://senshu-u.repo.nii.ac.jp/records/2001214)
+
+**[1]** Kunisato, Y., Warashina, K., Sumida, M., Muraguchi, Y., & **Omizu, T.** (2023). Tutorial on Psychological Network Analysis for Cross-Sectional Data. *Senshu Social Well-being Review: Psychology*, 13(1), 51–67. [[link]](https://senshu-u.repo.nii.ac.jp/records/13467)
+
+:::
+
+---
+
+## Conference Presentations
+
+::: {.pub-list}
+
+**[5]** **Omizu, T.** & Kunisato, Y. (2025). Quantifying Individual Differences in Emotion Granularity via Psychological Networks: Validation through Secondary Analysis of Open Data. *89th Annual Meeting of the Japanese Psychological Association*. Poster presentation. September 6, 2025. [[DOI]](https://doi.org/10.4992/pacjpa.89.0_926)
+
+**[4]** **Omizu, T.** & Kunisato, Y. (2024). Can Network Connectivity Serve as an Index of Symptom Improvement? *Japan Neural Network Society JNN2024* (September 11–13, 2024). Poster presentation. [[link]](https://conf.jnns.org/)
+
+**[3]** **Omizu, T.** & Kunisato, Y. (2024). Do Intervention Targets Affect the Reduction of Depressive Symptoms? Mathematical Simulation Using a Network Model. *88th Annual Meeting of the Japanese Psychological Association* (September 6–8, 2024). Poster presentation. [[link]](https://pub.confit.atlas.jp/ja/event/jpa2024/presentation/1D-41)
+
+**[2]** **Omizu, T.** (2023). Mathematical Simulation of Depression as a Complex System. *87th Annual Meeting of the Japanese Psychological Association, Young Researchers' Session "Undergraduate and High School Students' Presentation Battle"*. September 15–17, 2023. [[link]](https://sites.google.com/view/jpaecp-lt/2023)
+
+**[1]** **Omizu, T.** & Kunisato, Y. (2023, July). Network simulation of depression as a complex system with treatment components. In *Artificial Life Conference Proceedings 35* (Vol. 2023, No. 1, p. 97). MIT Press. [[link]](https://direct.mit.edu/isal/proceedings/isal/35/97/116843) (peer-reviewed)
+
+:::
+
+---
+
+## Presentations at Other Research Events
+
+::: {.pub-list}
+
+**[5]** Egawa, I., **Omizu, T.**, & Kunisato, Y. (2026). Uncertainty-based decision-making and learning tasks in computational approaches: A classification framework and selection guidelines from a scoping review. *Computational Psychiatry Colloquium 2026 (CPSYTOKYO2026)*. Poster presentation. February 19–20, 2026.
+
+**[4]** **Omizu, T.** & Kunisato, Y. (2026). Toward a Computational Model of Emotion Granularity: Simulation via Active Inference. *Computational Psychiatry Colloquium 2026 (CPSYTOKYO2026)*. Poster presentation. February 19–20, 2026.
+
+**[3]** **Omizu, T.** (2025). [Simulation Research Using Psychological Networks](slide/summerschool2025.html). *Computational Clinical Psychology Summer School 2025*. August 7, 2025. Senshu University, Kanda Campus.
+
+**[2]** **Omizu, T.** & Kunisato, Y. (2025). Estimation Accuracy and Interpretability of Individual Networks. *Computational Psychiatry Colloquium 2025 (CPSYTOKYO2025)*. Poster presentation. February 19–20, 2025.
+
+**[1]** **Omizu, T.** & Kunisato, Y. (2024). Computational Study of Psychotherapy Mechanisms through Psychological Networks and Mathematical Simulations. *Computational Psychiatry and Neurobiology 2024 at University of Tokyo*, Yamanaka-Ryo Naito Seminer House by abreuvoir. Oral presentation. November 4, 2024.
+
+:::
+
+---
+
+## Awards & Honors
+
+::: {.pub-list}
+
+**[9]** February 26, 2026 — **Outstanding Presentation Award**, 89th Annual Meeting of the Japanese Psychological Association (Omizu, T. & Kunisato, Y. (2025). Quantifying Individual Differences in Emotion Granularity via Psychological Networks. Poster presentation, September 6, 2025.)
+
+**[8]** February 4, 2026 — **Outstanding Master's Thesis Poster Award**, Graduate School of Letters, Senshu University, FY2025 — "Quantification of Emotion Granularity Using Psychological Networks and Validation of Emotion Labeling Effects"
+
+**[7]** 2025 — Senshu University Graduate Academic Scholarship
+
+**[6]** 2024 — Senshu University Graduate Academic Scholarship
+
+**[5]** March 22, 2024 — **Outstanding Undergraduate Thesis**, Senshu University, FY2023 — "Maintenance of Depressive Symptoms and Mechanisms of Therapeutic Action as a Complex System: A Mathematical Simulation Using a Network Model"
+
+**[4]** March 22, 2024 — Senshu University Kawashima Memorial Award (Academic)
+
+**[3]** September 2023 — **Best Presenter (1st Place)**, 87th Annual Meeting of the Japanese Psychological Association, Young Researchers' Session "Undergraduate and High School Students' Presentation Battle." [[link]](https://sites.google.com/view/jpaecp-lt/2023)
+
+**[2]** July 5, 2022 — Senshu University Academic Scholarship
+
+**[1]** November 12, 2020 — Senshu University Freshman Academic Scholarship
+
+:::
 :::

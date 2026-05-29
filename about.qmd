@@ -2,6 +2,7 @@
 title: "プロフィール"
 ---
 
+::: {#content-ja}
 ## 研究テーマ
 
 臨床心理学 ／ ネットワーク心理測定学 ／ 計算論的アプローチ
@@ -46,3 +47,51 @@ title: "プロフィール"
 
 - 心理学検定 1級（2021年9月17日）
 - 心理学検定 特1級（2021年10月15日）
+:::
+
+::: {#content-en}
+## Research Topics
+
+Clinical Psychology / Network Psychometrics / Computational Approaches
+
+---
+
+## Current Affiliation
+
+Doctoral Program, Department of Psychology, Graduate School of Letters, Senshu University
+
+Computational Clinical Psychology Laboratory
+
+---
+
+## Education
+
+| Date | Event |
+|---|---|
+| April 2020 | Enrolled in Department of Psychology, School of Human Sciences, Senshu University |
+| March 2024 | Graduated from Department of Psychology, School of Human Sciences, Senshu University |
+| April 2024 | Enrolled in Master's Program, Department of Psychology, Graduate School of Letters, Senshu University |
+| March 2026 | Completed Master's Program, Department of Psychology, Graduate School of Letters, Senshu University |
+| April 2026 | Enrolled in Doctoral Program, Department of Psychology, Graduate School of Letters, Senshu University |
+
+---
+
+## Academic Societies
+
+- The Japanese Psychological Association
+
+---
+
+## Teaching Assistant
+
+- Senshu University: Psychology Practicum 1 (Apr. 2025 – Jul. 2025)
+- Senshu University: Psychology Practicum 2 (Sep. 2025 – Jan. 2026)
+- Senshu University: Undergraduate Thesis Supervision, Dept. of Psychology (Apr. 2026 –)
+
+---
+
+## Qualifications
+
+- Psychology Certification Exam, Level 1 (September 17, 2021)
+- Psychology Certification Exam, Special Level 1 (October 15, 2021)
+:::

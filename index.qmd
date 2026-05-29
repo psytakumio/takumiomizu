@@ -14,6 +14,7 @@ about:
       href: "https://researchmap.jp/takumiomizu"
 ---
 
+::: {#content-ja}
 大水拓海（おおみずたくみ）です。
 
 専修大学大学院文学研究科心理学専攻**博士後期課程**に在籍しています。
@@ -27,3 +28,21 @@ about:
 ::: {.keyword-list}
 計算論的臨床心理学 &nbsp;｜&nbsp; 心理ネットワーク分析 &nbsp;｜&nbsp; 能動的推論 &nbsp;｜&nbsp; 数理シミュレーション &nbsp;｜&nbsp; 感情粒度
 :::
+:::
+
+::: {#content-en}
+I am Takumi Omizu (大水 拓海).
+
+I am a **doctoral student** in the Graduate School of Letters, Senshu University (Department of Psychology).
+
+My research focuses on the mechanisms underlying the maintenance of mental disorders and the mechanisms of psychotherapy, primarily in the field of **clinical psychology**, using **computational approaches** such as psychological network analysis, mathematical simulation, and active inference.
+
+---
+
+### Research Keywords
+
+::: {.keyword-list}
+Computational Clinical Psychology &nbsp;｜&nbsp; Psychological Network Analysis &nbsp;｜&nbsp; Active Inference &nbsp;｜&nbsp; Mathematical Simulation &nbsp;｜&nbsp; Emotion Granularity
+:::
+:::
+
