@@ -155,29 +155,6 @@ hr {
   color: #8a9bab;
 }
 
-/* --- Language Toggle Button --- */
-#content-en {
-  display: none;
-}
-
-.lang-toggle-btn {
-  background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  color: #ffffff;
-  border-radius: 4px;
-  padding: 0.3rem 0.75rem;
-  font-size: 0.85rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.2s ease, border-color 0.2s ease;
-  margin-left: 0.5rem;
-  white-space: nowrap;
-}
-
-.lang-toggle-btn:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.9);
-}
 
 /* --- Responsive Adjustments --- */
 @media (max-width: 768px) {

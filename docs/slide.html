@@ -140,7 +140,6 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div id="content-ja">
 <section id="公開中のスライド" class="level2">
 <h2 class="anchored" data-anchor-id="公開中のスライド">公開中のスライド</h2>
 <div class="pub-list">
@@ -158,101 +157,11 @@ ul.task-list li input[type="checkbox"] {
 <li><a href="slide/manual/psynetsim_manual.html">psynetsim</a> — 心理ネットワークシミュレーション用Rパッケージ</li>
 </ul>
 </div>
-</section>
-</div>
-<div id="content-en">
-<section id="available-slides" class="level2">
-<h2 class="anchored" data-anchor-id="available-slides">Available Slides</h2>
-<div class="pub-list">
-<ul>
-<li><p><a href="slide/summerschool2025.html">Simulation Research Using Psychological Networks</a> Computational Clinical Psychology Summer School 2025 (August 2025)</p></li>
-<li><p><a href="slide/hirosima.html">Emotion Granularity and Mental Health: Insights from Simulation Using Psychological Networks and Active Inference Models</a></p></li>
-</ul>
-</div>
-<hr>
-</section>
-<section id="packages" class="level2">
-<h2 class="anchored" data-anchor-id="packages">Packages</h2>
-<div class="pub-list">
-<ul>
-<li><a href="slide/manual/psynetsim_manual.html">psynetsim</a> — R package for psychological network simulation</li>
-</ul>
-</div>
-</section>
-</div>
 
 
+</section>
 
 </main> <!-- /main -->
-<script>
-(function () {
-  var currentLang = 'ja';
-
-  var pageTitleMap = {
-    '大水拓海 (Takumi Omizu)': 'Takumi Omizu',
-    'プロフィール': 'Profile',
-    '研究': 'Research',
-    'マテリアル': 'Materials',
-  };
-
-  var navLabelMap = {
-    'ホーム': 'Home',
-    'プロフィール': 'Profile',
-    '研究': 'Research',
-    'マテリアル': 'Materials',
-  };
-
-  function applyLang(lang) {
-    currentLang = lang;
-    var ja = document.getElementById('content-ja');
-    var en = document.getElementById('content-en');
-    var btn = document.getElementById('lang-btn');
-
-    if (lang === 'en') {
-      if (ja) ja.style.display = 'none';
-      if (en) en.style.display = 'block';
-      if (btn) btn.textContent = 'Japanese';
-    } else {
-      if (ja) ja.style.display = 'block';
-      if (en) en.style.display = 'none';
-      if (btn) btn.textContent = 'English';
-    }
-
-    var h1 = document.querySelector('h1.title');
-    if (h1) {
-      if (!h1.getAttribute('data-ja')) h1.setAttribute('data-ja', h1.textContent.trim());
-      var jaTitle = h1.getAttribute('data-ja');
-      h1.textContent = lang === 'en' ? (pageTitleMap[jaTitle] || jaTitle) : jaTitle;
-    }
-
-    var navTitle = document.querySelector('.navbar-title');
-    if (navTitle) {
-      navTitle.textContent = lang === 'en' ? 'Takumi Omizu' : '大水拓海';
-    }
-
-    document.querySelectorAll('.navbar-nav .menu-text').forEach(function (item) {
-      if (!item.getAttribute('data-ja')) item.setAttribute('data-ja', item.textContent.trim());
-      var jaLabel = item.getAttribute('data-ja');
-      item.textContent = lang === 'en' ? (navLabelMap[jaLabel] || jaLabel) : jaLabel;
-    });
-
-    localStorage.setItem('site-lang', lang);
-  }
-
-  document.addEventListener('DOMContentLoaded', function () {
-    var btn = document.createElement('button');
-    btn.id = 'lang-btn';
-    btn.className = 'lang-toggle-btn';
-    btn.textContent = 'English';
-    btn.addEventListener('click', function () {
-      applyLang(currentLang === 'ja' ? 'en' : 'ja');
-    });
-    var tools = document.querySelector('.quarto-navbar-tools');
-    if (tools) tools.appendChild(btn);
-    applyLang(localStorage.getItem('site-lang') || 'ja');
-  });
-})();
-</script>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

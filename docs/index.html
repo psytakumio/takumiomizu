@@ -143,104 +143,21 @@ ul.task-list li input[type="checkbox"] {
 </div>
   </div>
   <div class="about-contents"><main class="content" id="quarto-document-content">
-<div id="content-ja">
 <p>大水拓海（おおみずたくみ）です。</p>
 <p>専修大学大学院文学研究科心理学専攻<strong>博士後期課程</strong>に在籍しています。</p>
-<p>主に<strong>臨床心理学</strong>で扱われる精神障害等の症状維持メカニズムや心理療法の作用メカニズムについて，心理ネットワーク分析・数理シミュレーション・能動的推論などの<strong>計算論的アプローチ</strong>を用いた研究に取り組んでいます。</p>
+<p>主に<strong>臨床心理学</strong>で扱われる精神障害等の症状維持メカニズムや心理療法の作用メカニズムについて，心理ネットワーク分析や数理シミュレーションを中心とした<strong>計算論的アプローチ</strong>を用いて研究に取り組んでいます。</p>
 <hr>
 <section id="研究キーワード" class="level3">
 <h3 data-anchor-id="研究キーワード">研究キーワード</h3>
 <div class="keyword-list">
 <p>計算論的臨床心理学 &nbsp;｜&nbsp; 心理ネットワーク分析 &nbsp;｜&nbsp; 能動的推論 &nbsp;｜&nbsp; 数理シミュレーション &nbsp;｜&nbsp; 感情粒度</p>
 </div>
-</section>
-</div>
-<div id="content-en">
-<p>I am Takumi Omizu (大水 拓海).</p>
-<p>I am a <strong>doctoral student</strong> in the Graduate School of Letters, Senshu University (Department of Psychology).</p>
-<p>My research focuses on the mechanisms underlying the maintenance of mental disorders and the mechanisms of psychotherapy, primarily in the field of <strong>clinical psychology</strong>, using <strong>computational approaches</strong> such as psychological network analysis, mathematical simulation, and active inference.</p>
-<hr>
-<section id="research-keywords" class="level3">
-<h3 data-anchor-id="research-keywords">Research Keywords</h3>
-<div class="keyword-list">
-<p>Computational Clinical Psychology &nbsp;｜&nbsp; Psychological Network Analysis &nbsp;｜&nbsp; Active Inference &nbsp;｜&nbsp; Mathematical Simulation &nbsp;｜&nbsp; Emotion Granularity</p>
-</div>
-</section>
-</div>
 
 
+</section>
 </main></div>
 </div>
  <!-- /main -->
-<script>
-(function () {
-  var currentLang = 'ja';
-
-  var pageTitleMap = {
-    '大水拓海 (Takumi Omizu)': 'Takumi Omizu',
-    'プロフィール': 'Profile',
-    '研究': 'Research',
-    'マテリアル': 'Materials',
-  };
-
-  var navLabelMap = {
-    'ホーム': 'Home',
-    'プロフィール': 'Profile',
-    '研究': 'Research',
-    'マテリアル': 'Materials',
-  };
-
-  function applyLang(lang) {
-    currentLang = lang;
-    var ja = document.getElementById('content-ja');
-    var en = document.getElementById('content-en');
-    var btn = document.getElementById('lang-btn');
-
-    if (lang === 'en') {
-      if (ja) ja.style.display = 'none';
-      if (en) en.style.display = 'block';
-      if (btn) btn.textContent = 'Japanese';
-    } else {
-      if (ja) ja.style.display = 'block';
-      if (en) en.style.display = 'none';
-      if (btn) btn.textContent = 'English';
-    }
-
-    var h1 = document.querySelector('h1.title');
-    if (h1) {
-      if (!h1.getAttribute('data-ja')) h1.setAttribute('data-ja', h1.textContent.trim());
-      var jaTitle = h1.getAttribute('data-ja');
-      h1.textContent = lang === 'en' ? (pageTitleMap[jaTitle] || jaTitle) : jaTitle;
-    }
-
-    var navTitle = document.querySelector('.navbar-title');
-    if (navTitle) {
-      navTitle.textContent = lang === 'en' ? 'Takumi Omizu' : '大水拓海';
-    }
-
-    document.querySelectorAll('.navbar-nav .menu-text').forEach(function (item) {
-      if (!item.getAttribute('data-ja')) item.setAttribute('data-ja', item.textContent.trim());
-      var jaLabel = item.getAttribute('data-ja');
-      item.textContent = lang === 'en' ? (navLabelMap[jaLabel] || jaLabel) : jaLabel;
-    });
-
-    localStorage.setItem('site-lang', lang);
-  }
-
-  document.addEventListener('DOMContentLoaded', function () {
-    var btn = document.createElement('button');
-    btn.id = 'lang-btn';
-    btn.className = 'lang-toggle-btn';
-    btn.textContent = 'English';
-    btn.addEventListener('click', function () {
-      applyLang(currentLang === 'ja' ? 'en' : 'ja');
-    });
-    var tools = document.querySelector('.quarto-navbar-tools');
-    if (tools) tools.appendChild(btn);
-    applyLang(localStorage.getItem('site-lang') || 'ja');
-  });
-})();
-</script>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

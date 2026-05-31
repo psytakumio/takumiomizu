@@ -4,7 +4,7 @@
     "href": "slide.html",
     "title": "マテリアル",
     "section": "",
-    "text": "心理ネットワークを用いたシミュレーション研究 計算論的臨床心理学サマースクール2025（2025年8月）\n感情粒度とメンタルヘルス：心理ネットワークと能動的推論モデルによるシミュレーションから\n\n\n\n\n\n\n\n\npsynetsim — 心理ネットワークシミュレーション用Rパッケージ"
+    "text": "心理ネットワークを用いたシミュレーション研究 計算論的臨床心理学サマースクール2025（2025年8月）\n感情粒度とメンタルヘルス：心理ネットワークと能動的推論モデルによるシミュレーションから"
   },
   {
     "objectID": "slide.html#公開中のスライド",
@@ -17,29 +17,15 @@
     "objectID": "slide.html#パッケージ",
     "href": "slide.html#パッケージ",
     "title": "マテリアル",
-    "section": "",
-    "text": "psynetsim — 心理ネットワークシミュレーション用Rパッケージ"
-  },
-  {
-    "objectID": "slide.html#available-slides",
-    "href": "slide.html#available-slides",
-    "title": "マテリアル",
-    "section": "Available Slides",
-    "text": "Available Slides\n\n\nSimulation Research Using Psychological Networks Computational Clinical Psychology Summer School 2025 (August 2025)\nEmotion Granularity and Mental Health: Insights from Simulation Using Psychological Networks and Active Inference Models"
-  },
-  {
-    "objectID": "slide.html#packages",
-    "href": "slide.html#packages",
-    "title": "マテリアル",
-    "section": "Packages",
-    "text": "Packages\n\n\npsynetsim — R package for psychological network simulation"
+    "section": "パッケージ",
+    "text": "パッケージ\n\n\npsynetsim — 心理ネットワークシミュレーション用Rパッケージ"
   },
   {
     "objectID": "about.html",
     "href": "about.html",
     "title": "プロフィール",
     "section": "",
-    "text": "臨床心理学 ／ ネットワーク心理測定学 ／ 計算論的アプローチ\n\n\n\n\n専修大学大学院文学研究科心理学専攻　博士後期課程\n計算論的臨床心理学研究室\n\n\n\n\n\n\n\n年月\n内容\n\n\n\n\n2020年4月\n専修大学人間科学部心理学科 入学\n\n\n2024年3月\n専修大学人間科学部心理学科 卒業\n\n\n2024年4月\n専修大学大学院文学研究科心理学専攻 修士課程 入学\n\n\n2026年3月\n専修大学大学院文学研究科心理学専攻 修士課程 修了\n\n\n2026年4月\n専修大学大学院文学研究科心理学専攻 博士後期課程 入学\n\n\n\n\n\n\n\n\n日本心理学会\n\n\n\n\n\n\n専修大学 心理演習1（2025.4. ～ 2025.7.）\n専修大学 心理演習2（2025.9. ～ 2026.1.）\n専修大学 人間科学部心理学科 卒業論文指導（2026.4. ～）\n\n\n\n\n\n\n心理学検定 1級（2021年9月17日）\n心理学検定 特1級（2021年10月15日）"
+    "text": "臨床心理学 ／ ネットワーク心理測定学 ／ 計算論的アプローチ"
   },
   {
     "objectID": "about.html#研究テーマ",
@@ -52,92 +38,50 @@
     "objectID": "about.html#現所属",
     "href": "about.html#現所属",
     "title": "プロフィール",
-    "section": "",
-    "text": "専修大学大学院文学研究科心理学専攻　博士後期課程\n計算論的臨床心理学研究室"
+    "section": "現所属",
+    "text": "現所属\n専修大学大学院文学研究科心理学専攻　博士後期課程\n計算論的臨床心理学研究室"
   },
   {
     "objectID": "about.html#経歴",
     "href": "about.html#経歴",
     "title": "プロフィール",
-    "section": "",
-    "text": "年月\n内容\n\n\n\n\n2020年4月\n専修大学人間科学部心理学科 入学\n\n\n2024年3月\n専修大学人間科学部心理学科 卒業\n\n\n2024年4月\n専修大学大学院文学研究科心理学専攻 修士課程 入学\n\n\n2026年3月\n専修大学大学院文学研究科心理学専攻 修士課程 修了\n\n\n2026年4月\n専修大学大学院文学研究科心理学専攻 博士後期課程 入学"
+    "section": "経歴",
+    "text": "経歴\n\n\n\n年月\n内容\n\n\n\n\n2020年4月\n専修大学人間科学部心理学科 入学\n\n\n2024年3月\n専修大学人間科学部心理学科 卒業\n\n\n2024年4月\n専修大学大学院文学研究科心理学専攻 修士課程 入学\n\n\n2026年3月\n専修大学大学院文学研究科心理学専攻 修士課程 修了\n\n\n2026年4月\n専修大学大学院文学研究科心理学専攻 博士後期課程 入学"
   },
   {
     "objectID": "about.html#所属学会",
     "href": "about.html#所属学会",
     "title": "プロフィール",
-    "section": "",
-    "text": "日本心理学会"
+    "section": "所属学会",
+    "text": "所属学会\n\n日本心理学会"
   },
   {
     "objectID": "about.html#ta等",
     "href": "about.html#ta等",
     "title": "プロフィール",
-    "section": "",
-    "text": "専修大学 心理演習1（2025.4. ～ 2025.7.）\n専修大学 心理演習2（2025.9. ～ 2026.1.）\n専修大学 人間科学部心理学科 卒業論文指導（2026.4. ～）"
+    "section": "TA等",
+    "text": "TA等\n\n専修大学 心理演習1（2025.4. ～ 2025.7.）\n専修大学 心理演習2（2025.9. ～ 2026.1.）\n専修大学 人間科学部心理学科 卒業論文指導（2026.4. ～）"
   },
   {
     "objectID": "about.html#資格等",
     "href": "about.html#資格等",
     "title": "プロフィール",
-    "section": "",
-    "text": "心理学検定 1級（2021年9月17日）\n心理学検定 特1級（2021年10月15日）"
-  },
-  {
-    "objectID": "about.html#research-topics",
-    "href": "about.html#research-topics",
-    "title": "プロフィール",
-    "section": "Research Topics",
-    "text": "Research Topics\nClinical Psychology / Network Psychometrics / Computational Approaches"
-  },
-  {
-    "objectID": "about.html#current-affiliation",
-    "href": "about.html#current-affiliation",
-    "title": "プロフィール",
-    "section": "Current Affiliation",
-    "text": "Current Affiliation\nDoctoral Program, Department of Psychology, Graduate School of Letters, Senshu University\nComputational Clinical Psychology Laboratory"
-  },
-  {
-    "objectID": "about.html#education",
-    "href": "about.html#education",
-    "title": "プロフィール",
-    "section": "Education",
-    "text": "Education\n\n\n\n\n\n\n\nDate\nEvent\n\n\n\n\nApril 2020\nEnrolled in Department of Psychology, School of Human Sciences, Senshu University\n\n\nMarch 2024\nGraduated from Department of Psychology, School of Human Sciences, Senshu University\n\n\nApril 2024\nEnrolled in Master’s Program, Department of Psychology, Graduate School of Letters, Senshu University\n\n\nMarch 2026\nCompleted Master’s Program, Department of Psychology, Graduate School of Letters, Senshu University\n\n\nApril 2026\nEnrolled in Doctoral Program, Department of Psychology, Graduate School of Letters, Senshu University"
-  },
-  {
-    "objectID": "about.html#academic-societies",
-    "href": "about.html#academic-societies",
-    "title": "プロフィール",
-    "section": "Academic Societies",
-    "text": "Academic Societies\n\nThe Japanese Psychological Association"
-  },
-  {
-    "objectID": "about.html#teaching-assistant",
-    "href": "about.html#teaching-assistant",
-    "title": "プロフィール",
-    "section": "Teaching Assistant",
-    "text": "Teaching Assistant\n\nSenshu University: Psychology Practicum 1 (Apr. 2025 – Jul. 2025)\nSenshu University: Psychology Practicum 2 (Sep. 2025 – Jan. 2026)\nSenshu University: Undergraduate Thesis Supervision, Dept. of Psychology (Apr. 2026 –)"
-  },
-  {
-    "objectID": "about.html#qualifications",
-    "href": "about.html#qualifications",
-    "title": "プロフィール",
-    "section": "Qualifications",
-    "text": "Qualifications\n\nPsychology Certification Exam, Level 1 (September 17, 2021)\nPsychology Certification Exam, Special Level 1 (October 15, 2021)"
+    "section": "資格等",
+    "text": "資格等\n\n心理学検定 1級（2021年9月17日）\n心理学検定 特1級（2021年10月15日）\n公認心理師(2026年5月)"
   },
   {
     "objectID": "index.html",
     "href": "index.html",
     "title": "大水拓海 (Takumi Omizu)",
     "section": "",
-    "text": "大水拓海（おおみずたくみ）です。\n専修大学大学院文学研究科心理学専攻博士後期課程に在籍しています。\n主に臨床心理学で扱われる精神障害等の症状維持メカニズムや心理療法の作用メカニズムについて，心理ネットワーク分析・数理シミュレーション・能動的推論などの計算論的アプローチを用いた研究に取り組んでいます。\n\n\n研究キーワード\n\n計算論的臨床心理学  ｜  心理ネットワーク分析  ｜  能動的推論  ｜  数理シミュレーション  ｜  感情粒度\n\n\n\n\nI am Takumi Omizu (大水 拓海).\nI am a doctoral student in the Graduate School of Letters, Senshu University (Department of Psychology).\nMy research focuses on the mechanisms underlying the maintenance of mental disorders and the mechanisms of psychotherapy, primarily in the field of clinical psychology, using computational approaches such as psychological network analysis, mathematical simulation, and active inference.\n\n\nResearch Keywords\n\nComputational Clinical Psychology  ｜  Psychological Network Analysis  ｜  Active Inference  ｜  Mathematical Simulation  ｜  Emotion Granularity"
+    "text": "大水拓海（おおみずたくみ）です。\n専修大学大学院文学研究科心理学専攻博士後期課程に在籍しています。\n主に臨床心理学で扱われる精神障害等の症状維持メカニズムや心理療法の作用メカニズムについて，心理ネットワーク分析や数理シミュレーションを中心とした計算論的アプローチを用いて研究に取り組んでいます。\n\n\n研究キーワード\n\n計算論的臨床心理学  ｜  心理ネットワーク分析  ｜  能動的推論  ｜  数理シミュレーション  ｜  感情粒度"
   },
   {
     "objectID": "research.html",
     "href": "research.html",
     "title": "研究",
     "section": "",
-    "text": "[2] 江川伊織・大水拓海・国里愛彦（印刷中）. 計算論的アプローチにおける不確実性下の意思決定・学習課題：スコーピングレビューによる選定指針. 認知科学, 33(2).\n[1] Omizu, T. and Kunisato, Y. (2025). Exploring Effective Intervention Strategies for Depression as a Complex System: Targeted Interventions through Network Simulations. Japanese Psychological Research, 67(2), 147–161. [DOI]\n\n\n\n\n\n\n[2] 大水拓海・国里愛彦（2025）. 単一事例研究への心理ネットワーク分析の適用―graphicalVARを用いたチュートリアル―. 専修人間科学論集 心理学篇, 15(1), 45–56. [link]\n[1] 国里愛彦・藁科佳奈・隅田昌孝・村口ゆら・大水拓海（2023）. 横断データに対する心理ネットワーク分析のチュートリアル. 専修人間科学論集 心理学篇, 13(1), 51–67. [link]\n\n\n\n\n\n\n[5] 大水拓海・国里愛彦（2025）. 心理ネットワークによる感情粒度の個人差の定量化：オープンデータの二次解析による検証. 日本心理学会第89回大会. ポスター発表. 2025年9月6日(土) 9:00 〜 10:40. [DOI]\n[4] 大水拓海・国里愛彦（2024）. 症状ネットワークのコネクティビティは症状改善の指標となるか？ 日本神経回路学会 JNN2024（2024.9.11-9.13）. ポスター発表. [link]\n[3] 大水拓海・国里愛彦（2024）. 介入標的によってうつ症状低減効果は変わるか？―ネットワークモデルを用いた数理シミュレーション―. 日本心理学会第88回大会.（2024.9.6 - 2024.9.8）. ポスター発表. [link]\n[2] 大水拓海（2023）. 複雑系としてのうつ病の数理シミュレーション. 日本心理学会第87回 若手の会企画「学部生・高校生プレゼンバトル」. 2023年9月15–17日. [link]\n[1] Omizu, T. & Kunisato, Y. (2023, July). Network simulation of depression as a complex system with treatment components. In Artificial Life Conference Proceedings 35 (Vol. 2023, No. 1, p. 97). MIT Press. [link] （審査あり）\n\n\n\n\n\n\n[5] 江川伊織・大水拓海・国里愛彦（2026）. 計算論的アプローチにおける不確実性下の意思決定・学習課題：スコーピングレビューによる分類枠組みと選定指針の提案. 計算論的精神医学コロキウム2026（CPSYTOKYO2026）. ポスター発表. 2026年2月19–20日.\n[4] 大水拓海・国里愛彦（2026）. 感情粒度の計算論モデル作成の試み：能動的推論によるシミュレーション. 計算論的精神医学コロキウム2026（CPSYTOKYO2026）. ポスター発表. 2026年2月19–20日.\n[3] 大水拓海（2025）. 心理ネットワークを用いたシミュレーション研究. 計算論的臨床心理学サマースクール2025. 2025年8月7日. 専修大学神田キャンパス.\n[2] 大水拓海・国里愛彦（2025）. 個別ネットワークの推定精度と解釈可能性. 計算論的精神医学コロキウム2025（CPSYTOKYO2025）. ポスター発表. 2025年2月19–20日.\n[1] Omizu, T. & Kunisato, Y. (2024). Computational Study of Psychotherapy Mechanisms through Psychological Networks and Mathematical Simulations. Computational Psychiatry and Neurobiology 2024 at University of Tokyo, Yamanaka-Ryo Naito Seminer House by abreuvoir. Oral presentation. November 4, 2024.\n\n\n\n\n\n\n[9] 2026年2月26日 日本心理学会第89回大会 学術大会優秀発表賞（大水拓海・国里愛彦（2025）. 心理ネットワークによる感情粒度の個人差の定量化：オープンデータの二次解析による検証. 日本心理学会第89回大会. ポスター発表. 2025年9月6日(土) 9:00 〜 10:40）\n[8] 2026年2月4日 令和7年度専修大学大学院文学研究科修士論文ポスター優秀発表賞「心理ネットワークを用いた感情粒度の定量化と感情ラベリングの効果の検証」\n[7] 2025年 専修大学大学院学術奨学生\n[6] 2024年 専修大学大学院学術奨学生\n[5] 2024年3月22日 令和5年度専修大学心理学科優秀卒業論文「複雑系としてのうつ病の症状維持と治療作用メカニズム―ネットワークモデルを用いた数理シミュレーションによる検討―」\n[4] 2024年3月22日 専修大学川島記念賞（学術）\n[3] 2023年9月 日本心理学会第87回 若手の会企画「学部生・高校生プレゼンバトル」ベストプレゼンター（第1席）. [link]\n[2] 2022年7月5日 専修大学学術奨学生\n[1] 2020年11月12日 専修大学新入生学術奨学生"
+    "text": "[2] 江川伊織・大水拓海・国里愛彦（印刷中）. 計算論的アプローチにおける不確実性下の意思決定・学習課題：スコーピングレビューによる選定指針. 認知科学, 33(2).\n[1] Omizu, T. and Kunisato, Y. (2025). Exploring Effective Intervention Strategies for Depression as a Complex System: Targeted Interventions through Network Simulations. Japanese Psychological Research, 67(2), 147–161. [DOI]"
   },
   {
     "objectID": "research.html#学術論文査読あり",
@@ -150,63 +94,28 @@
     "objectID": "research.html#紀要論文",
     "href": "research.html#紀要論文",
     "title": "研究",
-    "section": "",
-    "text": "[2] 大水拓海・国里愛彦（2025）. 単一事例研究への心理ネットワーク分析の適用―graphicalVARを用いたチュートリアル―. 専修人間科学論集 心理学篇, 15(1), 45–56. [link]\n[1] 国里愛彦・藁科佳奈・隅田昌孝・村口ゆら・大水拓海（2023）. 横断データに対する心理ネットワーク分析のチュートリアル. 専修人間科学論集 心理学篇, 13(1), 51–67. [link]"
+    "section": "紀要論文",
+    "text": "紀要論文\n\n[2] 大水拓海・国里愛彦（2025）. 単一事例研究への心理ネットワーク分析の適用―graphicalVARを用いたチュートリアル―. 専修人間科学論集 心理学篇, 15(1), 45–56. [link]\n[1] 国里愛彦・藁科佳奈・隅田昌孝・村口ゆら・大水拓海（2023）. 横断データに対する心理ネットワーク分析のチュートリアル. 専修人間科学論集 心理学篇, 13(1), 51–67. [link]"
   },
   {
     "objectID": "research.html#学会発表",
     "href": "research.html#学会発表",
     "title": "研究",
-    "section": "",
-    "text": "[5] 大水拓海・国里愛彦（2025）. 心理ネットワークによる感情粒度の個人差の定量化：オープンデータの二次解析による検証. 日本心理学会第89回大会. ポスター発表. 2025年9月6日(土) 9:00 〜 10:40. [DOI]\n[4] 大水拓海・国里愛彦（2024）. 症状ネットワークのコネクティビティは症状改善の指標となるか？ 日本神経回路学会 JNN2024（2024.9.11-9.13）. ポスター発表. [link]\n[3] 大水拓海・国里愛彦（2024）. 介入標的によってうつ症状低減効果は変わるか？―ネットワークモデルを用いた数理シミュレーション―. 日本心理学会第88回大会.（2024.9.6 - 2024.9.8）. ポスター発表. [link]\n[2] 大水拓海（2023）. 複雑系としてのうつ病の数理シミュレーション. 日本心理学会第87回 若手の会企画「学部生・高校生プレゼンバトル」. 2023年9月15–17日. [link]\n[1] Omizu, T. & Kunisato, Y. (2023, July). Network simulation of depression as a complex system with treatment components. In Artificial Life Conference Proceedings 35 (Vol. 2023, No. 1, p. 97). MIT Press. [link] （審査あり）"
+    "section": "学会発表",
+    "text": "学会発表\n\n[5] 大水拓海・国里愛彦（2025）. 心理ネットワークによる感情粒度の個人差の定量化：オープンデータの二次解析による検証. 日本心理学会第89回大会. ポスター発表. 2025年9月6日(土) 9:00 〜 10:40. [DOI]\n[4] 大水拓海・国里愛彦（2024）. 症状ネットワークのコネクティビティは症状改善の指標となるか？ 日本神経回路学会 JNN2024（2024.9.11-9.13）. ポスター発表. [link]\n[3] 大水拓海・国里愛彦（2024）. 介入標的によってうつ症状低減効果は変わるか？―ネットワークモデルを用いた数理シミュレーション―. 日本心理学会第88回大会.（2024.9.6 - 2024.9.8）. ポスター発表. [link]\n[2] 大水拓海（2023）. 複雑系としてのうつ病の数理シミュレーション. 日本心理学会第87回 若手の会企画「学部生・高校生プレゼンバトル」. 2023年9月15–17日. [link]\n[1] Omizu, T. & Kunisato, Y. (2023, July). Network simulation of depression as a complex system with treatment components. In Artificial Life Conference Proceedings 35 (Vol. 2023, No. 1, p. 97). MIT Press. [link] （審査あり）"
   },
   {
     "objectID": "research.html#その他の研究関連イベントでの発表",
     "href": "research.html#その他の研究関連イベントでの発表",
     "title": "研究",
-    "section": "",
-    "text": "[5] 江川伊織・大水拓海・国里愛彦（2026）. 計算論的アプローチにおける不確実性下の意思決定・学習課題：スコーピングレビューによる分類枠組みと選定指針の提案. 計算論的精神医学コロキウム2026（CPSYTOKYO2026）. ポスター発表. 2026年2月19–20日.\n[4] 大水拓海・国里愛彦（2026）. 感情粒度の計算論モデル作成の試み：能動的推論によるシミュレーション. 計算論的精神医学コロキウム2026（CPSYTOKYO2026）. ポスター発表. 2026年2月19–20日.\n[3] 大水拓海（2025）. 心理ネットワークを用いたシミュレーション研究. 計算論的臨床心理学サマースクール2025. 2025年8月7日. 専修大学神田キャンパス.\n[2] 大水拓海・国里愛彦（2025）. 個別ネットワークの推定精度と解釈可能性. 計算論的精神医学コロキウム2025（CPSYTOKYO2025）. ポスター発表. 2025年2月19–20日.\n[1] Omizu, T. & Kunisato, Y. (2024). Computational Study of Psychotherapy Mechanisms through Psychological Networks and Mathematical Simulations. Computational Psychiatry and Neurobiology 2024 at University of Tokyo, Yamanaka-Ryo Naito Seminer House by abreuvoir. Oral presentation. November 4, 2024."
+    "section": "その他の研究関連イベントでの発表",
+    "text": "その他の研究関連イベントでの発表\n\n[5] 江川伊織・大水拓海・国里愛彦（2026）. 計算論的アプローチにおける不確実性下の意思決定・学習課題：スコーピングレビューによる分類枠組みと選定指針の提案. 計算論的精神医学コロキウム2026（CPSYTOKYO2026）. ポスター発表. 2026年2月19–20日.\n[4] 大水拓海・国里愛彦（2026）. 感情粒度の計算論モデル作成の試み：能動的推論によるシミュレーション. 計算論的精神医学コロキウム2026（CPSYTOKYO2026）. ポスター発表. 2026年2月19–20日.\n[3] 大水拓海（2025）. 心理ネットワークを用いたシミュレーション研究. 計算論的臨床心理学サマースクール2025. 2025年8月7日. 専修大学神田キャンパス.\n[2] 大水拓海・国里愛彦（2025）. 個別ネットワークの推定精度と解釈可能性. 計算論的精神医学コロキウム2025（CPSYTOKYO2025）. ポスター発表. 2025年2月19–20日.\n[1] Omizu, T. & Kunisato, Y. (2024). Computational Study of Psychotherapy Mechanisms through Psychological Networks and Mathematical Simulations. Computational Psychiatry and Neurobiology 2024 at University of Tokyo, Yamanaka-Ryo Naito Seminer House by abreuvoir. Oral presentation. November 4, 2024."
   },
   {
     "objectID": "research.html#受賞等",
     "href": "research.html#受賞等",
     "title": "研究",
-    "section": "",
-    "text": "[9] 2026年2月26日 日本心理学会第89回大会 学術大会優秀発表賞（大水拓海・国里愛彦（2025）. 心理ネットワークによる感情粒度の個人差の定量化：オープンデータの二次解析による検証. 日本心理学会第89回大会. ポスター発表. 2025年9月6日(土) 9:00 〜 10:40）\n[8] 2026年2月4日 令和7年度専修大学大学院文学研究科修士論文ポスター優秀発表賞「心理ネットワークを用いた感情粒度の定量化と感情ラベリングの効果の検証」\n[7] 2025年 専修大学大学院学術奨学生\n[6] 2024年 専修大学大学院学術奨学生\n[5] 2024年3月22日 令和5年度専修大学心理学科優秀卒業論文「複雑系としてのうつ病の症状維持と治療作用メカニズム―ネットワークモデルを用いた数理シミュレーションによる検討―」\n[4] 2024年3月22日 専修大学川島記念賞（学術）\n[3] 2023年9月 日本心理学会第87回 若手の会企画「学部生・高校生プレゼンバトル」ベストプレゼンター（第1席）. [link]\n[2] 2022年7月5日 専修大学学術奨学生\n[1] 2020年11月12日 専修大学新入生学術奨学生"
-  },
-  {
-    "objectID": "research.html#peer-reviewed-journal-articles",
-    "href": "research.html#peer-reviewed-journal-articles",
-    "title": "研究",
-    "section": "Peer-Reviewed Journal Articles",
-    "text": "Peer-Reviewed Journal Articles\n\n[2] Egawa, I., Omizu, T., & Kunisato, Y. (in press). Uncertainty-based decision-making and learning tasks in computational approaches: A scoping review for selection guidelines. Cognitive Science, 33(2).\n[1] Omizu, T. and Kunisato, Y. (2025). Exploring Effective Intervention Strategies for Depression as a Complex System: Targeted Interventions through Network Simulations. Japanese Psychological Research, 67(2), 147–161. [DOI]"
-  },
-  {
-    "objectID": "research.html#bulletin-articles",
-    "href": "research.html#bulletin-articles",
-    "title": "研究",
-    "section": "Bulletin Articles",
-    "text": "Bulletin Articles\n\n[2] Omizu, T. & Kunisato, Y. (2025). Application of Psychological Network Analysis to Single-Case Research: A Tutorial Using graphicalVAR. Senshu Social Well-being Review: Psychology, 15(1), 45–56. [link]\n[1] Kunisato, Y., Warashina, K., Sumida, M., Muraguchi, Y., & Omizu, T. (2023). Tutorial on Psychological Network Analysis for Cross-Sectional Data. Senshu Social Well-being Review: Psychology, 13(1), 51–67. [link]"
-  },
-  {
-    "objectID": "research.html#conference-presentations",
-    "href": "research.html#conference-presentations",
-    "title": "研究",
-    "section": "Conference Presentations",
-    "text": "Conference Presentations\n\n[5] Omizu, T. & Kunisato, Y. (2025). Quantifying Individual Differences in Emotion Granularity via Psychological Networks: Validation through Secondary Analysis of Open Data. 89th Annual Meeting of the Japanese Psychological Association. Poster presentation. September 6, 2025. [DOI]\n[4] Omizu, T. & Kunisato, Y. (2024). Can Network Connectivity Serve as an Index of Symptom Improvement? Japan Neural Network Society JNN2024 (September 11–13, 2024). Poster presentation. [link]\n[3] Omizu, T. & Kunisato, Y. (2024). Do Intervention Targets Affect the Reduction of Depressive Symptoms? Mathematical Simulation Using a Network Model. 88th Annual Meeting of the Japanese Psychological Association (September 6–8, 2024). Poster presentation. [link]\n[2] Omizu, T. (2023). Mathematical Simulation of Depression as a Complex System. 87th Annual Meeting of the Japanese Psychological Association, Young Researchers’ Session “Undergraduate and High School Students’ Presentation Battle”. September 15–17, 2023. [link]\n[1] Omizu, T. & Kunisato, Y. (2023, July). Network simulation of depression as a complex system with treatment components. In Artificial Life Conference Proceedings 35 (Vol. 2023, No. 1, p. 97). MIT Press. [link] (peer-reviewed)"
-  },
-  {
-    "objectID": "research.html#presentations-at-other-research-events",
-    "href": "research.html#presentations-at-other-research-events",
-    "title": "研究",
-    "section": "Presentations at Other Research Events",
-    "text": "Presentations at Other Research Events\n\n[5] Egawa, I., Omizu, T., & Kunisato, Y. (2026). Uncertainty-based decision-making and learning tasks in computational approaches: A classification framework and selection guidelines from a scoping review. Computational Psychiatry Colloquium 2026 (CPSYTOKYO2026). Poster presentation. February 19–20, 2026.\n[4] Omizu, T. & Kunisato, Y. (2026). Toward a Computational Model of Emotion Granularity: Simulation via Active Inference. Computational Psychiatry Colloquium 2026 (CPSYTOKYO2026). Poster presentation. February 19–20, 2026.\n[3] Omizu, T. (2025). Simulation Research Using Psychological Networks. Computational Clinical Psychology Summer School 2025. August 7, 2025. Senshu University, Kanda Campus.\n[2] Omizu, T. & Kunisato, Y. (2025). Estimation Accuracy and Interpretability of Individual Networks. Computational Psychiatry Colloquium 2025 (CPSYTOKYO2025). Poster presentation. February 19–20, 2025.\n[1] Omizu, T. & Kunisato, Y. (2024). Computational Study of Psychotherapy Mechanisms through Psychological Networks and Mathematical Simulations. Computational Psychiatry and Neurobiology 2024 at University of Tokyo, Yamanaka-Ryo Naito Seminer House by abreuvoir. Oral presentation. November 4, 2024."
-  },
-  {
-    "objectID": "research.html#awards-honors",
-    "href": "research.html#awards-honors",
-    "title": "研究",
-    "section": "Awards & Honors",
-    "text": "Awards & Honors\n\n[9] February 26, 2026 — Outstanding Presentation Award, 89th Annual Meeting of the Japanese Psychological Association (Omizu, T. & Kunisato, Y. (2025). Quantifying Individual Differences in Emotion Granularity via Psychological Networks. Poster presentation, September 6, 2025.)\n[8] February 4, 2026 — Outstanding Master’s Thesis Poster Award, Graduate School of Letters, Senshu University, FY2025 — “Quantification of Emotion Granularity Using Psychological Networks and Validation of Emotion Labeling Effects”\n[7] 2025 — Senshu University Graduate Academic Scholarship\n[6] 2024 — Senshu University Graduate Academic Scholarship\n[5] March 22, 2024 — Outstanding Undergraduate Thesis, Senshu University, FY2023 — “Maintenance of Depressive Symptoms and Mechanisms of Therapeutic Action as a Complex System: A Mathematical Simulation Using a Network Model”\n[4] March 22, 2024 — Senshu University Kawashima Memorial Award (Academic)\n[3] September 2023 — Best Presenter (1st Place), 87th Annual Meeting of the Japanese Psychological Association, Young Researchers’ Session “Undergraduate and High School Students’ Presentation Battle.” [link]\n[2] July 5, 2022 — Senshu University Academic Scholarship\n[1] November 12, 2020 — Senshu University Freshman Academic Scholarship"
+    "section": "受賞等",
+    "text": "受賞等\n\n[9] 2026年2月26日 日本心理学会第89回大会 学術大会優秀発表賞（大水拓海・国里愛彦（2025）. 心理ネットワークによる感情粒度の個人差の定量化：オープンデータの二次解析による検証. 日本心理学会第89回大会. ポスター発表. 2025年9月6日(土) 9:00 〜 10:40）\n[8] 2026年2月4日 令和7年度専修大学大学院文学研究科修士論文ポスター優秀発表賞「心理ネットワークを用いた感情粒度の定量化と感情ラベリングの効果の検証」\n[7] 2025年 専修大学大学院学術奨学生\n[6] 2024年 専修大学大学院学術奨学生\n[5] 2024年3月22日 令和5年度専修大学心理学科優秀卒業論文「複雑系としてのうつ病の症状維持と治療作用メカニズム―ネットワークモデルを用いた数理シミュレーションによる検討―」\n[4] 2024年3月22日 専修大学川島記念賞（学術）\n[3] 2023年9月 日本心理学会第87回 若手の会企画「学部生・高校生プレゼンバトル」ベストプレゼンター（第1席）. [link]\n[2] 2022年7月5日 専修大学学術奨学生\n[1] 2020年11月12日 専修大学新入生学術奨学生"
   }
 ]

@@ -140,7 +140,6 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div id="content-ja">
 <section id="研究テーマ" class="level2">
 <h2 class="anchored" data-anchor-id="研究テーマ">研究テーマ</h2>
 <p>臨床心理学 ／ ネットワーク心理測定学 ／ 計算論的アプローチ</p>
@@ -207,156 +206,13 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li>心理学検定 1級（2021年9月17日）</li>
 <li>心理学検定 特1級（2021年10月15日）</li>
+<li>公認心理師(2026年5月)</li>
 </ul>
-</section>
-</div>
-<div id="content-en">
-<section id="research-topics" class="level2">
-<h2 class="anchored" data-anchor-id="research-topics">Research Topics</h2>
-<p>Clinical Psychology / Network Psychometrics / Computational Approaches</p>
-<hr>
-</section>
-<section id="current-affiliation" class="level2">
-<h2 class="anchored" data-anchor-id="current-affiliation">Current Affiliation</h2>
-<p>Doctoral Program, Department of Psychology, Graduate School of Letters, Senshu University</p>
-<p>Computational Clinical Psychology Laboratory</p>
-<hr>
-</section>
-<section id="education" class="level2">
-<h2 class="anchored" data-anchor-id="education">Education</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Date</th>
-<th>Event</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>April 2020</td>
-<td>Enrolled in Department of Psychology, School of Human Sciences, Senshu University</td>
-</tr>
-<tr class="even">
-<td>March 2024</td>
-<td>Graduated from Department of Psychology, School of Human Sciences, Senshu University</td>
-</tr>
-<tr class="odd">
-<td>April 2024</td>
-<td>Enrolled in Master’s Program, Department of Psychology, Graduate School of Letters, Senshu University</td>
-</tr>
-<tr class="even">
-<td>March 2026</td>
-<td>Completed Master’s Program, Department of Psychology, Graduate School of Letters, Senshu University</td>
-</tr>
-<tr class="odd">
-<td>April 2026</td>
-<td>Enrolled in Doctoral Program, Department of Psychology, Graduate School of Letters, Senshu University</td>
-</tr>
-</tbody>
-</table>
-<hr>
-</section>
-<section id="academic-societies" class="level2">
-<h2 class="anchored" data-anchor-id="academic-societies">Academic Societies</h2>
-<ul>
-<li>The Japanese Psychological Association</li>
-</ul>
-<hr>
-</section>
-<section id="teaching-assistant" class="level2">
-<h2 class="anchored" data-anchor-id="teaching-assistant">Teaching Assistant</h2>
-<ul>
-<li>Senshu University: Psychology Practicum 1 (Apr.&nbsp;2025 – Jul.&nbsp;2025)</li>
-<li>Senshu University: Psychology Practicum 2 (Sep.&nbsp;2025 – Jan.&nbsp;2026)</li>
-<li>Senshu University: Undergraduate Thesis Supervision, Dept. of Psychology (Apr.&nbsp;2026 –)</li>
-</ul>
-<hr>
-</section>
-<section id="qualifications" class="level2">
-<h2 class="anchored" data-anchor-id="qualifications">Qualifications</h2>
-<ul>
-<li>Psychology Certification Exam, Level 1 (September 17, 2021)</li>
-<li>Psychology Certification Exam, Special Level 1 (October 15, 2021)</li>
-</ul>
-</section>
-</div>
 
 
+</section>
 
 </main> <!-- /main -->
-<script>
-(function () {
-  var currentLang = 'ja';
-
-  var pageTitleMap = {
-    '大水拓海 (Takumi Omizu)': 'Takumi Omizu',
-    'プロフィール': 'Profile',
-    '研究': 'Research',
-    'マテリアル': 'Materials',
-  };
-
-  var navLabelMap = {
-    'ホーム': 'Home',
-    'プロフィール': 'Profile',
-    '研究': 'Research',
-    'マテリアル': 'Materials',
-  };
-
-  function applyLang(lang) {
-    currentLang = lang;
-    var ja = document.getElementById('content-ja');
-    var en = document.getElementById('content-en');
-    var btn = document.getElementById('lang-btn');
-
-    if (lang === 'en') {
-      if (ja) ja.style.display = 'none';
-      if (en) en.style.display = 'block';
-      if (btn) btn.textContent = 'Japanese';
-    } else {
-      if (ja) ja.style.display = 'block';
-      if (en) en.style.display = 'none';
-      if (btn) btn.textContent = 'English';
-    }
-
-    var h1 = document.querySelector('h1.title');
-    if (h1) {
-      if (!h1.getAttribute('data-ja')) h1.setAttribute('data-ja', h1.textContent.trim());
-      var jaTitle = h1.getAttribute('data-ja');
-      h1.textContent = lang === 'en' ? (pageTitleMap[jaTitle] || jaTitle) : jaTitle;
-    }
-
-    var navTitle = document.querySelector('.navbar-title');
-    if (navTitle) {
-      navTitle.textContent = lang === 'en' ? 'Takumi Omizu' : '大水拓海';
-    }
-
-    document.querySelectorAll('.navbar-nav .menu-text').forEach(function (item) {
-      if (!item.getAttribute('data-ja')) item.setAttribute('data-ja', item.textContent.trim());
-      var jaLabel = item.getAttribute('data-ja');
-      item.textContent = lang === 'en' ? (navLabelMap[jaLabel] || jaLabel) : jaLabel;
-    });
-
-    localStorage.setItem('site-lang', lang);
-  }
-
-  document.addEventListener('DOMContentLoaded', function () {
-    var btn = document.createElement('button');
-    btn.id = 'lang-btn';
-    btn.className = 'lang-toggle-btn';
-    btn.textContent = 'English';
-    btn.addEventListener('click', function () {
-      applyLang(currentLang === 'ja' ? 'en' : 'ja');
-    });
-    var tools = document.querySelector('.quarto-navbar-tools');
-    if (tools) tools.appendChild(btn);
-    applyLang(localStorage.getItem('site-lang') || 'ja');
-  });
-})();
-</script>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

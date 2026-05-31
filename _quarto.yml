@@ -34,4 +34,3 @@ format:
     toc: false
     lang: ja
     include-in-header: meta.html
-    include-after-body: lang-toggle.html

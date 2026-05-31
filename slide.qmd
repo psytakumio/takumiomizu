@@ -2,7 +2,6 @@
 title: "マテリアル"
 ---
 
-::: {#content-ja}
 ## 公開中のスライド
 
 ::: {.pub-list}
@@ -22,28 +21,4 @@ title: "マテリアル"
 
 - [psynetsim](slide/manual/psynetsim_manual.html) — 心理ネットワークシミュレーション用Rパッケージ
 
-:::
-:::
-
-::: {#content-en}
-## Available Slides
-
-::: {.pub-list}
-
-- [Simulation Research Using Psychological Networks](slide/summerschool2025.html)
-  Computational Clinical Psychology Summer School 2025 (August 2025)
-
-- [Emotion Granularity and Mental Health: Insights from Simulation Using Psychological Networks and Active Inference Models](slide/hirosima.html)
-
-:::
-
----
-
-## Packages
-
-::: {.pub-list}
-
-- [psynetsim](slide/manual/psynetsim_manual.html) — R package for psychological network simulation
-
-:::
 :::
