@@ -117,6 +117,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"TakumiOmizu/psynetsim"</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psynetsim)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>psynetsimでは，症状同士が互いに影響し合うネットワークを仮定し，そのネットワークに対して治療的な介入を加えたときに，症状の活性化が時間のなかでどのように変化するかをシミュレーションします。ここでいう「症状」は，抑うつ気分，不安，不眠，疲労感などの心理・行動的な状態を表すノードです。ネットワークのエッジは，ある症状が別の症状をどの程度活性化しやすいかを表します。</p>
+<p>このパッケージで扱うシミュレーションは，おおまかには次の考え方に基づいています。</p>
+<ul>
+<li>各症状は，それぞれ 0 または 1 の状態をとります。</li>
+<li>1 はその症状が活性化している状態，0 は活性化していない状態を表します。</li>
+<li>ある時点の症状状態は，ネットワークの重み，閾値，直前の症状状態に基づいて確率的に更新されます。</li>
+<li>介入は，治療コンポーネントを追加したり，症状の閾値を変化させたりする形で表現されます。</li>
+<li>1回のシミュレーションだけでは確率的なゆらぎが大きいため，通常は複数試行を行い，平均的な変化を確認します。</li>
+</ul>
 </section>
 <section id="関数" class="level1">
 <h1>関数</h1>
@@ -124,15 +133,584 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>以降ではpsynetsimパッケージに含まれている関数の使い方についてまとめています。 (追記するまでは，Rで？「関数名」を実行して使い方をご確認ください。)</p></li>
 <li><p>最新はver0.2.0で，閾値に介入する時系列シミュレーション関数(simulate_network_threshold)を追加しました。</p></li>
 </ul>
-<section id="simulate_treatment_network" class="level3">
-<h3 class="anchored" data-anchor-id="simulate_treatment_network">simulate_treatment_network</h3>
+<p>現在の主な関数は次の3つです。</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>関数名</th>
+<th>概要</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>simulate_treatment_network()</code></td>
+<td>症状ネットワークに治療コンポーネントを順に追加し，症状と治療コンポーネントの活性化の変化をシミュレーションする関数です。</td>
+</tr>
+<tr class="even">
+<td><code>simulate_treatment_network_dym()</code></td>
+<td><code>simulate_treatment_network()</code>を拡張し，介入の進行中に症状ネットワーク自体をデータから再推定・更新する関数です。</td>
+</tr>
+<tr class="odd">
+<td><code>simulate_network_threshold()</code></td>
+<td>治療コンポーネントを追加するのではなく，症状の閾値に直接介入し，介入開始・終了後の動的変化をシミュレーションする関数です。</td>
+</tr>
+</tbody>
+</table>
+<section id="共通して必要になる入力" class="level2">
+<h2 class="anchored" data-anchor-id="共通して必要になる入力">共通して必要になる入力</h2>
+<p>3つの関数では，基本的に以下のような情報を用意します。</p>
+<section id="w_init" class="level3">
+<h3 class="anchored" data-anchor-id="w_init"><code>W_init</code></h3>
+<p><code>W_init</code>は，初期状態の症状ネットワークを表す正方行列です。行数と列数は症状数に対応します。たとえば6症状を扱う場合は，6行6列の行列を指定します。</p>
+<p>行列の各要素は，症状間の結びつきの強さを表します。対角成分は自分自身への影響なので，通常は0にします。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>W_init <span class="ot">&lt;-</span> <span class="fu">matrix</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.0</span>, <span class="fl">0.2</span>, <span class="fl">0.1</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.2</span>, <span class="fl">0.0</span>, <span class="fl">0.3</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.1</span>, <span class="fl">0.3</span>, <span class="fl">0.0</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">nrow =</span> <span class="dv">3</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">byrow =</span> <span class="cn">TRUE</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
-<section id="simulate_treatment_network_dym" class="level3">
-<h3 class="anchored" data-anchor-id="simulate_treatment_network_dym">simulate_treatment_network_dym</h3>
+<section id="b_init" class="level3">
+<h3 class="anchored" data-anchor-id="b_init"><code>b_init</code></h3>
+<p><code>b_init</code>は，各症状の初期閾値を表す数値ベクトルです。長さは<code>W_init</code>の行数，つまり症状数と一致している必要があります。閾値は，症状が活性化するしやすさに関わります。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>b_init <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.3</span>, <span class="fl">0.4</span>, <span class="fl">0.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
-<section id="simulate_network_threshold" class="level3">
-<h3 class="anchored" data-anchor-id="simulate_network_threshold">simulate_network_threshold</h3>
+<section id="target" class="level3">
+<h3 class="anchored" data-anchor-id="target"><code>target</code></h3>
+<p><code>target</code>は，どの症状に介入するかを指定する引数です。ただし，関数によって意味が少し異なります。</p>
+<ul>
+<li><code>simulate_treatment_network()</code>と<code>simulate_treatment_network_dym()</code>では，<code>1</code>が介入対象，<code>0</code>が非対象を表します。</li>
+<li><code>simulate_network_threshold()</code>では，各症状の閾値にどれだけ介入効果を加えるかを表す数値ベクトルです。0ならその症状には介入しません。</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1番目と3番目の症状を介入対象にする</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>target_binary <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 1番目と3番目の症状の閾値に介入する</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>target_threshold <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.5</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
+<section id="symptom_name" class="level3">
+<h3 class="anchored" data-anchor-id="symptom_name"><code>symptom_name</code></h3>
+<p><code>symptom_name</code>は，症状名を指定する文字ベクトルです。指定しない場合は，関数側で<code>a</code>, <code>b</code>, <code>c</code>や<code>Symptom_1</code>, <code>Symptom_2</code>のような名前が使われます。結果のネットワーク図を読みやすくするため，実際の分析では指定しておくことをおすすめします。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>symptom_name <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Depressed mood"</span>, <span class="st">"Anxiety"</span>, <span class="st">"Insomnia"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="simulate_treatment_network" class="level2">
+<h2 class="anchored" data-anchor-id="simulate_treatment_network">simulate_treatment_network</h2>
+<p><code>simulate_treatment_network()</code>は，症状ネットワークに治療コンポーネント(TC: treatment component)を順番に追加していくシミュレーション関数です。</p>
+<p>この関数では，まず介入前のベースライン期間をシミュレーションします。その後，治療コンポーネントを1つずつ追加します。各治療コンポーネントは，<code>target</code>で指定された症状に対して負の結びつきを持つように導入されます。つまり，治療コンポーネントが活性化すると，対象症状の活性化を下げる方向に働く，というイメージです。最後にフォローアップ期間をシミュレーションします。</p>
+<p>実行すると，平均的なネットワーク図と，症状および治療コンポーネントの平均活性化の時系列図が得られます。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">simulate_treatment_network</span>(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  W_init,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  b_init,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  target,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">connectivity =</span> <span class="dv">1</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">edge_between_TC =</span> <span class="dv">1</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">weight_bias =</span> <span class="dv">1</span>,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">TB =</span> <span class="dv">1</span>,</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">trial =</span> <span class="dv">10</span>,</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">baseline_iteration =</span> <span class="dv">10</span>,</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">num_TC =</span> <span class="dv">5</span>,</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">TC_iteration_per_component =</span> <span class="dv">10</span>,</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">follow_up_iteration =</span> <span class="dv">10</span>,</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">symptom_name =</span> <span class="cn">NULL</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="引数" class="level3">
+<h3 class="anchored" data-anchor-id="引数">引数</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>引数</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>W_init</code></td>
+<td>初期症状ネットワークを表す正方行列です。行数・列数が症状数になります。</td>
+</tr>
+<tr class="even">
+<td><code>b_init</code></td>
+<td>各症状の初期閾値を表す数値ベクトルです。長さは<code>W_init</code>の行数と一致させます。</td>
+</tr>
+<tr class="odd">
+<td><code>target</code></td>
+<td>介入対象の症状を指定します。<code>1</code>が介入対象，<code>0</code>が非対象です。リストまたはベクトルで指定できます。</td>
+</tr>
+<tr class="even">
+<td><code>connectivity</code></td>
+<td>ネットワーク全体の結合の強さを調整する係数です。大きいほど，隣接ノードからの影響が強くなります。既定値は<code>1</code>です。</td>
+</tr>
+<tr class="odd">
+<td><code>edge_between_TC</code></td>
+<td>治療コンポーネント同士の結びつきの強さを調整する係数です。既定値は<code>1</code>です。</td>
+</tr>
+<tr class="even">
+<td><code>weight_bias</code></td>
+<td>治療コンポーネントから対象症状への負の効果の強さを調整する係数です。大きいほど，対象症状を抑制する方向の結びつきが強くなります。既定値は<code>1</code>です。</td>
+</tr>
+<tr class="odd">
+<td><code>TB</code></td>
+<td>治療コンポーネントの閾値を調整する係数です。大きいほど，治療コンポーネントが自発的に活性化しにくくなります。既定値は<code>1</code>です。</td>
+</tr>
+<tr class="even">
+<td><code>trial</code></td>
+<td>シミュレーションを何回繰り返すかを指定します。結果は試行間で平均されます。既定値は<code>10</code>です。</td>
+</tr>
+<tr class="odd">
+<td><code>baseline_iteration</code></td>
+<td>治療コンポーネントを導入する前のベースライン期間の長さです。既定値は<code>10</code>です。</td>
+</tr>
+<tr class="even">
+<td><code>num_TC</code></td>
+<td>導入する治療コンポーネントの数です。既定値は<code>5</code>です。</td>
+</tr>
+<tr class="odd">
+<td><code>TC_iteration_per_component</code></td>
+<td>治療コンポーネントを1つ追加するごとに，何ステップ状態更新を行うかを指定します。既定値は<code>10</code>です。</td>
+</tr>
+<tr class="even">
+<td><code>follow_up_iteration</code></td>
+<td>すべての治療コンポーネントを導入した後のフォローアップ期間の長さです。既定値は<code>10</code>です。</td>
+</tr>
+<tr class="odd">
+<td><code>symptom_name</code></td>
+<td>症状名を指定する文字ベクトルです。<code>NULL</code>の場合は自動的に名前が付けられます。</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="返り値" class="level3">
+<h3 class="anchored" data-anchor-id="返り値">返り値</h3>
+<p>返り値はリストです。</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>要素</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>result_plot</code></td>
+<td>ネットワーク図と時系列図を並べたプロットです。</td>
+</tr>
+<tr class="even">
+<td><code>result_text</code></td>
+<td>最終時点における症状活性化と治療コンポーネント活性化の平均・標準偏差をまとめた文字列です。</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="使用例" class="level3">
+<h3 class="anchored" data-anchor-id="使用例">使用例</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>W_init <span class="ot">&lt;-</span> <span class="fu">matrix</span>(</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.0</span>, <span class="fl">0.2</span>, <span class="fl">0.1</span>,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.2</span>, <span class="fl">0.0</span>, <span class="fl">0.3</span>,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.1</span>, <span class="fl">0.3</span>, <span class="fl">0.0</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">nrow =</span> <span class="dv">3</span>,</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">byrow =</span> <span class="cn">TRUE</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>b_init <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.3</span>, <span class="fl">0.4</span>, <span class="fl">0.2</span>)</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>target <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>symptom_name <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Depressed mood"</span>, <span class="st">"Anxiety"</span>, <span class="st">"Insomnia"</span>)</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">simulate_treatment_network</span>(</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">W_init =</span> W_init,</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">b_init =</span> b_init,</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">target =</span> target,</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">trial =</span> <span class="dv">20</span>,</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">baseline_iteration =</span> <span class="dv">20</span>,</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">num_TC =</span> <span class="dv">3</span>,</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">TC_iteration_per_component =</span> <span class="dv">20</span>,</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">follow_up_iteration =</span> <span class="dv">20</span>,</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">symptom_name =</span> symptom_name</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>res<span class="sc">$</span>result_text</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>res<span class="sc">$</span>result_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="simulate_treatment_network_dym" class="level2">
+<h2 class="anchored" data-anchor-id="simulate_treatment_network_dym">simulate_treatment_network_dym</h2>
+<p><code>simulate_treatment_network_dym()</code>は，<code>simulate_treatment_network()</code>を動的ネットワーク版に拡張した関数です。</p>
+<p>基本的な流れは<code>simulate_treatment_network()</code>と同じで，ベースライン期間のあとに治療コンポーネントを順番に追加していきます。大きな違いは，介入の進行中に得られた症状状態の時系列データを使って，症状ネットワークを再推定する点です。再推定には正則化ロジスティック回帰が使われます。これにより，治療が進むなかで症状同士の関係が変化する状況を表現できます。</p>
+<p>たとえば，ある症状を抑えることで，別の症状との結びつきが弱くなる，あるいは別の経路が強くなる，といった変化を含めてシミュレーションしたい場合に使います。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">simulate_treatment_network_dym</span>(</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  W_init,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  b_init,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  target,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">connectivity =</span> <span class="dv">1</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">edge_between_TC =</span> <span class="dv">1</span>,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">weight_bias =</span> <span class="dv">1</span>,</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">TB =</span> <span class="dv">1</span>,</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">trial =</span> <span class="dv">10</span>,</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">baseline_iteration =</span> <span class="dv">10</span>,</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">num_TC =</span> <span class="dv">5</span>,</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">TC_iteration_per_component =</span> <span class="dv">10</span>,</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">follow_up_iteration =</span> <span class="dv">10</span>,</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">symptom_name =</span> <span class="cn">NULL</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="引数-1" class="level3">
+<h3 class="anchored" data-anchor-id="引数-1">引数</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>引数</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>W_init</code></td>
+<td>初期症状ネットワークを表す正方行列です。</td>
+</tr>
+<tr class="even">
+<td><code>b_init</code></td>
+<td>各症状の初期閾値を表す数値ベクトルです。</td>
+</tr>
+<tr class="odd">
+<td><code>target</code></td>
+<td>介入対象の症状を指定します。<code>1</code>が介入対象，<code>0</code>が非対象です。</td>
+</tr>
+<tr class="even">
+<td><code>connectivity</code></td>
+<td>ネットワーク全体の結合の強さを調整する係数です。大きいほど，直前の状態が次の状態に与える影響が強くなります。既定値は<code>1</code>です。</td>
+</tr>
+<tr class="odd">
+<td><code>edge_between_TC</code></td>
+<td>治療コンポーネント同士の結びつきの強さを調整する係数です。既定値は<code>1</code>です。</td>
+</tr>
+<tr class="even">
+<td><code>weight_bias</code></td>
+<td>治療コンポーネントから介入対象症状への負の結びつきの強さを調整します。既定値は<code>1</code>です。</td>
+</tr>
+<tr class="odd">
+<td><code>TB</code></td>
+<td>治療コンポーネントの閾値を調整する係数です。既定値は<code>1</code>です。</td>
+</tr>
+<tr class="even">
+<td><code>trial</code></td>
+<td>シミュレーションの繰り返し回数です。既定値は<code>10</code>です。</td>
+</tr>
+<tr class="odd">
+<td><code>baseline_iteration</code></td>
+<td>介入前のベースライン期間の長さです。既定値は<code>10</code>です。</td>
+</tr>
+<tr class="even">
+<td><code>num_TC</code></td>
+<td>導入する治療コンポーネントの数です。既定値は<code>5</code>です。</td>
+</tr>
+<tr class="odd">
+<td><code>TC_iteration_per_component</code></td>
+<td>治療コンポーネントを追加した後，次の追加・再推定までに何ステップ進めるかを指定します。既定値は<code>10</code>です。</td>
+</tr>
+<tr class="even">
+<td><code>follow_up_iteration</code></td>
+<td>治療コンポーネント導入後のフォローアップ期間です。既定値は<code>10</code>です。</td>
+</tr>
+<tr class="odd">
+<td><code>symptom_name</code></td>
+<td>症状名を指定する文字ベクトルです。<code>NULL</code>の場合は，<code>W_init</code>の列名または自動生成された名前が使われます。</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="返り値-1" class="level3">
+<h3 class="anchored" data-anchor-id="返り値-1">返り値</h3>
+<p>返り値はリストです。</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>要素</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>result_plot</code></td>
+<td>症状ネットワーク図と，症状・治療コンポーネントの平均活性化の時系列図を並べたプロットです。</td>
+</tr>
+<tr class="even">
+<td><code>result_text</code></td>
+<td>最終時点における症状活性化と治療コンポーネント活性化の平均・標準偏差をまとめた文字列です。</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="simulate_treatment_networkとの違い" class="level3">
+<h3 class="anchored" data-anchor-id="simulate_treatment_networkとの違い"><code>simulate_treatment_network()</code>との違い</h3>
+<p><code>simulate_treatment_network()</code>では，最初に与えた症状ネットワークを基本として，そこに治療コンポーネントを追加していきます。一方，<code>simulate_treatment_network_dym()</code>では，介入中の症状データに基づいて症状ネットワーク部分が更新されます。そのため，介入によって症状間の関係そのものが変化すると考えたい場合には，<code>simulate_treatment_network_dym()</code>のほうが適しています。</p>
+<p>ただし，動的にネットワークを再推定するため，<code>TC_iteration_per_component</code>が極端に短いと，再推定に使えるデータが少なくなります。安定した推定を行いたい場合は，試行数や各フェーズのステップ数をある程度大きく設定することが重要です。</p>
+</section>
+<section id="使用例-1" class="level3">
+<h3 class="anchored" data-anchor-id="使用例-1">使用例</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>res_dym <span class="ot">&lt;-</span> <span class="fu">simulate_treatment_network_dym</span>(</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">W_init =</span> W_init,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">b_init =</span> b_init,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">target =</span> target,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">trial =</span> <span class="dv">20</span>,</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">baseline_iteration =</span> <span class="dv">20</span>,</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">num_TC =</span> <span class="dv">3</span>,</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">TC_iteration_per_component =</span> <span class="dv">30</span>,</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">follow_up_iteration =</span> <span class="dv">20</span>,</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">symptom_name =</span> symptom_name</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>res_dym<span class="sc">$</span>result_text</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>res_dym<span class="sc">$</span>result_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="simulate_network_threshold" class="level2">
+<h2 class="anchored" data-anchor-id="simulate_network_threshold">simulate_network_threshold</h2>
+<p><code>simulate_network_threshold()</code>は，ver0.2.0で追加された，閾値への介入を扱う時系列シミュレーション関数です。</p>
+<p><code>simulate_treatment_network()</code>と<code>simulate_treatment_network_dym()</code>では，治療コンポーネントという新しいノードをネットワークに追加します。一方，<code>simulate_network_threshold()</code>では，新しいノードは追加せず，既存の症状ノードの閾値に直接介入します。したがって，「治療によって特定の症状が活性化しにくくなる」「一定期間だけ特定症状の閾値が変わる」といった状況を表現するのに向いています。</p>
+<p>この関数では，ベースライン期間のあとに<code>target</code>で指定した値を<code>b_init</code>に加えます。その後，指定された期間だけ介入を続け，介入終了時点でその効果を取り除きます。また，介入後の時系列データを用いて，症状ネットワークを複数回再推定します。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">simulate_network_threshold</span>(</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  W_init,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  b_init,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  target,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">connectivity =</span> <span class="dv">1</span>,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">trial =</span> <span class="dv">10</span>,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">baseline_iteration =</span> <span class="dv">10</span>,</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">intervention_duration =</span> <span class="dv">20</span>,</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">num_updates =</span> <span class="dv">5</span>,</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">update_interval =</span> <span class="dv">10</span>,</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">follow_up_iteration =</span> <span class="dv">10</span>,</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">symptom_name =</span> <span class="cn">NULL</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="引数-2" class="level3">
+<h3 class="anchored" data-anchor-id="引数-2">引数</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>引数</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>W_init</code></td>
+<td>初期症状ネットワークを表す正方行列です。行数と列数は一致している必要があります。</td>
+</tr>
+<tr class="even">
+<td><code>b_init</code></td>
+<td>各症状の初期閾値を表す数値ベクトルです。長さは<code>W_init</code>の行数と一致している必要があります。</td>
+</tr>
+<tr class="odd">
+<td><code>target</code></td>
+<td>各症状の閾値に加える介入量を表す数値ベクトルです。長さは症状数と一致している必要があります。0を指定した症状には介入しません。</td>
+</tr>
+<tr class="even">
+<td><code>connectivity</code></td>
+<td>ネットワーク全体の結合の強さを調整する係数です。既定値は<code>1</code>です。</td>
+</tr>
+<tr class="odd">
+<td><code>trial</code></td>
+<td>シミュレーションの繰り返し回数です。既定値は<code>10</code>です。</td>
+</tr>
+<tr class="even">
+<td><code>baseline_iteration</code></td>
+<td>閾値介入を始める前のベースライン期間の長さです。既定値は<code>10</code>です。</td>
+</tr>
+<tr class="odd">
+<td><code>intervention_duration</code></td>
+<td>閾値介入を何ステップ継続するかを指定します。既定値は<code>20</code>です。</td>
+</tr>
+<tr class="even">
+<td><code>num_updates</code></td>
+<td>介入開始後にネットワークを何回再推定するかを指定します。既定値は<code>5</code>です。</td>
+</tr>
+<tr class="odd">
+<td><code>update_interval</code></td>
+<td>ネットワーク再推定の間隔です。たとえば<code>10</code>なら，10ステップごとに症状データを使ってネットワークを再推定します。既定値は<code>10</code>です。</td>
+</tr>
+<tr class="even">
+<td><code>follow_up_iteration</code></td>
+<td>動的更新フェーズの後に追加で実行するフォローアップ期間です。既定値は<code>10</code>です。</td>
+</tr>
+<tr class="odd">
+<td><code>symptom_name</code></td>
+<td>症状名を指定する文字ベクトルです。<code>NULL</code>の場合は，<code>W_init</code>の列名または自動生成された名前が使われます。</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="返り値-2" class="level3">
+<h3 class="anchored" data-anchor-id="返り値-2">返り値</h3>
+<p>返り値はリストです。ほかの2関数よりも，後から結果を詳しく確認しやすい形になっています。</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>要素</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>plot_data</code></td>
+<td>各時点・各症状の平均活性化と標準偏差をまとめたデータフレームです。</td>
+</tr>
+<tr class="even">
+<td><code>raw_data</code></td>
+<td>全試行の生データです。次元はおおむね「試行数 × 時点数 × 症状数」です。</td>
+</tr>
+<tr class="odd">
+<td><code>final_network</code></td>
+<td>全試行を平均した最終ネットワークです。<code>W</code>に重み行列，<code>b</code>に閾値ベクトルが含まれます。</td>
+</tr>
+<tr class="even">
+<td><code>network_history_full</code></td>
+<td>各試行におけるネットワークと閾値の更新履歴です。介入開始，介入終了，各更新時点の状態を確認できます。</td>
+</tr>
+<tr class="odd">
+<td><code>result_plot</code></td>
+<td>最終試行のネットワーク図と，全体的な活性化の時系列図を並べたプロットです。</td>
+</tr>
+<tr class="even">
+<td><code>result_text</code></td>
+<td>最終時点の全体的な活性化をまとめた文字列です。</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="targetの指定に注意" class="level3">
+<h3 class="anchored" data-anchor-id="targetの指定に注意"><code>target</code>の指定に注意</h3>
+<p><code>simulate_network_threshold()</code>の<code>target</code>は，介入対象を<code>1</code>/<code>0</code>で指定するのではなく，閾値に加える量を直接指定します。</p>
+<p>たとえば，次のように指定すると，1番目と3番目の症状の閾値に<code>-0.5</code>が加えられます。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>target <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.5</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>閾値への介入量の符号や大きさは，どのような介入を表現したいかに応じて決める必要があります。実装上は，ベースライン終了後に<code>b &lt;- b + target</code>として介入が加えられ，介入終了時点で<code>b &lt;- b - target</code>として取り除かれます。</p>
+</section>
+<section id="使用例-2" class="level3">
+<h3 class="anchored" data-anchor-id="使用例-2">使用例</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>target_threshold <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.5</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="fl">0.5</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>res_threshold <span class="ot">&lt;-</span> <span class="fu">simulate_network_threshold</span>(</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">W_init =</span> W_init,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">b_init =</span> b_init,</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">target =</span> target_threshold,</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">trial =</span> <span class="dv">20</span>,</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">baseline_iteration =</span> <span class="dv">20</span>,</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">intervention_duration =</span> <span class="dv">30</span>,</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">num_updates =</span> <span class="dv">5</span>,</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">update_interval =</span> <span class="dv">10</span>,</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">follow_up_iteration =</span> <span class="dv">20</span>,</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">symptom_name =</span> symptom_name</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>res_threshold<span class="sc">$</span>result_text</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>res_threshold<span class="sc">$</span>result_plot</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a><span class="co"># 各症状の時系列データを確認する</span></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(res_threshold<span class="sc">$</span>plot_data)</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a><span class="co"># 平均した最終ネットワークを確認する</span></span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>res_threshold<span class="sc">$</span>final_network<span class="sc">$</span>W</span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>res_threshold<span class="sc">$</span>final_network<span class="sc">$</span>b</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="使い分け" class="level1">
+<h1>使い分け</h1>
+<p>どの関数を使うかは，介入をどのように表現したいかによって変わります。</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>目的</th>
+<th>使う関数</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>治療コンポーネントを症状ネットワークに追加し，その効果を見たい</td>
+<td><code>simulate_treatment_network()</code></td>
+</tr>
+<tr class="even">
+<td>治療中に症状間の関係も変化すると考えたい</td>
+<td><code>simulate_treatment_network_dym()</code></td>
+</tr>
+<tr class="odd">
+<td>新しい治療ノードではなく，既存症状の閾値を直接変化させたい</td>
+<td><code>simulate_network_threshold()</code></td>
+</tr>
+</tbody>
+</table>
+<p>まず基本的な治療コンポーネントの効果を見たい場合は，<code>simulate_treatment_network()</code>から試すとわかりやすいです。介入によってネットワーク構造そのものが変わることを想定する場合は，<code>simulate_treatment_network_dym()</code>を使います。特定症状の活性化しやすさを直接変える介入を表現したい場合は，<code>simulate_network_threshold()</code>を使います。</p>
+</section>
+<section id="実行時の注意" class="level1">
+<h1>実行時の注意</h1>
+<ul>
+<li><code>W_init</code>は正方行列にしてください。</li>
+<li><code>b_init</code>，<code>target</code>，<code>symptom_name</code>の長さは，基本的に症状数と一致させてください。</li>
+<li><code>trial</code>を大きくすると結果は安定しやすくなりますが，計算時間は長くなります。</li>
+<li><code>baseline_iteration</code>，<code>TC_iteration_per_component</code>，<code>update_interval</code>などのステップ数が短すぎると，時系列の変化やネットワーク再推定が不安定になりやすくなります。</li>
+<li>乱数を使うため，再現性を確保したい場合は，実行前に<code>set.seed()</code>を指定してください。</li>
+</ul>
 </section>
 
 </main>
