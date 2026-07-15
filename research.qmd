@@ -28,7 +28,22 @@ title: "研究"
 
 ## 学会発表
 
+**プログラム公開済みで発表予定のものは，現在[6]-[11]です。発表後に詳細を追記します。**
+
 ::: {.pub-list}
+
+**[11]**国里愛彦・**大水拓海**(2026). チュートリアルワークショップ「Pythonによる能動的推論入門」　日本心理学会第90回大会　東京　9月6日(日) 13：40～15：20
+
+**[10]**  加藤めぐみ・**大水拓海**・国里愛彦(2026). 抑うつ症状ネットワークの安定性ランドスケープ分析 日本心理学会第90回大会　東京　9月6日(日) 9：20～11：00. ポスター発表.
+
+**[9]** **大水拓海**(2026). 大会企画シンポジウム「公認心理師試験から見た公認心理師」話題提供「タイトル未定」.日本心理学会第90回大会　東京　9月4日(金) 13：40～15：20 
+
+**[8]** **大水拓海**(2026).
+公募シンポジウム「心理ネットワークアプローチの最前線:研究手法と領域の広がり，心の個別性・複雑性理解への道筋」話題提供「タイトル未定」. 日本心理学会第90回大会　東京　9月4日(金) 9:00~10:40
+
+**[7]** Kato, M., **Omizu, T.,** & Kunisato, Y.(2026, July). Intervention Simulations for Insomnia Using Bridge Centrality in Networks. International Meeting of the Psychometric Society 2026. Yonsei University, Korea. Poster presentation. 
+
+**[6]** **Omizu, T.** & Kunisato, Y.(2026, July). Estimating Inverse Temperature in Individual Networks Using Dynamic Ising Models. International Meeting of the Psychometric Society 2026. Yonsei University, Korea. Poster presentation. 
 
 **[5]** **大水拓海**・国里愛彦（2025）. 心理ネットワークによる感情粒度の個人差の定量化：オープンデータの二次解析による検証. 日本心理学会第89回大会. ポスター発表. 2025年9月6日(土) 9:00 〜 10:40. [[DOI]](https://doi.org/10.4992/pacjpa.89.0_926)
 
