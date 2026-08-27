@@ -1,0 +1,124 @@
+---
+title: "能動的推論の研究例"
+subtitle: "生成モデルの学習と心理療法"
+author: "専修大学大学院文学研究科心理学専攻博士後期課程<br>大水 拓海"
+date: 2026.9.6
+format: 
+  revealjs:
+    theme: simple
+    css: styles.css
+    slide-number: true
+    embed-resources: true      
+    html-math-method: mathjax  
+bibliography: references.bib
+---
+
+# 自己紹介
+
+::: columns
+::: {.column width="50%"}
+![](slidefig/Omizu2026.jpg)
+:::
+
+::: {.column width="50%"}
+-   **大水拓海(Takumi Omizu)**
+
+-   専修大学大学院文学研究科心理学専攻博士後期課程(D1)
+
+-   心理療法の作用機序や症状維持に関する計算論的アプローチ(心理ネットワーク，確率微分方程式，能動的推論)
+
+:::
+:::
+
+
+## 心理療法の変容過程をPOMDPで表現
+
+
+## POMDPの基本：ABCDE
+
+### 生成モデル
+
+$$P(o_{1:T},s_{1:T},\pi) = P(\pi)P(s_1)\prod_t P(o_t | s_t) \prod_t P(s_{t+1} | s_t, \upsilon_t)$$
+
+- A($P(o_t | s_t)$): 状態をどう観測するか
+
+- B($P(s_{t+1} | s_t, \upsilon_t)$): 行動すると次にどうなると思うか
+
+- C(観測への選好): 何を好むもしくは何を避けるか
+
+- D($P(s_1)$): 初期状態についての信念
+
+- E($P(\pi)$): 習慣・ポリシーの事前分布
+
+
+## 仮想患者のモデル
+
+### 隠れ状態
+
+$$s_t = (A_t, D_t,F_t, Z_t)$$
+
+- Anxiety
+
+- Depression
+
+- Functional restriction
+
+- Context(選好と被るのでZ表記)
+
+### 行動
+
+$$\upsilon_t \in [avoid, stay, approach]$$
+
+### 観測
+
+- anxiety report
+
+- depression report
+
+- functional impairment report
+
+- outcome
+
+- UP module
+
+
+## シミュレーションの中心仮説
+
+エージェントのBと真の環境のBが異なる前提
+
+
+## B行列の学習に注目したモデル
+
+- もし「この状態にいると悪い結果を観測しやすい」という仮説を表現するなら尤度行列($A=P(o|s)$)を学習させる
+
+- 今回は遷移行列($B = P(s_{t+1} | s_t,\upsilon_t)$)を学習させる
+
+- 「接近という行動をすると，その後の状態が悪化する」という信念の更新
+
+- Dirichlet分布のパラメータ($b_{iju}$)を更新
+
+$$b_{iju}^{new} = b_{iju}^{old} + \eta_B q_t(i) q_{t-1}(j) I (u_{t-1 = u})$$
+
+今回は$\kappa_B = 20$，$\eta_B = .35$なので，**実際にapproachしない限りapproachに関するBにはほとんど新しい経験が入らない**設定。
+
+
+## 介入の実装
+
+
+| UP module    | POMDP | 計算論的な介入機序の仮説 | 
+|---------|:--------|------:|
+| 感情への気づき | A      |      状態と観測の対応精度を上げる |  
+| 認知的再評価   | prior + B   |    接近後の悲観的な予測を緩める |  
+| 回避・EDB  | E      |    回避の習慣を下げて接近のpriorを高める |   
+|身体感覚への耐容(内部間隔ex)  | C     |      症状の高まりへの嫌悪を下げる |   
+| 感情ex  | E→B      |      接近を高めて経験を得ることでB行列を学習する |   
+
+
+
+## 介入スケジュールとシミュレーション
+
+
+
+
+
+## 引用文献

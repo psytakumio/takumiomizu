@@ -19,7 +19,7 @@ website:
       - href: about.qmd
         text: プロフィール
       - href: research.qmd
-        text: 研究
+        text: 研究業績
       - href: slide.qmd
         text: マテリアル
   page-footer:
