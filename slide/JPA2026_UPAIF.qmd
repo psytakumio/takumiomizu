@@ -1,124 +1,536 @@
 ---
 title: "能動的推論の研究例"
-subtitle: "生成モデルの学習と心理療法"
+subtitle: "**生成モデルの学習と心理療法**"
 author: "専修大学大学院文学研究科心理学専攻博士後期課程<br>大水 拓海"
-date: 2026.9.6
+institute: "日本心理学会第90回大会TWS「Pythonによる能動的推論入門」"
+date: "2026-9-6"
 format: 
   revealjs:
     theme: simple
     css: styles.css
     slide-number: true
     embed-resources: true      
-    html-math-method: mathjax  
+    html-math-method: mathjax
+    scrollable: true  
 bibliography: references.bib
 ---
 
 # 自己紹介
 
 ::: columns
-::: {.column width="50%"}
-![](slidefig/Omizu2026.jpg)
-:::
-
-::: {.column width="50%"}
+::: {.column width="60%"}
 -   **大水拓海(Takumi Omizu)**
 
 -   専修大学大学院文学研究科心理学専攻博士後期課程(D1)
 
 -   心理療法の作用機序や症状維持に関する計算論的アプローチ(心理ネットワーク，確率微分方程式，能動的推論)
 
+- 本発表で紹介するシミュレーションコードには生成AI(GPT-5.6Sol)を用いています。
+:::
+
+::: {.column width="40%"}
+
+![](slidefig/Omizu2026.jpg)
 :::
 :::
 
 
-## 心理療法の変容過程をPOMDPで表現
 
 
-## POMDPの基本：ABCDE
-
-### 生成モデル
-
-$$P(o_{1:T},s_{1:T},\pi) = P(\pi)P(s_1)\prod_t P(o_t | s_t) \prod_t P(s_{t+1} | s_t, \upsilon_t)$$
-
-- A($P(o_t | s_t)$): 状態をどう観測するか
-
-- B($P(s_{t+1} | s_t, \upsilon_t)$): 行動すると次にどうなると思うか
-
-- C(観測への選好): 何を好むもしくは何を避けるか
-
-- D($P(s_1)$): 初期状態についての信念
-
-- E($P(\pi)$): 習慣・ポリシーの事前分布
+## 目的：心理療法による変化を生成モデルの「学習」として表現する
 
 
-## 仮想患者のモデル
+- **何を学ぶか**
 
-### 隠れ状態
+$A$（状態→観測）と $B$（状態＋行動→次状態）の学習を分けて考える。
 
-$$s_t = (A_t, D_t,F_t, Z_t)$$
+- **何を経験しやすくするか**
 
-- Anxiety
-
-- Depression
-
-- Functional restriction
-
-- Context(選好と被るのでZ表記)
-
-### 行動
-
-$$\upsilon_t \in [avoid, stay, approach]$$
-
-### 観測
-
-- anxiety report
-
-- depression report
-
-- functional impairment report
-
-- outcome
-
-- UP module
+方策事前分布 $E$ を操作し，新たな行動(`stay`)の経験機会を増やす。
 
 
-## シミュレーションの中心仮説
-
-エージェントのBと真の環境のBが異なる前提
-
-
-## B行列の学習に注目したモデル
-
-- もし「この状態にいると悪い結果を観測しやすい」という仮説を表現するなら尤度行列($A=P(o|s)$)を学習させる
-
-- 今回は遷移行列($B = P(s_{t+1} | s_t,\upsilon_t)$)を学習させる
-
-- 「接近という行動をすると，その後の状態が悪化する」という信念の更新
-
-- Dirichlet分布のパラメータ($b_{iju}$)を更新
-
-$$b_{iju}^{new} = b_{iju}^{old} + \eta_B q_t(i) q_{t-1}(j) I (u_{t-1 = u})$$
-
-今回は$\kappa_B = 20$，$\eta_B = .35$なので，**実際にapproachしない限りapproachに関するBにはほとんど新しい経験が入らない**設定。
-
-
-## 介入の実装
-
-
-| UP module    | POMDP | 計算論的な介入機序の仮説 | 
-|---------|:--------|------:|
-| 感情への気づき | A      |      状態と観測の対応精度を上げる |  
-| 認知的再評価   | prior + B   |    接近後の悲観的な予測を緩める |  
-| 回避・EDB  | E      |    回避の習慣を下げて接近のpriorを高める |   
-|身体感覚への耐容(内部間隔ex)  | C     |      症状の高まりへの嫌悪を下げる |   
-| 感情ex  | E→B      |      接近を高めて経験を得ることでB行列を学習する |   
+パニック症の**回避と曝露**を念頭に置いたトイモデルで検討する。
 
 
 
-## 介入スケジュールとシミュレーション
+## POMDPを固定モデルから学習するモデルへ
+
+- 尤度行列 $A$ や遷移行列 $B$ は固定値としておくこともできるが，エージェントにとって正しい値とは限らない。
+
+- $P(o\mid s)$ や $P(s_{t+1}\mid s_t,u_t)$ 自体も，不確実性のある確率変数として扱う。
+
+- $A$ の各列，$B$ の各列，初期状態事前分布 $D$ は，カテゴリカル分布のパラメータベクトルとして理解できる。
+
+
+
+$$
+\text{経験}
+\rightarrow
+\text{Dirichletパラメータの更新}
+\rightarrow
+\text{生成モデル }A,B\text{ の変化}
+$$
+
+
+## A行列の学習
+
+
+A行列の各列は確率ベクトル
+
+
+$$
+A_0=
+\begin{array}{c}
+\overbrace{
+\begin{array}{cc}
+\text{safe} & \text{threat}
+\end{array}
+}^{s_t}
+\\[-0.2em]
+\begin{pmatrix}
+0.65 & 0.35\\
+0.35 & 0.65
+\end{pmatrix}
+\end{array}
+\quad
+\begin{array}{c}
+\phantom{\text{safe}}\\[-0.2em]
+\left.
+\begin{array}{l}
+\text{calm}\\
+\text{palpitation}
+\end{array}
+\right\}
+\; o_t
+\end{array}
+$$
+
+たとえば `safe` 列：
+
+$$
+A_{:,safe}
+=
+\begin{pmatrix}
+0.65\\
+0.35
+\end{pmatrix}
+=P(o_t\mid s_t=\mathrm{safe})
+$$
+
+:::::: {.subhead}
+確率そのものを固定しない
+::::::
+
+$$
+\boldsymbol{\theta}_{safe}
+\sim
+\mathrm{Dir}(\boldsymbol{a}_{safe})
+$$
+
+$$
+A_{:,safe}
+=E[\boldsymbol{\theta}_{safe}]
+=\frac{\boldsymbol{a}_{safe}}
+{\sum_k a_{k,safe}}
+$$
+
+$\boldsymbol{a}$ は**擬似カウント**。
+
+経験後のパラメータ更新：
+
+$$
+\boldsymbol{a}_{new}
+=
+\boldsymbol{a}_{old}
++
+\eta_A\,\Delta\boldsymbol{a}
+$$
+
+
+
+`safe` と推論しているときに `calm` を経験するほど，**safe → calm** の対応が強くなる。
+
+ディリクレ分布を用いた更新に関する詳細は補足を参照してください。
+
+
+
+## B行列の学習 {.scrollable}
+
+:::::: {.subhead}
+B行列の各列も確率ベクトル
+::::::
+
+`stay` の場合：
+
+$$
+B_0^{\mathrm{stay}}=
+\begin{array}{c}
+\overbrace{
+\begin{array}{cc}
+\text{safe} & \text{threat}
+\end{array}
+}^{s_t}
+\\[-0.2em]
+\begin{pmatrix}
+0.70 & 0.20\\
+0.30 & 0.80
+\end{pmatrix}
+\end{array}
+\quad
+\begin{array}{c}
+\phantom{\text{safe}}\\[-0.2em]
+\left.
+\begin{array}{l}
+\text{safe}\\
+\text{threat}
+\end{array}
+\right\}
+\; s_{t+1}
+\end{array}
+$$
+
+たとえば `threat` 列：
+
+$$
+B^{\mathrm{stay}}_{:,threat}
+=
+\begin{pmatrix}
+0.20\\
+0.80
+\end{pmatrix}
+=
+P(s_{t+1}\mid s_t=\mathrm{threat},u_t=\mathrm{stay})
+$$
+
+:::::: {.subhead}
+遷移確率そのものを固定しない
+::::::
+
+$$
+\boldsymbol{\theta}_{threat,stay}
+\sim
+\mathrm{Dir}(\boldsymbol{b}_{threat,stay})
+$$
+
+$$
+B^{\mathrm{stay}}_{:,threat}
+=E[\boldsymbol{\theta}_{threat,stay}]
+=\frac{\boldsymbol{b}_{threat,stay}}
+{\sum_k b_{k,threat,stay}}
+$$
+
+$\boldsymbol{b}$ は**擬似カウント**。
+
+経験後の更新式：
+
+$$
+\boldsymbol{b}_{new}
+=
+\boldsymbol{b}_{old}
++
+\eta_B\,\Delta\boldsymbol{b}
+$$
+
+
+`threat` で `stay` した後に `safe` へ移行する経験ほど，**threat + stay → safe** の確率が高くなる。
+
+
+## パニック症の回避と曝露のトイモデル
+
+強い動悸を経験したとき，**「身体は安全なのか／生命に関わる危機なのか」**を推論するエージェントを考える。
+
+
+$$
+\begin{gathered}
+\text{動悸などの身体感覚}
+\rightarrow
+\text{身体的危機の推論}
+\rightarrow
+\text{escape / stay}
+\\
+\rightarrow
+\text{行動結果の経験}
+\rightarrow
+\text{生成モデルの学習}
+\end{gathered}
+$$
+
+
+**Q.** 回避せず `stay` する経験は，エージェントの生成モデルをどのように変えるか？
+
+
+## トイモデル：身体的危機の推論と回避
+
+:::::: {.columns}
+::::: {.column width="48%"}
+:::: {.subhead}
+**隠れ状態**
+::::
+
+$$
+s_t\in\{\mathrm{safe},\mathrm{threat}\}
+$$
+
+- `safe`：安全
+- `threat`：脅威
+
+:::: {.subhead}
+**観測**
+::::
+
+$$
+o_t\in\{\mathrm{calm},\mathrm{palpitation}\}
+$$
+
+- `calm`：穏やかな身体感覚
+- `palpitation`：動悸様の身体感覚
+:::::
+
+::::: {.column width="48%"}
+:::: {.subhead}
+**行動**
+::::
+
+$$
+u_t\in\{\mathrm{escape},\mathrm{stay}\}
+$$
+
+- `escape`：その場から離れる
+- `stay`：その場にとどまる
+
+:::: {.subhead}
+**1試行の流れ**
+::::
+
+$$
+\begin{aligned}
+\text{state}
+&\rightarrow
+\text{observation}
+\rightarrow
+Q(s_t)
+\\
+\rightarrow
+&Q(\pi)
+\rightarrow
+u_t
+\rightarrow
+s_{t+1}
+\end{aligned}
+$$
+:::::
+::::::
+
+
+## モデルの設定 {.compact}
+
+:::::: {.columns}
+::::: {.column width="49%"}
+:::: {.subhead}
+**エージェントの初期信念**
+::::
+
+$$
+A_0=
+\begin{pmatrix}
+0.65&0.35\\
+0.35&0.65
+\end{pmatrix}
+$$
+
+`stay` の $B_0$：
+
+$$
+B_0^{\mathrm{stay}}=
+\begin{pmatrix}
+0.70&0.20\\
+0.30&0.80
+\end{pmatrix}
+$$
+:::::
+
+::::: {.column width="49%"}
+:::: {.subhead}
+**真の環境**
+::::
+
+$$
+A^{Env}=
+\begin{pmatrix}
+0.85&0.15\\
+0.15&0.85
+\end{pmatrix}
+$$
+
+`stay` の $B^{Env}$：
+
+$$
+B_{Env}^{\mathrm{stay}}=
+\begin{pmatrix}
+0.75&0.60\\
+0.25&0.40
+\end{pmatrix}
+$$
+:::::
+::::::
+
+
+**「脅威状態で留まっても安全には戻りにくい」と予測している。**
+
+
+
+
+## シミュレーション設定の整理 {.compact}
+
+| 量 | 意味 | トイモデルでの扱い |
+|---|---|---|
+| $A=P(o_t\mid s_t)$ | 状態→観測 | 条件により学習 |
+| $B=P(s_{t+1}\mid s_t,u_t)$ | 行動後の状態遷移 | 条件により学習 |
+| $C=[1.5,-1.5]$ | calm / palpitation への選好 | 固定 |
+| $D=[0.20,0.80]$ | 初期状態事前分布 | 固定 |
+| $E=P(\pi)$ | 方策の事前分布 | Simulation 2,3 で操作 |
+| $\gamma=1.0$ | 方策評価の精度 | 固定 |
+
+
+初期総集中度:$\kappa_A=\kappa_B=5$<br>
+学習率：$\qquad\eta_A=\eta_B=0.5$
+
+
+## Simulation 1｜A行列・B行列の学習
+
+- 100試行，介入なし
+- 行動はすべて通常の方策推論から確率的に選択する。
+
+| 条件 | A learning | B learning |
+|---|:---:|:---:|
+| No learning | × | × |
+| A learning | ○ | × |
+| B learning | × | ○ |
+| A + B learning | ○ | ○ |
+
+
+**生成モデルのどこを学習可能にするかによって，学習軌跡と行動はどう変わるか？**
+
+
+
+## Simulation 1｜結果 {.figure-slide .scrollable}
+
+
+Aの学習
+
+![](slidefig/Alearning.png)
+
+
+
+Bの学習
+
+
+![](slidefig/Blearning.png)
+
+
+
+stayの選択
+
+![](slidefig/Stayselect.png)
+
+
+- B learningでは $P(\mathrm{safe}_{t+1}\mid\mathrm{threat}_t,\mathrm{stay})$ が **0.20 → 約0.38** と，環境の0.60方向へ更新。
+- Aも更新されるが，この単一のシミュレーションでは真値0.85へ単調に近づかない。状態の真値ではなく $Q(s_t)$ を更新に使うため，推論の曖昧さと経験分布に依存する。
+- mean $P(\mathrm{stay})$ は **0.438–0.445** とほぼ同じ <br>
+→ **生成モデルの学習 ≠ 直ちに行動変化**。
+
+
+
+## Simulation 2｜方策事前分布 $E$ への介入{.nostretch}
+
+$A/B$ を直接変更せず，一定期間だけ**`stay` 方策の事前的な選びやすさ**を高める。
+
+Baseline
+$$
+E_{baseline}
+=
+\begin{pmatrix}
+0.90\\0.10
+\end{pmatrix}
+$$
+Intervention
+
+
+$$
+E_{intervention}
+=
+\begin{pmatrix}
+0.10\\0.90
+\end{pmatrix}
+$$
+
+上から `escape`, `stay`
+
+
+![](slidefig/Eint2.png)
+
+**心理療法的には，回避せず留まる経験を得やすくする操作の抽象化**
+
+
+## Simulation 2｜結果：`stay` の経験機会が増える{.figure-slide .scrollable}
+
+![](slidefig/E_stay.png){width="82%" fig-align="center"}
+
+
+介入中
+
+
+- `stay` の実現率が大きく上昇。
+- 行動は強制しておらず，$E$ を介した方策選択の変化。
+
+
+介入終了後
+
+
+- $E$ をbaselineへ戻すと，`stay` は再び減少。
+
+
+**介入はBを直接書き換えず，学習に使える経験の分布を変える。**
+
+経験機会の変化がB学習へ波及
+![](slidefig/EtoB.png)
+
+追跡量：
+
+$$
+P(\mathrm{safe}_{t+1}
+\mid
+\mathrm{threat}_t,\mathrm{stay})
+$$
+
+- Constant $E$：ほぼ **0.20** のまま。
+- $E$ intervention：約 **0.20 → 0.33**。
+- 介入終了後も，学習したBは保持される。
+
+**新しい経験を得る機会を作ることで，誤った遷移予測が修正される。**
 
 
 
 
 
-## 引用文献
+
+
+## まとめ
+
+### トイモデルから
+
+- 生成モデルは経験から変化するが，**パラメータ変化だけで行動が大きく変わるとは限らない**。
+
+- 方策事前分布の操作で特定の行動の経験を増やし，**介入を表現**できる。
+
+### POMDPの学習
+
+- 能動的推論モデルの生成モデルの学習を扱うことで，**心理療法の中で何が変化しているのか**を検討できる
+
+- 本シミュレーションはトイモデルであり，パニック症や心理療法の実際の作用機序を実証したものではない。
+
+
+
+## 補足｜Dirichlet分布と初期総集中度 $\kappa$ {.scrollable}
+
+数式を丁寧に書いたDirichlet分布の説明と学習の計算過程を後で追加します。
