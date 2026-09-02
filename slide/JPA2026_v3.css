@@ -1,0 +1,136 @@
+
+/* JPA2026_v4.css
+   Standalone for this deck. Do NOT load styles.css together with it. */
+
+:root {
+  --ink: #2f343a;
+  --muted: #68717a;
+  --line: #d7dce1;
+  --soft: #f3f5f6;
+  --accent: #566f86;
+}
+
+.reveal {
+  font-family: "Yu Gothic", "YuGothic", "Meiryo", "Hiragino Sans", sans-serif;
+  font-size: 20px;
+  color: var(--ink);
+}
+
+.reveal .slides {
+  text-align: left;
+}
+
+.reveal .slides section {
+  box-sizing: border-box;
+  padding: 0 4px;
+  line-height: 1.20;
+}
+
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal p,
+.reveal li,
+.reveal td,
+.reveal th {
+  font-family: "Yu Gothic", "YuGothic", "Meiryo", "Hiragino Sans", sans-serif;
+}
+
+.reveal h2 {
+  font-size: 30px !important;
+  line-height: 1.12 !important;
+  margin: 0 0 12px !important;
+  text-transform: none !important;
+}
+
+.reveal h3 {
+  font-size: 21px !important;
+  line-height: 1.12 !important;
+  margin: 0 0 5px !important;
+  text-transform: none !important;
+  color: var(--muted);
+}
+
+.reveal p { margin: .22em 0 !important; }
+.reveal ul { margin: .2em 0 .2em 1.05em !important; }
+.reveal li { margin: .14em 0 !important; }
+.reveal img {
+  display: block;
+  margin: 3px auto !important;
+  max-width: 100%;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+.reveal mjx-container[display="true"] { margin: .23em 0 !important; }
+
+#title-slide .title {
+  font-size: 43px !important;
+  line-height: 1.08 !important;
+}
+#title-slide .subtitle { font-size: 26px !important; }
+#title-slide .author,
+#title-slide .institute,
+#title-slide .date { font-size: 18px !important; }
+
+.grid2, .grid3, .grid4, .flow3, .flow4 {
+  display: grid !important;
+  width: 100%;
+  box-sizing: border-box;
+  align-items: stretch;
+}
+.grid2 { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 16px; }
+.grid3 { grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; }
+.grid4 { grid-template-columns: repeat(4, minmax(0,1fr)); gap: 9px; }
+.flow3 { grid-template-columns: 1fr 34px 1fr 34px 1fr; gap: 5px; align-items: center; }
+.flow4 { grid-template-columns: repeat(4, minmax(0,1fr)); gap: 9px; }
+
+.card, .step {
+  box-sizing: border-box;
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 12px;
+  background: rgba(255,255,255,.75);
+}
+
+.step { text-align: center; padding: 11px 7px; }
+.arrow { text-align: center; font-size: 25px; color: var(--muted); }
+.label { color: var(--muted); font-size: 17px; font-weight: 700; margin-bottom: 4px; }
+.big { font-size: 24px; font-weight: 700; margin: 5px 0; }
+.small { font-size: 16px; color: var(--muted); }
+.tiny { font-size: 15px; color: var(--muted); }
+
+.takehome {
+  box-sizing: border-box;
+  margin-top: 9px;
+  padding: 7px 11px;
+  border-left: 4px solid var(--accent);
+  background: var(--soft);
+  font-size: 19px;
+  line-height: 1.18;
+}
+
+.matrix { font-size: 18px; }
+.reading { font-size: 18px; }
+.param-table table { width: 100%; font-size: 16px; margin: 2px 0 !important; }
+.param-table th, .param-table td { padding: 4px 6px !important; }
+
+.sim1 img { max-height: 390px !important; width: auto !important; }
+.simplot img { max-height: 360px !important; width: auto !important; }
+.simplot2 img { max-height: 330px !important; width: auto !important; }
+
+.result3 {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 8px;
+  margin-top: 3px;
+  font-size: 16px;
+  text-align: center;
+}
+.result3 > div { border-top: 1px solid var(--line); padding-top: 4px; }
+
+.supp { font-size: 18px; }
+
+/* Prevent accidental stretching/overflow by long tokens */
+.reveal .slides section * { box-sizing: border-box; min-width: 0; }
+.reveal code { white-space: normal; }
