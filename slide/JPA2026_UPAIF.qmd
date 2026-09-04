@@ -6,6 +6,7 @@ institute: "日本心理学会第90回大会TWS「Pythonによる能動的推論
 date: "2026-9-6"
 format: 
   revealjs:
+    include-after-body: subtitle.html
     theme: simple
     css: styles.css
     slide-number: true
