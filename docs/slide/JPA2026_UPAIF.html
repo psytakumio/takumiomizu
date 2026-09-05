@@ -2603,6 +2603,93 @@ window.QuartoSupport = function () {
         ]
       });
     </script>
+    <style>
+
+#live-subtitle-container {
+position: fixed;
+bottom: 0%; 
+left: 0;
+width: 100%;
+text-align: center;
+z-index: 99999; 
+pointer-events: none; 
+}
+
+#live-subtitle-text {
+display: none; 
+background: transparent;
+color: #ffffff;
+font-family: 'Helvetica Neue', Arial, sans-serif;
+font-size: 24px; 
+
+font-weight: 900; padding: 10px 25px;
+max-width: 90%;
+margin: 0 auto;
+line-height: 1.4;
+
+-webkit-text-stroke: 2px #000000; 
+text-shadow: 2px 2px 4px rgba(0,0,0,0.8); 
+
+max-height: 4.2em; overflow: hidden; }
+</style>
+
+    <div id="live-subtitle-container">
+      <div id="live-subtitle-text"></div>
+    </div>
+
+    <script>
+      let subtitleActive = false;
+      let slideFinalText = "";
+      const subtitleBox = document.getElementById('live-subtitle-text');
+
+      const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+      recognition.lang = 'ja-JP';
+      recognition.continuous = true;
+      recognition.interimResults = true;
+      
+      recognition.onresult = (event) => {
+        let interimText = '';
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          if (event.results[i].isFinal) {
+            slideFinalText += event.results[i][0].transcript;
+          } else {
+            interimText += event.results[i][0].transcript;
+          }
+        }
+        
+        // 確定テキストと認識中テキストを結合して表示
+        subtitleBox.innerHTML = slideFinalText + '<span style="color: #aaa;">' + interimText + '</span>';
+        
+        // ▼ 追加：テキストが更新されるたびに、常に一番下（最新）にスクロールさせる ▼
+        subtitleBox.scrollTop = subtitleBox.scrollHeight;
+      };
+
+      recognition.onend = () => {
+        // アクティブな状態なら、文脈が切れたタイミングで表示をリセットして再開
+        if (subtitleActive) {
+          slideFinalText = "";
+          recognition.start();
+        }
+      };
+
+      // --- スライド用の起動スイッチ（キーボードの「S」キーでON/OFF） ---
+      document.addEventListener('keydown', (e) => {
+        // 大文字・小文字どちらの「s」でも反応
+        if (e.key === 's' || e.key === 'S') {
+          subtitleActive = !subtitleActive;
+          
+          if (subtitleActive) {
+            subtitleBox.style.display = 'inline-block';
+            subtitleBox.innerText = "（マイク待機中...）";
+            slideFinalText = "";
+            try { recognition.start(); } catch(err) {}
+          } else {
+            subtitleBox.style.display = 'none';
+            recognition.stop();
+          }
+        }
+      });
+    </script>
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
